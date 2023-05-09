@@ -140,10 +140,10 @@ export function ErrorBoundary() {
 		if (error.status === 404) {
 			return (
 				<Container>
-					<h1 className="text-7xl font-semibold text-gray-12">
+					<h2 className="text-7xl font-semibold text-gray-12">
 						<span className="text-gold-9">404</span>{" "}
 						<span className="text-3xl">Page Not Found</span>
-					</h1>
+					</h2>
 
 					<p className="mt-4 text-gray-11">{errorMessage}</p>
 				</Container>
@@ -157,10 +157,10 @@ export function ErrorBoundary() {
 
 	return (
 		<Container>
-			<h1 className="text-7xl font-semibold text-gray-12">
+			<h2 className="text-7xl font-semibold text-gray-12">
 				<span className="text-gold-9">500</span>{" "}
 				<span className="text-3xl">Internal Server Error</span>
-			</h1>
+			</h2>
 
 			<p className="mt-4 text-gray-11">{errorMessage}</p>
 		</Container>
