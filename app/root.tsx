@@ -60,6 +60,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			hideComplete,
 		})
 	} catch (error) {
+		console.error(error)
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {
 			message = error.message
