@@ -216,7 +216,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 
 					<Popover.Portal>
 						<Popover.Content
-							align="center"
+							side="top"
 							sideOffset={4}
 							className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6"
 							dangerouslySetInnerHTML={{ __html: achievement.clue }}
