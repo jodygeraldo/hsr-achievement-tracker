@@ -141,7 +141,32 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Highway Star", version: "1.0" },
 		{ name: "Extreme Survival", version: "1.0" },
 		{ name: "Bullet Time", version: "1.0" },
+		{
+			name: "Deus Ex Machina",
+			version: "1.0",
+			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
+		},
+		{
+			name: "It's My Turn",
+			version: "1.0",
+			clue: "Seele acts 5 time(s) in a row before the next ally unit's turn",
+		},
 		{ name: "Coffee Lover", version: "1.0" },
+		{
+			name: "Foolish Little Brother...",
+			version: "1.0",
+			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
+		},
+		{
+			name: "Listen...",
+			version: "1.0",
+			clue: "Use the Trailblazer to fight boss Kafka and become Dominated by her",
+		},
+		{
+			name: "I Don't Get No Respect!",
+			version: "1.0",
+			clue: "Enrage the Guardian Shadow with 4 character(s) in your team",
+		},
 		{ name: "Chad Norris", version: "1.0" },
 		{ name: "Attack! No Matter the Cost!", version: "1.0" },
 		{ name: "Decapitation Strike", version: "1.0" },
@@ -165,21 +190,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 
 		// in-game position check
 		{
-			name: "Deus Ex Machina",
-			version: "1.0",
-			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
-		},
-		{
-			name: "It's My Turn",
-			version: "1.0",
-			clue: "Seele acts 5 time(s) in a row before the next ally unit's turn",
-		},
-		{
-			name: "Listen...",
-			version: "1.0",
-			clue: "Use the Trailblazer to fight boss Kafka and become Dominated by her",
-		},
-		{
 			name: "Will of Steel",
 			version: "1.0",
 			clue: "In a single battle against boss Kafka, dispel Dominated 3 times",
@@ -195,19 +205,9 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Use Bronya to deal the final blow in a victory against boss Cocolia",
 		},
 		{
-			name: "Foolish Little Brother...",
-			version: "1.0",
-			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
-		},
-		{
 			name: "Four-and-a-Half Pirouettes",
 			version: "1.0",
 			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
-		},
-		{
-			name: "I Don't Get No Respect!",
-			version: "1.0",
-			clue: "Enrage the Guardian Shadow with 4 character(s) in your team",
 		},
 		{
 			name: "Over-Protective",
@@ -298,6 +298,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Life Is but a Game", version: "1.0" },
 		{ name: "Who Moved My Pokeball?", version: "1.0" },
 		{ name: "A Porcine Football Team", version: "1.0" },
+		{
+			name: "Don't Let It Get Away!",
+			version: "1.0",
+			clue: "Let Trotters escape 1 times in Simulated Universe",
+		},
 		{ name: "Existence Precedes Essence", version: "1.0" },
 		{ name: "Memories Look at Me", version: "1.0" },
 		{ name: "Create A Beautiful Chaos", version: "1.0" },
@@ -324,11 +329,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Does This Game Not Have a Platinum Trophy?", version: "1.0" },
 
 		// in-game position check
-		{
-			name: "Don't Let It Get Away!",
-			version: "1.0",
-			clue: "Let Trotters escape 1 times in Simulated Universe",
-		},
 		{
 			name: "Console Game",
 			version: "1.0",
@@ -501,17 +501,17 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Confront the Public Property Protector and show him the cost of stopping you (or have him humbly acknowledge his wrongdoing.)",
 		},
 		{
+			name: "Outworlder",
+			version: "1.0",
+			clue: "Return the music box found in Rivet Town to its heartbroken owner",
+		},
+		{
 			name: "For a Breath I Tarry |DIVIDER| The Lifecycle of Software Objects",
 			version: "1.0",
 			clue: [
 				'Choose to format Little Robot in the mission "Rarely Affectionate (Part 2)"',
 				'Choose not to format Little Robot in the mission "Rarely Affectionate (Part 2)"',
 			],
-		},
-		{
-			name: "Outworlder",
-			version: "1.0",
-			clue: "Return the music box found in Rivet Town to its heartbroken owner",
 		},
 		{
 			name: "50 Credits!?",
@@ -623,6 +623,16 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			],
 		},
 		{
+			name: "The Seven Errors of Cycranes: Sloth",
+			version: "1.0",
+			clue: "Convince the depressed cycrane to return to its job",
+		},
+		{
+			name: "Seven Birds in the Hand Is Worth A Thousand in the Bush",
+			version: "1.0",
+			clue: "Help Heron Express to recover all lost cycranes",
+		},
+		{
 			name: "Fair and Square |DIVIDER| All Is Fair in Love and War |DIVIDER| From Hero to Zero",
 			version: "1.0",
 			clue: [
@@ -665,16 +675,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 				"Did not retrieve the credits that the fraudster took",
 				"Retrieved more credits from the fraudster than what they took",
 			],
-		},
-		{
-			name: "Seven Birds in the Hand Is Worth A Thousand in the Bush",
-			version: "1.0",
-			clue: "Help Heron Express to recover all lost cycranes",
-		},
-		{
-			name: "The Seven Errors of Cycranes: Sloth",
-			version: "1.0",
-			clue: "Convince the depressed cycrane to return to its job",
 		},
 		{
 			name: "The Seven Errors of Cycranes: Lust",
