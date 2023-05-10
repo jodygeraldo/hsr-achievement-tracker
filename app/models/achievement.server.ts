@@ -298,12 +298,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "The Meaning of Choice", version: "1.0", clue: "Choose gender-specific dialogue options 3 time(s)" },
 	],
 	"the-memories-we-share": [
-		{ name: "Guess Who I Am", version: "1.0" },
-		{ name: "The Sorrows of Young Arlan", version: "1.0" },
-		{ name: "The Gift of the Magi", version: "1.0" },
-		{ name: "The Outskirts Here Are Quiet", version: "1.0" },
-		{ name: "Clara and the Sun", version: "1.0" },
-		{ name: "Serval's Faithfull: An Autobiography", version: "1.0" },
+		{ name: "Guess Who I Am", version: "1.0", clue: 'Complete Companion Mission "You Already Know Me"' },
+		{ name: "The Sorrows of Young Arlan", version: "1.0", clue: 'Complete Companion Mission "An Unexpected Turn of Events"' },
+		{ name: "The Gift of the Magi", version: "1.0", clue: `Complete Companion Mission "Hook's Gift"` },
+		{ name: "The Outskirts Here Are Quiet", version: "1.0", clue: 'Complete Companion Mission "Blizzard Immunity"' },
+		{ name: "Clara and the Sun", version: "1.0", clue: 'Complete Companion Mission "Rarely Affectionate"' },
+		{ name: "Serval's Faithfull: An Autobiography", version: "1.0", clue: 'Complete Companion Mission "Only A Child"' }, // (in-game typo) Faithfull => Faithful
 
 		// in-game position check
 		{ name: "Seventeen's Map", version: "1.0", clue: 'Find all readable items regarding Asta in the mission "Emptiness of Locus Silentii"' },
@@ -349,7 +349,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "The Fourth Little Mole", version: "1.0", clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"' },
 		{ name: "The Adventurous Moles Super Grown-Up Edition", version: "1.0", clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant" },
 		{ name: "A Simple Life", version: "1.0", clue: 'Receive a text from Luhui after completing the mission "Fired"' },
-		{ name: "Carpe Diem, Festina Lente, and Tempus Fugit", version: "1.0", clue: `Receive all the texts about Chengjie's fasding passion after completing the mission "A Teacher and a Friend".` },
+		{ name: "Carpe Diem, Festina Lente, and Tempus Fugit", version: "1.0", clue: `Revving up, Losing Steam, and Running On Empty. Receive all the texts about Chengjie's fading passion after completing the mission "A Teacher and a Friend".` },
 		{ 
 			name: "Tootsie |DIVIDER| Cyber Fraud |DIVIDER| A Secret Makes a Woman, Woman.", 
 			version: "1.0", 
