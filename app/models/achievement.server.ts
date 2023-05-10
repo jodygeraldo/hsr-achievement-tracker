@@ -32,10 +32,10 @@ type Achievement = {
 }
 
 /**
- * There could be mistakes or things missing in the list of achievements. 
- * The order of achievements might change as I unlock more or confirm them with others. 
+ * There could be mistakes or things missing in the list of achievements.
+ * The order of achievements might change as I unlock more or confirm them with others.
  * There might also be some secret achievements that are not included or might not be described accurately.
- * 
+ *
  * Resources:
  * - [HSR Achievement Tracker by Meow of MeowDB.com]{@link https://docs.google.com/spreadsheets/d/1zewLHLp-WnpTnIT4TdbSoUvnCtAOq0_p__ZyFsJZAEg/edit#gid=633819019}
  * - [HSR Fnadom Wiki]{@link https://honkai-star-rail.fandom.com/wiki/Achievement}
@@ -700,4 +700,3 @@ function isValidSlugifiedCategoryName(
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, putAchived, deleteAchived }
-
