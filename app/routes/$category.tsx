@@ -7,6 +7,7 @@ import type {
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
+import type { ShouldRevalidateFunction } from "@remix-run/react"
 import {
 	isRouteErrorResponse,
 	useFetcher,
@@ -121,14 +122,6 @@ export default function CategoryPage() {
 	)
 }
 
-function Container({ children }: { children: React.ReactNode }) {
-	return (
-		<div className="flex w-full flex-1 flex-col gap-y-3 self-start rounded-lg bg-gray-2 px-4 py-6">
-			{children}
-		</div>
-	)
-}
-
 export function ErrorBoundary() {
 	const error = useRouteError()
 
@@ -166,6 +159,25 @@ export function ErrorBoundary() {
 
 			<p className="mt-4 text-gray-11">{errorMessage}</p>
 		</Container>
+	)
+}
+
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+	formAction,
+	formData,
+}) => {
+	if (formAction !== "/" && formData?.get("name")) {
+		return false
+	}
+
+	return true
+}
+
+function Container({ children }: { children: React.ReactNode }) {
+	return (
+		<div className="flex w-full flex-1 flex-col gap-y-3 self-start rounded-lg bg-gray-2 px-4 py-6">
+			{children}
+		</div>
 	)
 }
 
