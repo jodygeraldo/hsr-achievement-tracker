@@ -106,18 +106,11 @@ export default function CategoryPage() {
 
 	return (
 		<Container>
-			{achievements.length === 0 ? (
-				<p className="text-center font-medium leading-6 text-gold-11">
-					Wow, you did it! You finished all the achievements in this category!
-					That's amazing! You nerd 🤓!
-				</p>
-			) : (
-				<ul className="divide-y divide-gray-6">
-					{achievements.map((achievement) => (
-						<Achievement key={achievement.name} achievement={achievement} />
-					))}
-				</ul>
-			)}
+			<ul className="divide-y divide-gray-6">
+				{achievements.map((achievement) => (
+					<Achievement key={achievement.name} achievement={achievement} />
+				))}
+			</ul>
 		</Container>
 	)
 }
