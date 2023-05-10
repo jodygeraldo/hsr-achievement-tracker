@@ -67,7 +67,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Sauntering Fox", version: "1.0", clue: "Diplomacy is but a trade of opinions..." },
 		{ name: "Omniscia Spares None", version: "1.0", clue: "What Goes Around Comes Around" },
 		{ name: "A Professional Onlooker", version: "1.0", clue: "When the Wind-Watcher Watches You..." },
-		{ name: "Prophets Do Not Prophesize", version: "1.0", clue: "Witness the mystery of the Divination Commision's matrix" },
+		{ name: "Prophets Do Not Prophesize", version: "1.0", clue: "Witness the mystery of the Divination Commission's matrix" },
 		{ name: "The Deer Hunter", version: "1.0", clue: "The Furnace Endured, the Antlers Obscured" },
 		{ name: 'Slayer of a Very "Deer" Friend', version: "1.0", clue: "Try to walk on the Path of The Hunt..." },
 		{ name: "Draconic Opulence", version: "1.0", clue: "Witness Dan Shu's story" },
