@@ -232,7 +232,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 							<span>{achievement.name}</span>
 							{achievement.clue && !Array.isArray(achievement.clue) ? (
 								<Popover.Root>
-									<Popover.Trigger className="text-gray-11 transition-colors hover:text-gray-12">
+									<Popover.Trigger className="rounded-md text-gray-11 transition-colors hover:text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8">
 										<span className="sr-only">Clue</span>
 										<InfoCircle />
 									</Popover.Trigger>
@@ -241,7 +241,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 										<Popover.Content
 											side="top"
 											sideOffset={4}
-											className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6"
+											className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
 											dangerouslySetInnerHTML={{
 												__html: achievement.clue,
 											}}
