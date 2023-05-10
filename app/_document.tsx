@@ -94,14 +94,13 @@ function Main() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, hideComplete } = useRouteLoaderData(
-		"root"
-	) as SerializeFrom<typeof rootLoader>
+	const { achievementSize, achievedTotal, enableAchievedBottom } =
+		useRouteLoaderData("root") as SerializeFrom<typeof rootLoader>
 
 	const checkboxId = React.useId()
 
-	const [checkedHide, setCheckedHide] =
-		React.useState<CheckedState>(hideComplete)
+	const [checkedAchievedBottom, setCheckedAchievedBottom] =
+		React.useState<CheckedState>(enableAchievedBottom)
 	const fetcher = useFetcher()
 
 	return (
@@ -128,14 +127,14 @@ function Sidebar() {
 							htmlFor={checkboxId}
 							className="select-none text-sm font-medium leading-none"
 						>
-							Hide achieved
+							Show not achieved first
 						</label>
 						<Checkbox
 							name="ck"
 							id={checkboxId}
-							checked={checkedHide}
+							checked={checkedAchievedBottom}
 							onCheckedChange={(checked) => {
-								setCheckedHide(checked)
+								setCheckedAchievedBottom(checked)
 								if (checked !== "indeterminate") {
 									fetcher.submit(
 										{ checked: checked.toString() },

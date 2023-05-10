@@ -1,3 +1,7 @@
+.clue-italic {
+	font-style: italic;
+}
+
 .clue-highlight {
 	color: hsl(var(--gold-9));
 	font-weight: 500;

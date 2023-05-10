@@ -7,6 +7,7 @@ import type {
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
+import type { ShouldRevalidateFunction } from "@remix-run/react"
 import {
 	isRouteErrorResponse,
 	useFetcher,
@@ -18,7 +19,7 @@ import * as React from "react"
 import { assert, string } from "superstruct"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
-import { getHideCompletePref } from "~/cookies.server"
+import { getEnableAchievedBottom } from "~/cookies.server"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
 import {
 	deleteAchived,
@@ -66,14 +67,14 @@ export async function loader({ request, params, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
 	const slug = params.category
 	assert(slug, string())
-	const hideComplete = await getHideCompletePref(request)
+	const enableAchievedBottom = await getEnableAchievedBottom(request)
 
 	try {
 		const data = await getAchievements(
 			context.env,
 			sessionId,
 			slug,
-			hideComplete
+			enableAchievedBottom
 		)
 
 		if (!data) {
@@ -105,25 +106,12 @@ export default function CategoryPage() {
 
 	return (
 		<Container>
-			{achievements.length === 0 ? (
-				<p className="text-center font-medium leading-6 text-gold-11">
-					Wow, you did it! You finished all the achievements in this category!
-					That's amazing! You nerd 🤓!
-				</p>
-			) : (
-				achievements.map((achievement) => (
+			<ul className="divide-y divide-gray-6">
+				{achievements.map((achievement) => (
 					<Achievement key={achievement.name} achievement={achievement} />
-				))
-			)}
+				))}
+			</ul>
 		</Container>
-	)
-}
-
-function Container({ children }: { children: React.ReactNode }) {
-	return (
-		<div className="flex w-full flex-1 flex-col gap-y-3 self-start rounded-lg bg-gray-2 px-4 py-6">
-			{children}
-		</div>
 	)
 }
 
@@ -140,10 +128,10 @@ export function ErrorBoundary() {
 		if (error.status === 404) {
 			return (
 				<Container>
-					<h1 className="text-7xl font-semibold text-gray-12">
+					<h2 className="text-7xl font-semibold text-gray-12">
 						<span className="text-gold-9">404</span>{" "}
 						<span className="text-3xl">Page Not Found</span>
-					</h1>
+					</h2>
 
 					<p className="mt-4 text-gray-11">{errorMessage}</p>
 				</Container>
@@ -157,13 +145,32 @@ export function ErrorBoundary() {
 
 	return (
 		<Container>
-			<h1 className="text-7xl font-semibold text-gray-12">
+			<h2 className="text-7xl font-semibold text-gray-12">
 				<span className="text-gold-9">500</span>{" "}
 				<span className="text-3xl">Internal Server Error</span>
-			</h1>
+			</h2>
 
 			<p className="mt-4 text-gray-11">{errorMessage}</p>
 		</Container>
+	)
+}
+
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+	formAction,
+	formData,
+}) => {
+	if (formAction !== "/" && formData?.get("name")) {
+		return false
+	}
+
+	return true
+}
+
+function Container({ children }: { children: React.ReactNode }) {
+	return (
+		<div className="flex w-full flex-1 flex-col gap-y-3 self-start rounded-lg bg-gray-2 px-4 py-6">
+			{children}
+		</div>
 	)
 }
 
@@ -176,7 +183,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 	const action = useFormAction()
 
 	return (
-		<div className="flex items-center gap-x-2">
+		<li className="flex items-center justify-between gap-x-8 py-2">
 			<div key={achievement.name} className="flex items-center gap-x-3">
 				<Checkbox
 					name={achievement.name}
@@ -199,32 +206,63 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 					htmlFor={checkboxId}
 					className="select-none text-gold-12 peer-data-[state=checked]:text-gold-11 peer-data-[state=checked]:line-through"
 				>
-					{achievement.name}
+					{achievement.name.includes("|DIVIDER|") ? (
+						achievement.name.split("|DIVIDER|").map((text, idx) => (
+							<div key={text} className="flex items-center gap-2">
+								<span>{text}</span>
+								{Array.isArray(achievement.clue) &&
+								typeof achievement.clue[idx] !== "undefined" ? (
+									<Popover.Root>
+										<Popover.Trigger className="text-gray-11 transition-colors hover:text-gray-12">
+											<span className="sr-only">Clue</span>
+											<InfoCircle />
+										</Popover.Trigger>
+
+										<Popover.Portal>
+											<Popover.Content
+												side="top"
+												sideOffset={4}
+												className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6"
+												dangerouslySetInnerHTML={{
+													__html: achievement.clue[idx],
+												}}
+											/>
+										</Popover.Portal>
+									</Popover.Root>
+								) : null}
+							</div>
+						))
+					) : (
+						<div className="flex items-center gap-2">
+							<span>{achievement.name}</span>
+							{achievement.clue && !Array.isArray(achievement.clue) ? (
+								<Popover.Root>
+									<Popover.Trigger className="rounded-md text-gray-11 transition-colors hover:text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8">
+										<span className="sr-only">Clue</span>
+										<InfoCircle />
+									</Popover.Trigger>
+
+									<Popover.Portal>
+										<Popover.Content
+											side="top"
+											sideOffset={4}
+											className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
+											dangerouslySetInnerHTML={{
+												__html: achievement.clue,
+											}}
+										/>
+									</Popover.Portal>
+								</Popover.Root>
+							) : null}
+						</div>
+					)}
 				</label>
 			</div>
 
-			<span className="inline-flex items-center rounded-md bg-overlay-3 px-2 py-1 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+			<span className="inline-flex items-center self-start rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
 				{achievement.version}
 			</span>
-
-			{achievement.clue ? (
-				<Popover.Root>
-					<Popover.Trigger className="text-gray-11 transition-colors hover:text-gray-12">
-						<span className="sr-only">Clue</span>
-						<InfoCircle />
-					</Popover.Trigger>
-
-					<Popover.Portal>
-						<Popover.Content
-							align="center"
-							sideOffset={4}
-							className="z-50 max-w-[18rem] rounded-md bg-gray-3 p-2 text-sm text-gray-12 shadow-md shadow-overlay-6"
-							dangerouslySetInnerHTML={{ __html: achievement.clue }}
-						/>
-					</Popover.Portal>
-				</Popover.Root>
-			) : null}
-		</div>
+		</li>
 	)
 }
 

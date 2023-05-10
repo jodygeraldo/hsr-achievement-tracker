@@ -15,7 +15,7 @@
 		"typecheck": "tsc"
 	},
 	"dependencies": {
-		"@planetscale/database": "^1.7.0",
+		"@planetscale/database": "1.6.0",
 		"@radix-ui/react-checkbox": "^1.0.3",
 		"@radix-ui/react-popover": "^1.0.5",
 		"@remix-run/cloudflare": "^1.16.0",
