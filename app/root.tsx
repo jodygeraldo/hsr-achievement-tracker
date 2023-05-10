@@ -63,7 +63,6 @@ export async function loader({ request, context }: LoaderArgs) {
 			enableAchievedBottom,
 		})
 	} catch (error) {
-		console.error(error)
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {
 			message = error.message
