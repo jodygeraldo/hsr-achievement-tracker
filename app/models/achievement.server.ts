@@ -31,6 +31,7 @@ type Achievement = {
 	done?: boolean
 }
 
+// prettier-ignore
 const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 	trailblazer: [
 		{ name: "Ever-Burning Amber", version: "1.0", clue: "Tread on the Path of Preservation" },
@@ -54,16 +55,8 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Armed to the Teeth", version: "1.0", clue: "Level up 4 Relics to Lv.15" },
 
 		// in-game position check
-		{
-			name: "I Have Finished The Race",
-			version: "1.0",
-			clue: "Level up all Traces for a character to the maximum level",
-		},
-		{
-			name: "Sovereign Warframe",
-			version: "1.0",
-			clue: "Equip a character with level 15 5-star Relics in all slots",
-		},
+		{ name: "I Have Finished The Race", version: "1.0", clue: "Level up all Traces for a character to the maximum level" },
+		{ name: "Sovereign Warframe", version: "1.0", clue: "Equip a character with level 15 5-star Relics in all slots" },
 	],
 	"the-rail-unto-the-stars": [
 		{ name: "My Heart Lies With the Stars", version: "1.0" },
@@ -137,32 +130,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Highway Star", version: "1.0" },
 		{ name: "Extreme Survival", version: "1.0" },
 		{ name: "Bullet Time", version: "1.0" },
-		{
-			name: "Deus Ex Machina",
-			version: "1.0",
-			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
-		},
-		{
-			name: "It's My Turn",
-			version: "1.0",
-			clue: "Seele acts 5 time(s) in a row before the next ally unit's turn",
-		},
+		{ name: "Deus Ex Machina", version: "1.0", clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle" },
+		{ name: "It's My Turn", version: "1.0", clue: "Seele acts 5 time(s) in a row before the next ally unit's turn" },
 		{ name: "Coffee Lover", version: "1.0" },
-		{
-			name: "Foolish Little Brother...",
-			version: "1.0",
-			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
-		},
-		{
-			name: "Listen...",
-			version: "1.0",
-			clue: "Use the Trailblazer to fight boss Kafka and become Dominated by her",
-		},
-		{
-			name: "I Don't Get No Respect!",
-			version: "1.0",
-			clue: "Enrage the Guardian Shadow with 4 character(s) in your team",
-		},
+		{ name: "Foolish Little Brother...", version: "1.0", clue: "Use Serval to deal the final blow in a victory against boss Gepard" },
+		{ name: "Listen...", version: "1.0", clue: "Use the Trailblazer to fight boss Kafka and become Dominated by her" },
+		{ name: "I Don't Get No Respect!", version: "1.0", clue: "Enrage the Guardian Shadow with 4 character(s) in your team" },
 		{ name: "Chad Norris", version: "1.0" },
 		{ name: "Attack! No Matter the Cost!", version: "1.0" },
 		{ name: "Decapitation Strike", version: "1.0" },
@@ -185,52 +158,16 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Wrathful Aurumaton", version: "1.0" },
 
 		// in-game position check
-		{
-			name: "Will of Steel",
-			version: "1.0",
-			clue: "In a single battle against boss Kafka, dispel Dominated 3 times",
-		},
-		{
-			name: "Bring a Gun to a Knife Fight",
-			version: "1.0",
-			clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack",
-		},
-		{
-			name: "Et tu, Bronya?",
-			version: "1.0",
-			clue: "Use Bronya to deal the final blow in a victory against boss Cocolia",
-		},
-		{
-			name: "Four-and-a-Half Pirouettes",
-			version: "1.0",
-			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
-		},
-		{
-			name: "Over-Protective",
-			version: "1.0",
-			clue: "Win 1 battle(s) without having Gepard's Shields take any DMG",
-		},
+		{ name: "Will of Steel", version: "1.0", clue: "In a single battle against boss Kafka, dispel Dominated 3 times" },
+		{ name: "Bring a Gun to a Knife Fight", version: "1.0", clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack" },
+		{ name: "Et tu, Bronya?", version: "1.0", clue: "Use Bronya to deal the final blow in a victory against boss Cocolia" },
+		{ name: "Four-and-a-Half Pirouettes", version: "1.0", clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)" },
+		{ name: "Over-Protective", version: "1.0", clue: "Win 1 battle(s) without having Gepard's Shields take any DMG" },
 		{ name: "Perish Song", version: "1.0", clue: "Get knocked out together with the enemy" },
-		{
-			name: "Serval's Parting Gift",
-			version: "1.0",
-			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
-		},
-		{
-			name: "Surge of Tiles",
-			version: "1.0",
-			clue: 'Qingque starts her turn in the "Hidden Hand" state for 3 turn(s) in a row',
-		},
-		{
-			name: "Trial of Thirteen",
-			version: "1.0",
-			clue: "In a single battle, make Svarog block attacks toward Clara 13 times",
-		},
-		{
-			name: "When the National Anthem Rings",
-			version: "1.0",
-			clue: 'Have ally Bronya use "The Belobog March" 1 time(s) when fighting the bosses Gepard, Cocolia, and Bronya respectively',
-		},
+		{ name: "Serval's Parting Gift", version: "1.0", clue: "Use Serval to deal the final blow in a victory against boss Cocolia" },
+		{ name: "Surge of Tiles", version: "1.0", clue: 'Qingque starts her turn in the "Hidden Hand" state for 3 turn(s) in a row' },
+		{ name: "Trial of Thirteen", version: "1.0", clue: "In a single battle, make Svarog block attacks toward Clara 13 times" },
+		{ name: "When the National Anthem Rings", version: "1.0", clue: 'Have ally Bronya use "The Belobog March" 1 time(s) when fighting the bosses Gepard, Cocolia, and Bronya respectively' },
 	],
 	"vestige-of-luminflux": [
 		{ name: "The Express Passenger's Guide to the Galaxy", version: "1.0" },
@@ -241,31 +178,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Fate/stranger Fake", version: "1.0" },
 
 		// in-game position check
-		{
-			name: "Ripples on the Dirac Sea (III)",
-			version: "1.0",
-			clue: "Obtain 40 type(s) of Light Cones",
-		},
-		{
-			name: "The Great Interastral Migration",
-			version: "1.0",
-			clue: "Obtain 50 characters",
-		},
-		{
-			name: "Interastral Peace Diamond Membership",
-			version: "1.0",
-			clue: "Obtain 1,000,000 credits in total",
-		},
-		{
-			name: "Interastral Peace Supreme Diamond Membership",
-			version: "1.0",
-			clue: "Obtain 10,000,000 credits in total",
-		},
-		{
-			name: "Mega Rich Light-Bending Guy",
-			version: "1.0",
-			clue: "Obtain 100,000,000 credits in total",
-		},
+		{ name: "Ripples on the Dirac Sea (III)", version: "1.0", clue: "Obtain 40 type(s) of Light Cones" },
+		{ name: "The Great Interastral Migration", version: "1.0", clue: "Obtain 50 characters" },
+		{ name: "Interastral Peace Diamond Membership", version: "1.0", clue: "Obtain 1,000,000 credits in total" },
+		{ name: "Interastral Peace Supreme Diamond Membership", version: "1.0", clue: "Obtain 10,000,000 credits in total", },
+		{ name: "Mega Rich Light-Bending Guy", version: "1.0", clue: "Obtain 100,000,000 credits in total" },
 	],
 	"universe-in-a-nutshell": [
 		{ name: "The First and Last Freedom", version: "1.0" },
@@ -294,11 +211,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Life Is but a Game", version: "1.0" },
 		{ name: "Who Moved My Pokeball?", version: "1.0" },
 		{ name: "A Porcine Football Team", version: "1.0" },
-		{
-			name: "Don't Let It Get Away!",
-			version: "1.0",
-			clue: "Let Trotters escape 1 times in Simulated Universe",
-		},
+		{ name: "Don't Let It Get Away!", version: "1.0", clue: "Let Trotters escape 1 times in Simulated Universe" },
 		{ name: "Existence Precedes Essence", version: "1.0" },
 		{ name: "Memories Look at Me", version: "1.0" },
 		{ name: "Create A Beautiful Chaos", version: "1.0" },
@@ -325,41 +238,13 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Does This Game Not Have a Platinum Trophy?", version: "1.0" },
 
 		// in-game position check
-		{
-			name: "Console Game",
-			version: "1.0",
-			clue: "Clear Simulated Universe at difficulty 2 or higher without using the Downloader",
-		},
-		{
-			name: "If I Can Stop One Heart From Breaking",
-			version: "1.0",
-			clue: "Clear Simulated Universe at difficulty 2 or higher without breaking any destructible objects",
-		},
-		{
-			name: "Aleph is the Universe",
-			version: "1.0",
-			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
-		},
-		{
-			name: "On Fire off the Shoulder of Orion",
-			version: "1.0",
-			clue: "Lose against Elite enemies in Simulated Universe",
-		},
-		{
-			name: "Glitter at the Tannhauser Gate",
-			version: "1.0",
-			clue: "Lose against the Boss enemies in Simulated Universe",
-		},
-		{
-			name: "Lost Like Tears in Rain",
-			version: "1.0",
-			clue: "Lose the battle in the tavern event in Simulated Universe",
-		},
-		{
-			name: "Wake Up!",
-			version: "1.0",
-			clue: "Lose the battle in the Nildis event in Simulated Universe",
-		},
+		{ name: "Console Game", version: "1.0", clue: "Clear Simulated Universe at difficulty 2 or higher without using the Downloader" },
+		{ name: "If I Can Stop One Heart From Breaking", version: "1.0", clue: "Clear Simulated Universe at difficulty 2 or higher without breaking any destructible objects" },
+		{ name: "Aleph is the Universe", version: "1.0", clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team" },
+		{ name: "On Fire off the Shoulder of Orion", version: "1.0", clue: "Lose against Elite enemies in Simulated Universe" },
+		{ name: "Glitter at the Tannhauser Gate", version: "1.0", clue: "Lose against the Boss enemies in Simulated Universe" },
+		{ name: "Lost Like Tears in Rain", version: "1.0", clue: "Lose the battle in the tavern event in Simulated Universe" },
+		{ name: "Wake Up!", version: "1.0", clue: "Lose the battle in the Nildis event in Simulated Universe" },
 	],
 	"glory-of-the-unyielding": [
 		{ name: "Shadows Die Ad Infinitum (I)", version: "1.0" },
@@ -421,287 +306,103 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Serval's Faithfull: An Autobiography", version: "1.0" },
 
 		// in-game position check
-		{
-			name: "Seventeen's Map",
-			version: "1.0",
-			clue: 'Find all readable items regarding Asta in the mission "Emptiness of Locus Silentii"',
-		},
-		{
-			name: "Diamond and Rust",
-			version: "1.0",
-			clue: 'Give the log to Bernard in the mission, "To: The Faint Star"',
-		},
-		{
-			name: "Farewell, Comet Hunter",
-			version: "1.0",
-			clue: 'Collect three "Letters From the Comet Hunter" in the mission "Out of Reach"',
-		},
-		{
-			name: "Does She Walk Alone?",
-			version: "1.0",
-			clue: `Complete the mission "Guide Paradox" and witness the android's ending`,
-		},
-		{
-			name: "Close Encounters of the Sixth Kind",
-			version: "1.0",
-			clue: 'Obtain the ability to communicate with Wubbabboos in the mission "Requiem Mass"',
-		},
-		{
-			name: "Disposable",
-			version: "1.0",
-			clue: "Find and talk to all Herta puppets in the space station",
-		},
-		{
-			name: "When Breath Becomes Air",
-			version: "1.0",
-			clue: "Visit the researcher Eikura Shuu's memorial",
-		},
-		{
-			name: "Bzzt! Clock Out!",
-			version: "1.0",
-			clue: "Turn off the little robots in the space station 6 times",
-		},
-		{
-			name: "Door to A New World",
-			version: "1.0",
-			clue: 'Use the Curio "Door to A New World"',
-		},
-		{
-			name: "Just A Number",
-			version: "1.0",
-			clue: 'Use the Curio "Rating Pistol"',
-		},
-		{
-			name: "No King Rules Forever",
-			version: "1.0",
-			clue: 'Use the Curio "Unbearable Weight" and decipher the contents of the mysterious sound',
-		},
-		{
-			name: "Green Thumb",
-			version: "1.0",
-			clue: "Talk with the strange plant and visit it again on the next day",
-		},
-		{
-			name: "Greed Psychology",
-			version: "1.0",
-			clue: 'Obtain the real treasure in the mission "Survival Wisdom"',
-		},
-		{
-			name: "One Day More",
-			version: "1.0",
-			clue: `Find all of Julian's items in the mission "Hook's Treasure"`,
-		},
-		{
-			name: "Moral Higher Ground",
-			version: "1.0",
-			clue: "Confront the Public Property Protector and show him the cost of stopping you (or have him humbly acknowledge his wrongdoing.)",
-		},
-		{
-			name: "Outworlder",
-			version: "1.0",
-			clue: "Return the music box found in Rivet Town to its heartbroken owner",
-		},
-		{
-			name: "For a Breath I Tarry |DIVIDER| The Lifecycle of Software Objects",
-			version: "1.0",
+		{ name: "Seventeen's Map", version: "1.0", clue: 'Find all readable items regarding Asta in the mission "Emptiness of Locus Silentii"' },
+		{ name: "Diamond and Rust", version: "1.0", clue: 'Give the log to Bernard in the mission, "To: The Faint Star"' },
+		{ name: "Farewell, Comet Hunter", version: "1.0", clue: 'Collect three "Letters From the Comet Hunter" in the mission "Out of Reach"' },
+		{ name: "Does She Walk Alone?", version: "1.0", clue: `Complete the mission "Guide Paradox" and witness the android's ending` },
+		{ name: "Close Encounters of the Sixth Kind", version: "1.0", clue: 'Obtain the ability to communicate with Wubbabboos in the mission "Requiem Mass"' },
+		{ name: "Disposable", version: "1.0", clue: "Find and talk to all Herta puppets in the space station" },
+		{ name: "When Breath Becomes Air", version: "1.0", clue: "Visit the researcher Eikura Shuu's memorial" },
+		{ name: "Bzzt! Clock Out!", version: "1.0", clue: "Turn off the little robots in the space station 6 times" },
+		{ name: "Door to A New World", version: "1.0", clue: 'Use the Curio "Door to A New World"' },
+		{ name: "Just A Number", version: "1.0", clue: 'Use the Curio "Rating Pistol"' },
+		{ name: "No King Rules Forever", version: "1.0", clue: 'Use the Curio "Unbearable Weight" and decipher the contents of the mysterious sound' },
+		{ name: "Green Thumb", version: "1.0", clue: "Talk with the strange plant and visit it again on the next day" },
+		{ name: "Greed Psychology", version: "1.0", clue: 'Obtain the real treasure in the mission "Survival Wisdom"' },
+		{ name: "One Day More", version: "1.0", clue: `Find all of Julian's items in the mission "Hook's Treasure"` },
+		{ name: "Moral Higher Ground", version: "1.0", clue: "Confront the Public Property Protector and show him the cost of stopping you (or have him humbly acknowledge his wrongdoing.)" },
+		{ name: "Outworlder", version: "1.0", clue: "Return the music box found in Rivet Town to its heartbroken owner" },
+		{ 
+			name: "For a Breath I Tarry |DIVIDER| The Lifecycle of Software Objects", 
+			version: "1.0", 
 			clue: [
 				'Choose to format Little Robot in the mission "Rarely Affectionate (Part 2)"',
 				'Choose not to format Little Robot in the mission "Rarely Affectionate (Part 2)"',
 			],
 		},
-		{
-			name: "50 Credits!?",
-			version: "1.0",
-			clue: "Collect all wanted posters of the Express Crew in Belobog",
-		},
-		{
-			name: "Twinkly, Winkly",
-			version: "1.0",
-			clue: "Obtain 3 Ancient Coin(s)",
-		},
-		{
-			name: "Sweet Pom-Pom O'Mine",
-			version: "1.0",
-			clue: "Try to give the Jarilo-VI's armillary sphere a spin to find... um... Pom-Pom on it?",
-		},
-		{
-			name: "Hurt Locker",
-			version: "1.0",
-			clue: "Solve the crisis at the Belobog cable car station while also avoiding ethical risks",
-		},
-		{
-			name: "Labor Omnia Vincit",
-			version: "1.0",
-			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
-		},
-		{
-			name: "Dance Like A Butterfly, Sting Like A Bee",
-			version: "1.0",
-			clue: "Dominate all 5 tournaments in the Boulder Town Super League",
-		},
-		{
-			name: "Where It All Began",
-			version: "1.0",
-			clue: "Return to the room where the Stellaron was kept and recall a blurred memory",
-		},
-		{
-			name: "Knight in Shining Armor",
-			version: "1.0",
-			clue: "Find the language model and give it to Fidora the amateur mechanic",
-		},
-		{
-			name: "Honest Abe",
-			version: "1.0",
-			clue: "Pass the test of integrity set up by a mysterious researcher",
-		},
-		{
-			name: "The Mandela Effect",
-			version: "1.0",
-			clue: `Contact Belobog's "back alley"`,
-		},
-		{
-			name: "Natural Immunity",
-			version: "1.0",
-			clue: "Obtain the recipe for fried rice from talking with Gertie at the Goethe Grand Hotel",
-		},
-		{
-			name: "Lā Lá Lǎ Là Land",
-			version: "1.0",
-			clue: "Obtain the score for the phonograph from talking with Tamila at the Golden Theater",
-		},
-		{
-			name: "Winter City Trap",
-			version: "1.0",
-			clue: "Finish listening to the vagrant's rap",
-		},
-		{
-			name: "For Ages 12 and Up",
-			version: "1.0",
-			clue: "Participate in the Dark Fist Tournament and become the ultimate winner",
-		},
-		{
-			name: "The Kelly Gang",
-			version: "1.0",
-			clue: "Excavate the treasure hidden in the Belobog Administrative District's fountain",
-		},
-		{
-			name: "The Banality of Evil",
-			version: "1.0",
-			clue: `Finish all the Fool's Box puzzles in the mission "Vessel of Mediocrity"`,
-		},
-		{
-			name: "The Fourth Little Mole",
-			version: "1.0",
-			clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"',
-		},
-		{
-			name: "The Adventurous Moles Super Grown-Up Edition",
-			version: "1.0",
-			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
-		},
-		{
-			name: "A Simple Life",
-			version: "1.0",
-			clue: 'Receive a text from Luhui after completing the mission "Fired"',
-		},
-		{
-			name: "Carpe Diem, Festina Lente, and Tempus Fugit",
-			version: "1.0",
-			clue: `Receive all the texts about Chengjie's fasding passion after completing the mission "A Teacher and a Friend".`,
-		},
-		{
-			name: "Tootsie |DIVIDER| Cyber Fraud |DIVIDER| A Secret Makes a Woman, Woman.",
-			version: "1.0",
+		{ name: "50 Credits!?", version: "1.0", clue: "Collect all wanted posters of the Express Crew in Belobog" },
+		{ name: "Twinkly, Winkly", version: "1.0", clue: "Obtain 3 Ancient Coin(s)" },
+		{ name: "Sweet Pom-Pom O'Mine", version: "1.0", clue: "Try to give the Jarilo-VI's armillary sphere a spin to find... um... Pom-Pom on it?" },
+		{ name: "Hurt Locker", version: "1.0", clue: "Solve the crisis at the Belobog cable car station while also avoiding ethical risks" },
+		{ name: "Labor Omnia Vincit", version: "1.0", clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)" },
+		{ name: "Dance Like A Butterfly, Sting Like A Bee", version: "1.0", clue: "Dominate all 5 tournaments in the Boulder Town Super League" },
+		{ name: "Where It All Began", version: "1.0", clue: "Return to the room where the Stellaron was kept and recall a blurred memory" },
+		{ name: "Knight in Shining Armor", version: "1.0", clue: "Find the language model and give it to Fidora the amateur mechanic" },
+		{ name: "Honest Abe", version: "1.0", clue: "Pass the test of integrity set up by a mysterious researcher" },
+		{ name: "The Mandela Effect", version: "1.0", clue: `Contact Belobog's "back alley"` },
+		{ name: "Natural Immunity", version: "1.0", clue: "Obtain the recipe for fried rice from talking with Gertie at the Goethe Grand Hotel" },
+		{ name: "Lā Lá Lǎ Là Land", version: "1.0", clue: "Obtain the score for the phonograph from talking with Tamila at the Golden Theater" },
+		{ name: "Winter City Trap", version: "1.0", clue: "Finish listening to the vagrant's rap" },
+		{ name: "For Ages 12 and Up", version: "1.0", clue: "Participate in the Dark Fist Tournament and become the ultimate winner" },
+		{ name: "The Kelly Gang", version: "1.0", clue: "Excavate the treasure hidden in the Belobog Administrative District's fountain" },
+		{ name: "The Banality of Evil", version: "1.0", clue: `Finish all the Fool's Box puzzles in the mission "Vessel of Mediocrity"` },
+		{ name: "The Fourth Little Mole", version: "1.0", clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"' },
+		{ name: "The Adventurous Moles Super Grown-Up Edition", version: "1.0", clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant" },
+		{ name: "A Simple Life", version: "1.0", clue: 'Receive a text from Luhui after completing the mission "Fired"' },
+		{ name: "Carpe Diem, Festina Lente, and Tempus Fugit", version: "1.0", clue: `Receive all the texts about Chengjie's fasding passion after completing the mission "A Teacher and a Friend".` },
+		{ 
+			name: "Tootsie |DIVIDER| Cyber Fraud |DIVIDER| A Secret Makes a Woman, Woman.", 
+			version: "1.0", 
 			clue: [
 				'Choose to have the Foxian Beauty reveal their true identity during the mission "From Xianzhou With Love"',
 				'Choose to have the Foxian Beauty turn themselves in during the mission "From Xianzhou With Love"',
 				'Choose to let the Foxian Beauty continue the ruse during the mission "From Xianzhou With Love"',
 			],
 		},
-		{
-			name: "The Seven Errors of Cycranes: Sloth",
-			version: "1.0",
-			clue: "Convince the depressed cycrane to return to its job",
-		},
-		{
-			name: "Seven Birds in the Hand Is Worth A Thousand in the Bush",
-			version: "1.0",
-			clue: "Help Heron Express to recover all lost cycranes",
-		},
-		{
-			name: "Fair and Square |DIVIDER| All Is Fair in Love and War |DIVIDER| From Hero to Zero",
-			version: "1.0",
+		{ name: "The Seven Errors of Cycranes: Sloth", version: "1.0", clue: "Convince the depressed cycrane to return to its job" },
+		{ name: "Seven Birds in the Hand Is Worth A Thousand in the Bush", version: "1.0", clue: "Help Heron Express to recover all lost cycranes" },
+		{ 
+			name: "Fair and Square |DIVIDER| All Is Fair in Love and War |DIVIDER| From Hero to Zero", 
+			version: "1.0", 
 			clue: [
 				"Win the Xianzhou Luofu Competitive Eater Championship openly and fairly",
 				"Win the Xianzhou Luofu Competitive Eater Championship in underhanded ways",
 				"Lose the Xianzhou Luofu Competitive Eater Championship",
 			],
 		},
-		{
-			name: "Far From the Madding Crowd |DIVIDER| Let the Wind Blow Where It May",
-			version: "1.0",
+		{ 
+			name: "Far From the Madding Crowd |DIVIDER| Let the Wind Blow Where It May", 
+			version: "1.0", 
 			clue: [
 				"Talk with the Immortal in a Vase and obtain its gift from the vase",
 				"Talk with the Immortal in a Vase and refuse its gift",
 			],
 		},
-		{
-			name: "Hasta la vista, Hexanexus!",
-			version: "1.0",
-			clue: "Complete 15 Hexanexus challenge(s) from the Hex Club",
-		},
-		{
-			name: "Rubik's Headache",
-			version: "1.0",
-			clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club",
-		},
-		{
-			name: "The Crimes That Bind |DIVIDER| Flight Cancelled",
-			version: "1.0",
+		{ name: "Hasta la vista, Hexanexus!", version: "1.0", clue: "Complete 15 Hexanexus challenge(s) from the Hex Club" },
+		{ name: "Rubik's Headache", version: "1.0", clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club" },
+		{ 
+			name: "The Crimes That Bind |DIVIDER| Flight Cancelled", 
+			version: "1.0", 
 			clue: [
 				"Stop the strange tourist from throwing a coin into the starskiff engine",
 				"Help the strange tourist to throw a coin into the starskiff engine",
 			],
 		},
-		{
-			name: "Lost and Found |DIVIDER| Leave It There |DIVIDER| Have Your Cake and Eat It",
-			version: "1.0",
+		{ 
+			name: "Lost and Found |DIVIDER| Leave It There |DIVIDER| Have Your Cake and Eat It", 
+			version: "1.0", 
 			clue: [
 				"Retrieved the credits that the fraudster took",
 				"Did not retrieve the credits that the fraudster took",
 				"Retrieved more credits from the fraudster than what they took",
 			],
 		},
-		{
-			name: "The Seven Errors of Cycranes: Lust",
-			version: "1.0",
-			clue: "Follow the gentlemanly cycrane to find the picture book withheld by customs",
-		},
-		{
-			name: "The Seven Errors of Cycranes: Gluttony",
-			version: "1.0",
-			clue: "Complete a bet with the dissatisfied cycrane",
-		},
-		{
-			name: "The Seven Errors of Cycranes: Greed",
-			version: "1.0",
-			clue: 'Explore the "mountain of deliveries" protected by the "evil dragon"',
-		},
-		{
-			name: "The Seven Errors of Cycranes: Envy",
-			version: "1.0",
-			clue: "Complete the challenge from the resentful cycrane",
-		},
-		{
-			name: "The Seven Errors of Cycranes: Wrath",
-			version: "1.0",
-			clue: "Defeat the highwaymen with the brave cycrane",
-		},
-		{
-			name: "The Seven Errors of Cycranes: Pride",
-			version: "1.0",
-			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
-		},
+		{ name: "The Seven Errors of Cycranes: Lust", version: "1.0", clue: "Follow the gentlemanly cycrane to find the picture book withheld by customs" },
+		{ name: "The Seven Errors of Cycranes: Gluttony", version: "1.0", clue: "Complete a bet with the dissatisfied cycrane" },
+		{ name: "The Seven Errors of Cycranes: Greed", version: "1.0", clue: 'Explore the "mountain of deliveries" protected by the "evil dragon"' },
+		{ name: "The Seven Errors of Cycranes: Envy", version: "1.0", clue: "Complete the challenge from the resentful cycrane" },
+		{ name: "The Seven Errors of Cycranes: Wrath", version: "1.0", clue: "Defeat the highwaymen with the brave cycrane" },
+		{ name: "The Seven Errors of Cycranes: Pride", version: "1.0", clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"' },
 	],
 	"fathom-the-unfathomable": [
 		{ name: "Until the Light Takes Us", version: "1.0" },
@@ -713,11 +414,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Destructive Impulse", version: "1.0" },
 		{ name: "Free Will of Destruction", version: "1.0" },
 		{ name: "Take by Surprise", version: "1.0" },
-		{
-			name: "Can't See Behind",
-			version: "1.0",
-			clue: "Ambushed during exploration",
-		},
+		{ name: "Can't See Behind", version: "1.0", clue: "Ambushed during exploration" },
 		{ name: "The Tertiary Power", version: "1.0" },
 		{ name: "The Tertiary Dimension", version: "1.0" },
 		{ name: "Dissertation Proposal", version: "1.0" },
@@ -732,11 +429,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "You Want Me to Raid Without Achievements?", version: "1.0" },
 		{ name: "Tindalos Piggy", version: "1.0" },
 		{ name: "Phase ATM", version: "1.0" },
-		{
-			name: "Sensory Socialization",
-			version: "1.0",
-			clue: "Collect all Memory Bubbles scattered on the Herta Space Station",
-		},
+		{ name: "Sensory Socialization", version: "1.0", clue: "Collect all Memory Bubbles scattered on the Herta Space Station" },
 		{ name: "Unearthly Marvel", version: "1.0" },
 		{ name: "The Seven-Bridges Problem", version: "1.0" },
 		{ name: "The Birth of Tragedy", version: "1.0" },
