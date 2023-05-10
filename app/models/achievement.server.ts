@@ -31,6 +31,15 @@ type Achievement = {
 	done?: boolean
 }
 
+/**
+ * Some of hidden achievements might be wrong
+ * The position of achievement will be updated as I got the achievement or confirmed by others
+ * 
+ * Resources:
+ * [HSR Achievement Tracker - Updated by Meow of MeowDB.com]{@link https://docs.google.com/spreadsheets/d/1zewLHLp-WnpTnIT4TdbSoUvnCtAOq0_p__ZyFsJZAEg/edit#gid=633819019}
+ * [HSR Fnadom Wiki]{@link https://honkai-star-rail.fandom.com/wiki/Achievement}
+ */
+// Some of hidden achievements description coming from https://docs.google.com/spreadsheets/d/1zewLHLp-WnpTnIT4TdbSoUvnCtAOq0_p__ZyFsJZAEg/edit#gid=633819019
 // prettier-ignore
 const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 	trailblazer: [
