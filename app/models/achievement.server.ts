@@ -405,40 +405,40 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "The Seven Errors of Cycranes: Pride", version: "1.0", clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"' },
 	],
 	"fathom-the-unfathomable": [
-		{ name: "Until the Light Takes Us", version: "1.0" },
-		{ name: "Unopen World", version: "1.0" },
-		{ name: "Where the Celestial Path May Lead", version: "1.0" },
-		{ name: "Proper Role-Playing Gamer", version: "1.0" },
-		{ name: "But at What Cost?", version: "1.0" },
-		{ name: "A Drop in the Bucket", version: "1.0" },
-		{ name: "Destructive Impulse", version: "1.0" },
-		{ name: "Free Will of Destruction", version: "1.0" },
-		{ name: "Take by Surprise", version: "1.0" },
+		{ name: "Until the Light Takes Us", version: "1.0", clue: "Activate 5 Space Anchors in the Herta Space Station" },
+		{ name: "Unopen World", version: "1.0", clue: "Activate 14 Space Anchors in Belobog" },
+		{ name: "Where the Celestial Path May Lead", version: "1.0", clue: "Activate 14 Space Anchors on the Xianzhou Luofu" },
+		{ name: "Proper Role-Playing Gamer", version: "1.0", clue: "Open Treasures 30 times on the Herta Space Station" },
+		{ name: "But at What Cost?", version: "1.0", clue: "Open Treasures 110 times in Belobog" },
+		{ name: "A Drop in the Bucket", version: "1.0", clue: "Open Treasures 100 time(s) on the Xianzhou Luofu" },
+		{ name: "Destructive Impulse", version: "1.0", clue: "Destroy 100 destructible objects" },
+		{ name: "Free Will of Destruction", version: "1.0", clue: "Destroy 1,000 destructible objects" },
+		{ name: "Take by Surprise", version: "1.0", clue: "Enter combat with attacks of corresponding Types for 100 time(s)" },
 		{ name: "Can't See Behind", version: "1.0", clue: "Ambushed during exploration" },
-		{ name: "The Tertiary Power", version: "1.0" },
-		{ name: "The Tertiary Dimension", version: "1.0" },
-		{ name: "Dissertation Proposal", version: "1.0" },
-		{ name: "Literature Review", version: "1.0" },
-		{ name: "Non-pulp Fiction", version: "1.0" },
-		{ name: "Everwinter City's Resident Historian", version: "1.0" },
-		{ name: "Glued to Books", version: "1.0" },
-		{ name: "Learned in All Things", version: "1.0" }, // in-game position check
-		{ name: "Red-Name Alert", version: "1.0" },
-		{ name: "High-Level Domination", version: "1.0" },
-		{ name: "Inter-Domain Roaming", version: "1.0" },
-		{ name: "You Want Me to Raid Without Achievements?", version: "1.0" },
-		{ name: "Tindalos Piggy", version: "1.0" },
-		{ name: "Phase ATM", version: "1.0" },
+		{ name: "The Tertiary Power", version: "1.0", clue: "Use Technique 50 time(s)" },
+		{ name: "The Tertiary Dimension", version: "1.0", clue: "Use Technique 300 time(s)" },
+		{ name: "Dissertation Proposal", version: "1.0", clue: "Collect 10 readable item(s) in the Herta Space Station" },
+		{ name: "Literature Review", version: "1.0", clue: "Collect 50 readable item(s) in the Herta Space Station" },
+		{ name: "Non-pulp Fiction", version: "1.0", clue: "Collect 20 readable item(s) in Belobog" },
+		{ name: "Everwinter City's Resident Historian", version: "1.0", clue: "Collect 80 readable item(s) in Belobog" },
+		{ name: "Glued to Books", version: "1.0", clue: "Collect 30 readable items from the Xianzhou Luofu" },
+		{ name: "Learned in All Things", version: "1.0", clue: "Collect 80 readable items from the Xianzhou Luofu" }, // in-game position check
+		{ name: "Red-Name Alert", version: "1.0", clue: "Complete the Formidable Foe Challenge 5 time(s)" },
+		{ name: "High-Level Domination", version: "1.0", clue: "Complete the Formidable Foe Challenge 15 time(s)" },
+		{ name: "Inter-Domain Roaming", version: "1.0", clue: "Complete Warring Expedition 1 time(s)" },
+		{ name: "You Want Me to Raid Without Achievements?", version: "1.0", clue: "Complete Warring Expedition 9 time(s)" },
+		{ name: "Tindalos Piggy", version: "1.0", clue: "Capture Warp Trotter 1 time(s)" },
+		{ name: "Phase ATM", version: "1.0", clue: "Capture Warp Trotter 10 time(s)" },
 		{ name: "Sensory Socialization", version: "1.0", clue: "Collect all Memory Bubbles scattered on the Herta Space Station" },
-		{ name: "Unearthly Marvel", version: "1.0" },
-		{ name: "The Seven-Bridges Problem", version: "1.0" },
-		{ name: "The Birth of Tragedy", version: "1.0" },
-		{ name: "Sisyphus of the Mines", version: "1.0" },
-		{ name: "The Tale of Moles", version: "1.0" },
-		{ name: "Red to Red and White to White", version: "1.0" },
-		{ name: "Don't You Dare Waste It", version: "1.0" },
-		{ name: "A Metaphor of Caves", version: "1.0" },
-		{ name: "North by Northwest", version: "1.0" },
+		{ name: "Unearthly Marvel", version: "1.0", clue: "Find all of the Unearthly Marvel treasures" },
+		{ name: "The Seven-Bridges Problem", version: "1.0", clue: "Find all repulsion bridge treasures" },
+		{ name: "The Birth of Tragedy", version: "1.0", clue: "Find all of The Fool's Box treasures" },
+		{ name: "Sisyphus of the Mines", version: "1.0", clue: "Complete the final Mine Cart Test" },
+		{ name: "The Tale of Moles", version: "1.0", clue: clueBuilder("Collect all of The Adventurous Moles", { italic: ["The Adventurous Moles"] }) },
+		{ name: "Red to Red and White to White", version: "1.0", clue: "Complete Magflow Link 10 time(s)" },
+		{ name: "Don't You Dare Waste It", version: "1.0", clue: "Get Jim Roger Bread Soda from a trash can" },
+		{ name: "A Metaphor of Caves", version: "1.0", clue: "Complete the Hexanexus 30 time(s)" },
+		{ name: "North by Northwest", version: "1.0", clue: "Complete the Formation-Breaking Compass 20 time(s)" },
 	],
 }
 
@@ -609,40 +609,60 @@ async function deleteAchived(
 		.execute()
 }
 
-// function clueBuilder(
-// 	clue: string,
-// 	highlight?: string[],
-// 	link?: { keyword: string; url: string }[]
-// ) {
-// 	let modifiedClue = clue
-// 	if (highlight) {
-// 		highlight.forEach((keyword) => {
-// 			modifiedClue = modifiedClue.replace(
-// 				keyword,
-// 				clueModifier(keyword, "highlight")
-// 			)
-// 		})
-// 	}
+function clueBuilder(
+	clue: string,
+	{
+		italic,
+		highlight,
+		link,
+	}: {
+		italic?: string[]
+		highlight?: string[]
+		link?: { keyword: string; url: string }[]
+	}
+) {
+	let modifiedClue = clue
+	if (italic) {
+		italic.forEach((keyword) => {
+			modifiedClue = modifiedClue.replace(
+				keyword,
+				clueModifier(keyword, "italic")
+			)
+		})
+	}
 
-// 	if (link) {
-// 		link.forEach(({ keyword, url }) => {
-// 			modifiedClue = modifiedClue.replace(
-// 				keyword,
-// 				clueModifier(keyword, "link", url)
-// 			)
-// 		})
-// 	}
+	if (highlight) {
+		highlight.forEach((keyword) => {
+			modifiedClue = modifiedClue.replace(
+				keyword,
+				clueModifier(keyword, "highlight")
+			)
+		})
+	}
 
-// 	return modifiedClue
-// }
+	if (link) {
+		link.forEach(({ keyword, url }) => {
+			modifiedClue = modifiedClue.replace(
+				keyword,
+				clueModifier(keyword, "link", url)
+			)
+		})
+	}
 
-// function clueModifier(keyword: string, to: "highlight" | "link", url?: string) {
-// 	if (to === "highlight") {
-// 		return `<span class="clue-highlight">${keyword}</span>`
-// 	}
+	return modifiedClue
+}
 
-// 	return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="clue-link">${keyword}</a>`
-// }
+function clueModifier(
+	keyword: string,
+	to: "italic" | "highlight" | "link",
+	url?: string
+) {
+	if (to !== "link") {
+		return `<span class="clue-${to}">${keyword}</span>`
+	}
+
+	return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="clue-link">${keyword}</a>`
+}
 
 function isValidSlugifiedCategoryName(
 	slug: string
