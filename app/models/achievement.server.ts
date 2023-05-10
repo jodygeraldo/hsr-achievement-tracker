@@ -170,12 +170,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "When the National Anthem Rings", version: "1.0", clue: 'Have ally Bronya use "The Belobog March" 1 time(s) when fighting the bosses Gepard, Cocolia, and Bronya respectively' },
 	],
 	"vestige-of-luminflux": [
-		{ name: "The Express Passenger's Guide to the Galaxy", version: "1.0" },
-		{ name: "Express Crew Roster", version: "1.0" },
-		{ name: "Ripples on the Dirac Sea (I)", version: "1.0" },
-		{ name: "Ripples on the Dirac Sea (II)", version: "1.0" },
-		{ name: "Supreme Treasure of the Netherworld", version: "1.0" },
-		{ name: "Fate/stranger Fake", version: "1.0" },
+		{ name: "The Express Passenger's Guide to the Galaxy", version: "1.0", clue: "Obtain 10 characters" },
+		{ name: "Express Crew Roster", version: "1.0", clue: "Obtain 20 characters" },
+		{ name: "Ripples on the Dirac Sea (I)", version: "1.0", clue: "Obtain 10 type(s) of Light Cones" },
+		{ name: "Ripples on the Dirac Sea (II)", version: "1.0", clue: "Obtain 20 type(s) of Light Cones" },
+		{ name: "Supreme Treasure of the Netherworld", version: "1.0", clue: "Obtain a 5-star Relic" },
+		{ name: "Fate/stranger Fake", version: "1.0", clue: "Obtain 5 5-star Relic(s) from Omni-Synthesizer" },
 
 		// in-game position check
 		{ name: "Ripples on the Dirac Sea (III)", version: "1.0", clue: "Obtain 40 type(s) of Light Cones" },
