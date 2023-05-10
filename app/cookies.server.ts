@@ -5,7 +5,7 @@ const userPrefs = createCookie("user-prefs")
 
 async function getUserPrefsCookie(request: Request) {
 	const cookieHeader = request.headers.get("Cookie")
-	const cookie = await userPrefs.parse(cookieHeader)
+	const cookie = (await userPrefs.parse(cookieHeader)) ?? undefined
 
 	return create(
 		cookie,
