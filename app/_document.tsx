@@ -191,6 +191,7 @@ function DesktopNavigation() {
 					<li key={category.slug}>
 						<NavLink
 							to={category.slug}
+							prefetch="intent"
 							className={({ isActive }) =>
 								cn(
 									isActive
