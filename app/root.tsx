@@ -9,7 +9,10 @@ import { json } from "@remix-run/cloudflare"
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
-import { getHideCompletePref, setHideCompletePref } from "~/cookies.server"
+import {
+	getEnableAchievedBottom,
+	setEnableAchievedBottom,
+} from "~/cookies.server"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./_document"
 import { getCategories } from "./models/achievement.server"
@@ -41,12 +44,12 @@ export function links(): LinkDescriptor[] {
 }
 
 export async function action({ request }: LoaderArgs) {
-	return await setHideCompletePref(request)
+	return await setEnableAchievedBottom(request)
 }
 
 export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
-	const hideComplete = await getHideCompletePref(request)
+	const enableAchievedBottom = await getEnableAchievedBottom(request)
 	try {
 		const { achievementSize, achievedTotal, categories } = await getCategories(
 			context.env,
@@ -57,7 +60,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			achievementSize,
 			achievedTotal,
 			categories,
-			hideComplete,
+			enableAchievedBottom,
 		})
 	} catch (error) {
 		let message = "Failed to get category details"

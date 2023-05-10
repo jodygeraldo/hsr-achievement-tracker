@@ -529,7 +529,7 @@ async function getAchievements(
 	env: Env,
 	sessionId: string,
 	slug: string,
-	hideComplete: boolean
+	enableAchievedBottom: boolean
 ) {
 	if (isValidSlugifiedCategoryName(slug)) {
 		const db = getDbConnection(env)
@@ -555,11 +555,15 @@ async function getAchievements(
 			(category) => category.slug === slug
 		)?.name
 
+		if (enableAchievedBottom) {
+			achievements.sort(
+				(first, second) => Number(first.done) - Number(second.done)
+			)
+		}
+
 		return {
 			categoryName,
-			achievements: hideComplete
-				? achievements.filter(({ done }) => !done)
-				: achievements,
+			achievements,
 		}
 	}
 }

@@ -18,7 +18,7 @@ import * as React from "react"
 import { assert, string } from "superstruct"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
-import { getHideCompletePref } from "~/cookies.server"
+import { getEnableAchievedBottom } from "~/cookies.server"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
 import {
 	deleteAchived,
@@ -66,14 +66,14 @@ export async function loader({ request, params, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
 	const slug = params.category
 	assert(slug, string())
-	const hideComplete = await getHideCompletePref(request)
+	const enableAchievedBottom = await getEnableAchievedBottom(request)
 
 	try {
 		const data = await getAchievements(
 			context.env,
 			sessionId,
 			slug,
-			hideComplete
+			enableAchievedBottom
 		)
 
 		if (!data) {
