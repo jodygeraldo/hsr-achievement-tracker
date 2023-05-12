@@ -1,8 +1,12 @@
 import { createCookie } from "@remix-run/cloudflare"
-import { boolean, create, defaulted, type } from "superstruct"
+import { boolean, create, defaulted, object, type } from "superstruct"
 
 const UserPrefs = type({
 	showMissedFirst: defaulted(boolean(), false),
+	showClue: object({
+		normalAchievement: defaulted(boolean(), false),
+		secretAchievement: defaulted(boolean(), false),
+	}),
 })
 
 const userPrefsCookie = createCookie("user-prefs")
