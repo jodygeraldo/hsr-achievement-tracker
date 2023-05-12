@@ -583,42 +583,37 @@ async function getAchievedCount(env: Env, sessionId: string) {
 	}
 }
 
-async function putAchived(
+async function modifyAchieved(
 	env: Env,
 	sessionId: string,
 	slug: SlugifiedCategoryName,
-	name: string
+	name: string,
+	intent: "put" | "delete"
 ) {
 	const db = getDbConnection(env)
-	await db
-		.insertInto("achievement")
-		.values({
-			category: slug,
-			session_id: sessionId,
-			name,
-		})
-		.execute()
-}
 
-async function deleteAchived(
-	env: Env,
-	sessionId: string,
-	slug: SlugifiedCategoryName,
-	name: string
-) {
-	const db = getDbConnection(env)
-	await db
-		.deleteFrom("achievement")
-		.where(({ and, cmpr }) =>
-			and([
-				cmpr("session_id", "=", sessionId),
-				cmpr("category", "=", slug),
-				cmpr("name", "=", name),
-			])
-		)
-		.execute()
+	if (intent === "put") {
+		await db
+			.insertInto("achievement")
+			.values({
+				category: slug,
+				session_id: sessionId,
+				name,
+			})
+			.execute()
+	} else {
+		await db
+			.deleteFrom("achievement")
+			.where(({ and, cmpr }) =>
+				and([
+					cmpr("session_id", "=", sessionId),
+					cmpr("category", "=", slug),
+					cmpr("name", "=", name),
+				])
+			)
+			.execute()
+	}
 }
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
-export { getCategories, getAchievements, putAchived, deleteAchived }
-
+export { getCategories, getAchievements, modifyAchieved }

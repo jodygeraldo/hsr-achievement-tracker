@@ -16,15 +16,11 @@ import {
 	useRouteError,
 } from "@remix-run/react"
 import * as React from "react"
-import { assert, string } from "superstruct"
+import { assert, literal, string, union } from "superstruct"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
-import {
-	deleteAchived,
-	getAchievements,
-	putAchived,
-} from "~/models/achievement.server"
+import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
 import { getEnableAchievedBottom } from "~/utils/user-prefs.server"
@@ -46,15 +42,12 @@ export async function action({ request, params, context }: ActionArgs) {
 
 	const formData = await request.formData()
 	const name = formData.get("name")
-	const checked = formData.get("checked") === "true"
+	const intent = formData.get("intent")
 	assert(name, string())
+	assert(intent, union([literal("put"), literal("delete")]))
 
 	try {
-		if (checked) {
-			await putAchived(context.env, sessionId, slug, name)
-		} else {
-			await deleteAchived(context.env, sessionId, slug, name)
-		}
+		await modifyAchieved(context.env, sessionId, slug, name, intent)
 	} catch (error) {
 		let message = "Failed to modified achievement status"
 		if (error instanceof DatabaseError) {
@@ -193,10 +186,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 						setChecked(checked)
 						if (checked !== "indeterminate") {
 							fetcher.submit(
-								{
-									name: achievement.name,
-									checked: checked.toString(),
-								},
+								{ name: achievement.name, intent: checked ? "put" : "delete" },
 								{ action, method: "POST", replace: true }
 							)
 						}
