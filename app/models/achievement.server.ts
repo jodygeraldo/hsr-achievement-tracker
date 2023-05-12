@@ -512,6 +512,7 @@ const categories: Category[] = [
 async function getCategories(env: Env, sessionId: string) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
+
 	const achievedCount = await getAchievedCount(env, sessionId)
 
 	return {
