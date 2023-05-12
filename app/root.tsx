@@ -9,11 +9,11 @@ import { json } from "@remix-run/cloudflare"
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
+import tailwindHref from "~/tailwind.css"
 import {
 	getEnableAchievedBottom,
 	setEnableAchievedBottom,
-} from "~/cookies.server"
-import tailwindHref from "~/tailwind.css"
+} from "~/utils/user-prefs.server"
 import { Document, Main } from "./_document"
 import { getCategories } from "./models/achievement.server"
 import { getSessionId } from "./utils/session.server"

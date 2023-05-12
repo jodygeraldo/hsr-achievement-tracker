@@ -19,7 +19,6 @@ import * as React from "react"
 import { assert, string } from "superstruct"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
-import { getEnableAchievedBottom } from "~/cookies.server"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
 import {
 	deleteAchived,
@@ -27,6 +26,7 @@ import {
 	putAchived,
 } from "~/models/achievement.server"
 import { getSessionId } from "~/utils/session.server"
+import { getEnableAchievedBottom } from "~/utils/user-prefs.server"
 
 export function meta({
 	data,
