@@ -58,7 +58,7 @@ function Document({ children }: { children: React.ReactNode }) {
 function Main() {
 	return (
 		<Document>
-			<div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 				<div className="flex flex-col gap-x-8 gap-y-4 lg:flex-row">
 					<Sidebar />
 
@@ -104,7 +104,7 @@ function Sidebar() {
 	const fetcher = useFetcher()
 
 	return (
-		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:w-96">
+		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:max-w-md">
 			<div className="px-4">
 				<h1 className="text-xl font-semibold tracking-tight text-gold-9">
 					HSR Achievement Tracker
@@ -191,6 +191,7 @@ function DesktopNavigation() {
 					<li key={category.slug}>
 						<NavLink
 							to={category.slug}
+							prefetch="intent"
 							className={({ isActive }) =>
 								cn(
 									isActive

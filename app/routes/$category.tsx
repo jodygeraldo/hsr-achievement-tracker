@@ -204,7 +204,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 				/>
 				<label
 					htmlFor={checkboxId}
-					className="select-none text-gold-12 peer-data-[state=checked]:text-gold-11 peer-data-[state=checked]:line-through"
+					className="select-none text-sm text-gray-11 peer-data-[state=checked]:text-gold-11 peer-data-[state=checked]:line-through sm:text-base"
 				>
 					{achievement.name.includes("|DIVIDER|") ? (
 						achievement.name.split("|DIVIDER|").map((text, idx) => (
@@ -259,9 +259,17 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 				</label>
 			</div>
 
-			<span className="inline-flex items-center self-start rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
-				{achievement.version}
-			</span>
+			<div className="flex items-center gap-2 self-start">
+				{achievement.secret ? (
+					<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+						Secret
+					</span>
+				) : null}
+
+				<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+					{achievement.version}
+				</span>
+			</div>
 		</li>
 	)
 }
