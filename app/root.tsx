@@ -25,13 +25,7 @@ declare module "@remix-run/cloudflare" {
 }
 
 export function meta(): V2_MetaDescriptor[] {
-	return [
-		{ title: "HSR Achievement Tracker" },
-		{
-			name: "description",
-			content: "Simple achievement tracker for Honkai Star Rail",
-		},
-	]
+	return [{ title: "HSR Achievement Tracker" }]
 }
 
 export function links(): LinkDescriptor[] {
