@@ -31,8 +31,6 @@ export function clueBuilder(
 	let modifiedClue = clue
 
 	Object.entries(modifier).forEach(([key, values]) => {
-		console.log(key, values)
-
 		assert(key, enums(["italic", "highlight", "link"]))
 		assert(
 			values,
