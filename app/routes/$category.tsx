@@ -23,7 +23,7 @@ import type { Achievement as AchievementType } from "~/models/achievement.server
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
-import { getEnableAchievedBottom } from "~/utils/user-prefs.server"
+import { getUserPrefs } from "~/utils/user-prefs.server"
 
 export function meta({
 	data,
@@ -73,14 +73,14 @@ export async function loader({ request, params, context }: LoaderArgs) {
 	}
 
 	const sessionId = await getSessionId(context.sessionStorage, request)
-	const enableAchievedBottom = await getEnableAchievedBottom(request)
+	const { showMissedFirst } = await getUserPrefs(request)
 
 	try {
 		const data = await getAchievements(
 			context.env,
 			sessionId,
 			slug,
-			enableAchievedBottom
+			showMissedFirst
 		)
 
 		return json(data)
