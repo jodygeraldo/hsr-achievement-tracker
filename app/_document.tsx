@@ -16,7 +16,7 @@ import * as React from "react"
 import type { CheckedState } from "./components/ui/checkbox"
 import { Checkbox } from "./components/ui/checkbox"
 import type { loader as rootLoader } from "./root"
-import { cn } from "./utils"
+import { cn } from "./utils/shared"
 
 function Document({ children }: { children: React.ReactNode }) {
 	return (
@@ -243,3 +243,4 @@ function MobileNavigation() {
 }
 
 export { Document, Main }
+
