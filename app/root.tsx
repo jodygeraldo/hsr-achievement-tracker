@@ -14,7 +14,7 @@ import {
 	getEnableAchievedBottom,
 	setEnableAchievedBottom,
 } from "~/utils/user-prefs.server"
-import { Document, Main } from "./_document"
+import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { getSessionId } from "./utils/session.server"
 NProgress.configure({ showSpinner: false })
