@@ -58,7 +58,7 @@ function Document({ children }: { children: React.ReactNode }) {
 function Main() {
 	return (
 		<Document>
-			<div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 				<div className="flex flex-col gap-x-8 gap-y-4 lg:flex-row">
 					<Sidebar />
 
