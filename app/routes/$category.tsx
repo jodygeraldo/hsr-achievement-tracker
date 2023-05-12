@@ -25,6 +25,7 @@ import {
 	getAchievements,
 	putAchived,
 } from "~/models/achievement.server"
+import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
 import { getEnableAchievedBottom } from "~/utils/user-prefs.server"
 
@@ -36,9 +37,12 @@ export function meta({
 }
 
 export async function action({ request, params, context }: ActionArgs) {
-	const sessionId = await getSessionId(context.sessionStorage, request)
 	const slug = params.category
-	assert(slug, string())
+	if (!isValidSlugifiedCategoryName(slug)) {
+		throw json({ message: "Invalid slugified category name" }, { status: 400 })
+	}
+
+	const sessionId = await getSessionId(context.sessionStorage, request)
 
 	const formData = await request.formData()
 	const name = formData.get("name")
@@ -64,9 +68,18 @@ export async function action({ request, params, context }: ActionArgs) {
 }
 
 export async function loader({ request, params, context }: LoaderArgs) {
-	const sessionId = await getSessionId(context.sessionStorage, request)
 	const slug = params.category
-	assert(slug, string())
+	if (!isValidSlugifiedCategoryName(slug)) {
+		throw json(
+			{
+				message:
+					"The url you entered does not match any category. Please check the spelling and try again.",
+			},
+			{ status: 404 }
+		)
+	}
+
+	const sessionId = await getSessionId(context.sessionStorage, request)
 	const enableAchievedBottom = await getEnableAchievedBottom(request)
 
 	try {
@@ -77,20 +90,7 @@ export async function loader({ request, params, context }: LoaderArgs) {
 			enableAchievedBottom
 		)
 
-		if (!data) {
-			throw json(
-				{
-					message:
-						"The url you entered does not match any category. Please check the spelling and try again.",
-				},
-				{ status: 404 }
-			)
-		}
-
-		return json({
-			categoryName: data.categoryName,
-			achievements: data.achievements,
-		})
+		return json(data)
 	} catch (error) {
 		let message = "Failed to get achievement details"
 		if (error instanceof DatabaseError) {

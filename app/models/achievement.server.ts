@@ -1,8 +1,5 @@
 import { getDbConnection } from "~/services/db.server"
-import {
-	clueBuilder,
-	isValidSlugifiedCategoryName,
-} from "~/utils/achievement.server"
+import { clueBuilder } from "~/utils/achievement.server"
 
 type Slugify<S extends string> = S extends `${infer T} ${infer U}`
 	? `${Slugify<T>}-${Slugify<U>}`
@@ -532,41 +529,39 @@ async function getCategories(env: Env, sessionId: string) {
 async function getAchievements(
 	env: Env,
 	sessionId: string,
-	slug: string,
+	slug: SlugifiedCategoryName,
 	enableAchievedBottom: boolean
 ) {
-	if (isValidSlugifiedCategoryName(slug)) {
-		const db = getDbConnection(env)
-		const achieved = await db
-			.selectFrom("achievement")
-			.select("name")
-			.where(({ and, cmpr }) =>
-				and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
-			)
-			.execute()
+	const db = getDbConnection(env)
+	const achieved = await db
+		.selectFrom("achievement")
+		.select("name")
+		.where(({ and, cmpr }) =>
+			and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
+		)
+		.execute()
 
-		const achievements = achievementByCategory[slug].map((achievement) => {
-			const done = achieved.find(({ name }) => name === achievement.name)
-			return {
-				...achievement,
-				done: Boolean(done),
-			}
-		})
-
-		const categoryName = categories.find(
-			(category) => category.slug === slug
-		)?.name
-
-		if (enableAchievedBottom) {
-			achievements.sort(
-				(first, second) => Number(first.done) - Number(second.done)
-			)
-		}
-
+	const achievements = achievementByCategory[slug].map((achievement) => {
+		const done = achieved.find(({ name }) => name === achievement.name)
 		return {
-			categoryName,
-			achievements,
+			...achievement,
+			done: Boolean(done),
 		}
+	})
+
+	const categoryName = categories.find(
+		(category) => category.slug === slug
+	)?.name
+
+	if (enableAchievedBottom) {
+		achievements.sort(
+			(first, second) => Number(first.done) - Number(second.done)
+		)
+	}
+
+	return {
+		categoryName,
+		achievements,
 	}
 }
 
@@ -591,14 +586,14 @@ async function getAchievedCount(env: Env, sessionId: string) {
 async function putAchived(
 	env: Env,
 	sessionId: string,
-	categorySlug: string,
+	slug: SlugifiedCategoryName,
 	name: string
 ) {
 	const db = getDbConnection(env)
 	await db
 		.insertInto("achievement")
 		.values({
-			category: categorySlug,
+			category: slug,
 			session_id: sessionId,
 			name,
 		})
@@ -608,7 +603,7 @@ async function putAchived(
 async function deleteAchived(
 	env: Env,
 	sessionId: string,
-	categorySlug: string,
+	slug: SlugifiedCategoryName,
 	name: string
 ) {
 	const db = getDbConnection(env)
@@ -617,7 +612,7 @@ async function deleteAchived(
 		.where(({ and, cmpr }) =>
 			and([
 				cmpr("session_id", "=", sessionId),
-				cmpr("category", "=", categorySlug),
+				cmpr("category", "=", slug),
 				cmpr("name", "=", name),
 			])
 		)

@@ -3,7 +3,7 @@ import { array, assert, enums, is, object, string, union } from "superstruct"
 import type { SlugifiedCategoryName } from "~/models/achievement.server"
 
 export function isValidSlugifiedCategoryName(
-	slug: string
+	slug?: string
 ): slug is SlugifiedCategoryName {
 	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> = enums([
 		"trailblazer",
