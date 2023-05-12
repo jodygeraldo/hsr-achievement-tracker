@@ -26,7 +26,7 @@ import {
 	getAchievements,
 	putAchived,
 } from "~/models/achievement.server"
-import { getSessionId } from "~/session.server"
+import { getSessionId } from "~/utils/session.server"
 
 export function meta({
 	data,

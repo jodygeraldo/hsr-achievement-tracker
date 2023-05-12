@@ -16,7 +16,7 @@ import {
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./_document"
 import { getCategories } from "./models/achievement.server"
-import { getSessionId } from "./session.server"
+import { getSessionId } from "./utils/session.server"
 NProgress.configure({ showSpinner: false })
 
 declare module "@remix-run/cloudflare" {
