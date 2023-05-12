@@ -259,14 +259,14 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 				</label>
 			</div>
 
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 self-start">
 				{achievement.secret ? (
-					<span className="inline-flex items-center self-start rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+					<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
 						Secret
 					</span>
 				) : null}
 
-				<span className="inline-flex items-center self-start rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+				<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
 					{achievement.version}
 				</span>
 			</div>
