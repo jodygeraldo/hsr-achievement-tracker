@@ -1,4 +1,5 @@
-import { enums, is } from "superstruct"
+import type { Describe } from "superstruct"
+import { array, assert, enums, is, object, string, union } from "superstruct"
 import { getDbConnection } from "~/services/db.server"
 
 type Slugify<S extends string> = S extends `${infer T} ${infer U}`
@@ -629,63 +630,51 @@ async function deleteAchived(
 
 function clueBuilder(
 	clue: string,
-	{
-		italic,
-		highlight,
-		link,
-	}: {
+	modifier: {
 		italic?: string[]
 		highlight?: string[]
 		link?: { keyword: string; url: string }[]
 	}
 ) {
 	let modifiedClue = clue
-	if (italic) {
-		italic.forEach((keyword) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "italic")
-			)
-		})
-	}
 
-	if (highlight) {
-		highlight.forEach((keyword) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "highlight")
-			)
-		})
-	}
+	Object.entries(modifier).forEach(([key, values]) => {
+		console.log(key, values)
 
-	if (link) {
-		link.forEach(({ keyword, url }) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "link", url)
-			)
+		assert(key, enums(["italic", "highlight", "link"]))
+		assert(
+			values,
+			union([
+				array(string()),
+				array(object({ keyword: string(), url: string() })),
+			])
+		)
+
+		values.forEach((value) => {
+			const toReplaced = typeof value === "string" ? value : value.keyword
+			modifiedClue = modifiedClue.replace(toReplaced, clueModifier(value, key))
 		})
-	}
+	})
 
 	return modifiedClue
 }
 
 function clueModifier(
-	keyword: string,
-	to: "italic" | "highlight" | "link",
-	url?: string
+	value: string | { keyword: string; url: string },
+	modifier: "italic" | "highlight" | "link"
 ) {
-	if (to !== "link") {
-		return `<span class="clue-${to}">${keyword}</span>`
+	if (modifier !== "link") {
+		return `<span class="clue-${modifier}">${value}</span>`
 	}
 
-	return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="clue-link">${keyword}</a>`
+	assert(value, object({ keyword: string(), url: string() }))
+	return `<a href="${value.url}" target="_blank" rel="noopener noreferrer" class="clue-link">${value.keyword}</a>`
 }
 
 function isValidSlugifiedCategoryName(
 	slug: string
 ): slug is SlugifiedCategoryName {
-	const slugifiedCategoryName: SlugifiedCategoryName[] = [
+	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> = enums([
 		"trailblazer",
 		"the-rail-unto-the-stars",
 		"eager-for-battle",
@@ -695,13 +684,11 @@ function isValidSlugifiedCategoryName(
 		"moment-of-joy",
 		"the-memories-we-share",
 		"fathom-the-unfathomable",
-	]
-	if (is(slug, enums(slugifiedCategoryName))) {
-		return true
-	} else {
-		return false
-	}
+	])
+
+	return is(slug, ValidSlugifiedCategoryName)
 }
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, putAchived, deleteAchived }
+
