@@ -204,7 +204,7 @@ function Achievement({ achievement }: { achievement: AchievementType }) {
 				/>
 				<label
 					htmlFor={checkboxId}
-					className="select-none text-gold-12 peer-data-[state=checked]:text-gold-11 peer-data-[state=checked]:line-through"
+					className="select-none text-sm text-gray-11 peer-data-[state=checked]:text-gold-11 peer-data-[state=checked]:line-through sm:text-base"
 				>
 					{achievement.name.includes("|DIVIDER|") ? (
 						achievement.name.split("|DIVIDER|").map((text, idx) => (

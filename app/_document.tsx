@@ -104,7 +104,7 @@ function Sidebar() {
 	const fetcher = useFetcher()
 
 	return (
-		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:w-96">
+		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:max-w-md">
 			<div className="px-4">
 				<h1 className="text-xl font-semibold tracking-tight text-gold-9">
 					HSR Achievement Tracker
