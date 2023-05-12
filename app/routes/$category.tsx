@@ -19,14 +19,14 @@ import * as React from "react"
 import { assert, string } from "superstruct"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
-import { getEnableAchievedBottom } from "~/cookies.server"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
 import {
 	deleteAchived,
 	getAchievements,
 	putAchived,
 } from "~/models/achievement.server"
-import { getSessionId } from "~/session.server"
+import { getSessionId } from "~/utils/session.server"
+import { getEnableAchievedBottom } from "~/utils/user-prefs.server"
 
 export function meta({
 	data,

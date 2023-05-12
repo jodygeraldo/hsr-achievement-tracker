@@ -1,5 +1,8 @@
-import { enums, is } from "superstruct"
 import { getDbConnection } from "~/services/db.server"
+import {
+	clueBuilder,
+	isValidSlugifiedCategoryName,
+} from "~/utils/achievement.server"
 
 type Slugify<S extends string> = S extends `${infer T} ${infer U}`
 	? `${Slugify<T>}-${Slugify<U>}`
@@ -507,7 +510,9 @@ const categories: Category[] = [
 ]
 
 async function getCategories(env: Env, sessionId: string) {
-	const achievementSize = getAchievementSize()
+	let achievementSize = 0
+	categories.forEach(({ size }) => (achievementSize += size))
+
 	const achievedCount = await getAchievedCount(env, sessionId)
 
 	return {
@@ -522,14 +527,6 @@ async function getCategories(env: Env, sessionId: string) {
 					?.count ?? "0",
 		})),
 	}
-}
-
-function getAchievementSize() {
-	let size = 0
-	Object.values(achievementByCategory).forEach(
-		(values) => (size += values.length)
-	)
-	return size
 }
 
 async function getAchievements(
@@ -625,82 +622,6 @@ async function deleteAchived(
 			])
 		)
 		.execute()
-}
-
-function clueBuilder(
-	clue: string,
-	{
-		italic,
-		highlight,
-		link,
-	}: {
-		italic?: string[]
-		highlight?: string[]
-		link?: { keyword: string; url: string }[]
-	}
-) {
-	let modifiedClue = clue
-	if (italic) {
-		italic.forEach((keyword) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "italic")
-			)
-		})
-	}
-
-	if (highlight) {
-		highlight.forEach((keyword) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "highlight")
-			)
-		})
-	}
-
-	if (link) {
-		link.forEach(({ keyword, url }) => {
-			modifiedClue = modifiedClue.replace(
-				keyword,
-				clueModifier(keyword, "link", url)
-			)
-		})
-	}
-
-	return modifiedClue
-}
-
-function clueModifier(
-	keyword: string,
-	to: "italic" | "highlight" | "link",
-	url?: string
-) {
-	if (to !== "link") {
-		return `<span class="clue-${to}">${keyword}</span>`
-	}
-
-	return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="clue-link">${keyword}</a>`
-}
-
-function isValidSlugifiedCategoryName(
-	slug: string
-): slug is SlugifiedCategoryName {
-	const slugifiedCategoryName: SlugifiedCategoryName[] = [
-		"trailblazer",
-		"the-rail-unto-the-stars",
-		"eager-for-battle",
-		"vestige-of-luminflux",
-		"universe-in-a-nutshell",
-		"glory-of-the-unyielding",
-		"moment-of-joy",
-		"the-memories-we-share",
-		"fathom-the-unfathomable",
-	]
-	if (is(slug, enums(slugifiedCategoryName))) {
-		return true
-	} else {
-		return false
-	}
 }
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
