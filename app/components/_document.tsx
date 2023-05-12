@@ -93,13 +93,13 @@ function Main() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, enableAchievedBottom } =
+	const { achievementSize, achievedTotal, showMissedFirst } =
 		useRouteLoaderData("root") as RootLoaderData
 
 	const checkboxId = React.useId()
 
-	const [checkedAchievedBottom, setCheckedAchievedBottom] =
-		React.useState<CheckedState>(enableAchievedBottom)
+	const [showMissedFirstState, setShowMissedFirstState] =
+		React.useState<CheckedState>(showMissedFirst)
 	const fetcher = useFetcher()
 
 	return (
@@ -131,9 +131,9 @@ function Sidebar() {
 						<Checkbox
 							name="ck"
 							id={checkboxId}
-							checked={checkedAchievedBottom}
+							checked={showMissedFirstState}
 							onCheckedChange={(checked) => {
-								setCheckedAchievedBottom(checked)
+								setShowMissedFirstState(checked)
 								if (checked !== "indeterminate") {
 									fetcher.submit(
 										{ checked: checked.toString() },

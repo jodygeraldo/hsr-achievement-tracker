@@ -530,7 +530,7 @@ async function getAchievements(
 	env: Env,
 	sessionId: string,
 	slug: SlugifiedCategoryName,
-	enableAchievedBottom: boolean
+	showMissedFirst: boolean
 ) {
 	const db = getDbConnection(env)
 	const achieved = await db
@@ -553,7 +553,7 @@ async function getAchievements(
 		(category) => category.slug === slug
 	)?.name
 
-	if (enableAchievedBottom) {
+	if (showMissedFirst) {
 		achievements.sort(
 			(first, second) => Number(first.done) - Number(second.done)
 		)

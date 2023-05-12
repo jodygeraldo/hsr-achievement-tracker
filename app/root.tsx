@@ -11,11 +11,7 @@ import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
-import {
-	getEnableAchievedBottom,
-	getUserPrefs,
-	userPrefsCookie
-} from "~/utils/user-prefs.server"
+import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { getSessionId } from "./utils/session.server"
@@ -48,7 +44,7 @@ export function links(): LinkDescriptor[] {
 export async function action({ request }: LoaderArgs) {
 	const cookie = await getUserPrefs(request)
 	const formData = await request.formData()
-	cookie.enableAchievedBottom = formData.get("checked") === "true"
+	cookie.showMissedFirst = formData.get("checked") === "true"
 
 	return json(null, {
 		headers: {
@@ -60,7 +56,8 @@ export async function action({ request }: LoaderArgs) {
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
-	const enableAchievedBottom = await getEnableAchievedBottom(request)
+	const { showMissedFirst } = await getUserPrefs(request)
+
 	try {
 		const { achievementSize, achievedTotal, categories } = await getCategories(
 			context.env,
@@ -71,7 +68,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			achievementSize,
 			achievedTotal,
 			categories,
-			enableAchievedBottom,
+			showMissedFirst,
 		})
 	} catch (error) {
 		let message = "Failed to get category details"

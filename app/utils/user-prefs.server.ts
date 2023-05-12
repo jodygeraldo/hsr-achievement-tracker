@@ -1,8 +1,8 @@
 import { createCookie } from "@remix-run/cloudflare"
-import { assert, boolean, create, defaulted, type } from "superstruct"
+import { boolean, create, defaulted, type } from "superstruct"
 
 const UserPrefs = type({
-	enableAchievedBottom: defaulted(boolean(), false),
+	showMissedFirst: defaulted(boolean(), false),
 })
 
 const userPrefsCookie = createCookie("user-prefs")
@@ -14,12 +14,4 @@ async function getUserPrefs(request: Request) {
 	return create(cookie, UserPrefs)
 }
 
-async function getEnableAchievedBottom(request: Request) {
-	const cookie = await getUserPrefs(request)
-	const enableAchievedBottom = cookie.enableAchievedBottom
-	assert(enableAchievedBottom, boolean())
-	return enableAchievedBottom
-}
-
-export { userPrefsCookie, getUserPrefs, getEnableAchievedBottom }
-
+export { userPrefsCookie, getUserPrefs }
