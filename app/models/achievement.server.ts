@@ -510,7 +510,9 @@ const categories: Category[] = [
 ]
 
 async function getCategories(env: Env, sessionId: string) {
-	const achievementSize = getAchievementSize()
+	let achievementSize = 0
+	categories.forEach(({ size }) => (achievementSize += size))
+	
 	const achievedCount = await getAchievedCount(env, sessionId)
 
 	return {
@@ -525,14 +527,6 @@ async function getCategories(env: Env, sessionId: string) {
 					?.count ?? "0",
 		})),
 	}
-}
-
-function getAchievementSize() {
-	let size = 0
-	Object.values(achievementByCategory).forEach(
-		(values) => (size += values.length)
-	)
-	return size
 }
 
 async function getAchievements(
@@ -632,3 +626,4 @@ async function deleteAchived(
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, putAchived, deleteAchived }
+
