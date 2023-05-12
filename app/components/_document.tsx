@@ -1,4 +1,3 @@
-import type { SerializeFrom } from "@remix-run/cloudflare"
 import {
 	Links,
 	LiveReload,
@@ -13,7 +12,7 @@ import {
 	useRouteLoaderData,
 } from "@remix-run/react"
 import * as React from "react"
-import type { loader as RootLoader } from "../root"
+import type { RootLoaderData } from "../root"
 import { cn } from "../utils/shared"
 import type { CheckedState } from "./ui/checkbox"
 import { Checkbox } from "./ui/checkbox"
@@ -95,7 +94,7 @@ function Main() {
 
 function Sidebar() {
 	const { achievementSize, achievedTotal, enableAchievedBottom } =
-		useRouteLoaderData("root") as SerializeFrom<typeof RootLoader>
+		useRouteLoaderData("root") as RootLoaderData
 
 	const checkboxId = React.useId()
 
@@ -180,9 +179,7 @@ function Sidebar() {
 }
 
 function DesktopNavigation() {
-	const { categories } = useRouteLoaderData("root") as SerializeFrom<
-		typeof RootLoader
-	>
+	const { categories } = useRouteLoaderData("root") as RootLoaderData
 
 	return (
 		<nav className="hidden sm:block">
@@ -214,9 +211,7 @@ function DesktopNavigation() {
 }
 
 function MobileNavigation() {
-	const { categories } = useRouteLoaderData("root") as SerializeFrom<
-		typeof RootLoader
-	>
+	const { categories } = useRouteLoaderData("root") as RootLoaderData
 	const location = useLocation()
 	const navigate = useNavigate()
 

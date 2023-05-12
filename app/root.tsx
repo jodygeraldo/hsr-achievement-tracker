@@ -2,6 +2,7 @@ import { DatabaseError } from "@planetscale/database"
 import type {
 	LinkDescriptor,
 	LoaderArgs,
+	SerializeFrom,
 	SessionStorage,
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
@@ -47,6 +48,7 @@ export async function action({ request }: LoaderArgs) {
 	return await setEnableAchievedBottom(request)
 }
 
+export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
 	const enableAchievedBottom = await getEnableAchievedBottom(request)
