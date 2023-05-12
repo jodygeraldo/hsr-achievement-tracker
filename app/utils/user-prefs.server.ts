@@ -1,37 +1,25 @@
-import { createCookie, json } from "@remix-run/cloudflare"
+import { createCookie } from "@remix-run/cloudflare"
 import { assert, boolean, create, defaulted, type } from "superstruct"
 
-const userPrefs = createCookie("user-prefs")
+const UserPrefs = type({
+	enableAchievedBottom: defaulted(boolean(), false),
+})
 
-async function getUserPrefsCookie(request: Request) {
+const userPrefsCookie = createCookie("user-prefs")
+
+async function getUserPrefs(request: Request) {
 	const cookieHeader = request.headers.get("Cookie")
-	const cookie = (await userPrefs.parse(cookieHeader)) ?? undefined
+	const cookie = (await userPrefsCookie.parse(cookieHeader)) ?? undefined
 
-	return create(
-		cookie,
-		defaulted(type({ enableAchievedBottom: boolean() }), {
-			enableAchievedBottom: false,
-		})
-	)
+	return create(cookie, UserPrefs)
 }
 
 async function getEnableAchievedBottom(request: Request) {
-	const cookie = await getUserPrefsCookie(request)
+	const cookie = await getUserPrefs(request)
 	const enableAchievedBottom = cookie.enableAchievedBottom
 	assert(enableAchievedBottom, boolean())
 	return enableAchievedBottom
 }
 
-async function setEnableAchievedBottom(request: Request) {
-	const cookie = await getUserPrefsCookie(request)
-	const formData = await request.formData()
-	cookie.enableAchievedBottom = formData.get("checked") === "true"
+export { userPrefsCookie, getUserPrefs, getEnableAchievedBottom }
 
-	return json(null, {
-		headers: {
-			"Set-Cookie": await userPrefs.serialize(cookie),
-		},
-	})
-}
-
-export { getEnableAchievedBottom, setEnableAchievedBottom }

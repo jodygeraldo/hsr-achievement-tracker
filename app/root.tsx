@@ -13,7 +13,8 @@ import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
 import {
 	getEnableAchievedBottom,
-	setEnableAchievedBottom,
+	getUserPrefs,
+	userPrefsCookie
 } from "~/utils/user-prefs.server"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
@@ -45,7 +46,15 @@ export function links(): LinkDescriptor[] {
 }
 
 export async function action({ request }: LoaderArgs) {
-	return await setEnableAchievedBottom(request)
+	const cookie = await getUserPrefs(request)
+	const formData = await request.formData()
+	cookie.enableAchievedBottom = formData.get("checked") === "true"
+
+	return json(null, {
+		headers: {
+			"Set-Cookie": await userPrefsCookie.serialize(cookie),
+		},
+	})
 }
 
 export type RootLoaderData = SerializeFrom<typeof loader>
