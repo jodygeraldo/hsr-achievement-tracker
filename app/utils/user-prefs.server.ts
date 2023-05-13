@@ -1,10 +1,10 @@
 import { createCookie } from "@remix-run/cloudflare"
 import type { Infer } from "superstruct"
-import { boolean, create, defaulted, object, type } from "superstruct"
+import { boolean, create, defaulted, type } from "superstruct"
 
 const userPrefsSchema = type({
 	showMissedFirst: defaulted(boolean(), false),
-	showClue: object({
+	showClue: type({
 		normalAchievement: defaulted(boolean(), false),
 		secretAchievement: defaulted(boolean(), false),
 	}),
