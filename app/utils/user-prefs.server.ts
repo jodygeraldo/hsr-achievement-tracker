@@ -1,13 +1,16 @@
 import { createCookie } from "@remix-run/cloudflare"
 import type { Infer } from "superstruct"
-import { boolean, create, defaulted, type } from "superstruct"
+import { boolean, defaulted, mask, object } from "superstruct"
 
-const userPrefsSchema = type({
+const userPrefsSchema = object({
 	showMissedFirst: defaulted(boolean(), false),
-	showClue: type({
-		normalAchievement: defaulted(boolean(), false),
-		secretAchievement: defaulted(boolean(), false),
-	}),
+	showClue: defaulted(
+		object({
+			normalAchievement: defaulted(boolean(), true),
+			secretAchievement: defaulted(boolean(), false),
+		}),
+		{}
+	),
 })
 
 type UserPrefs = Infer<typeof userPrefsSchema>
@@ -15,17 +18,9 @@ type UserPrefs = Infer<typeof userPrefsSchema>
 const userPrefsCookie = createCookie("user-prefs")
 
 async function getUserPrefs(request: Request): Promise<UserPrefs> {
-	const defaultUserPrefs: UserPrefs = {
-		showMissedFirst: false,
-		showClue: {
-			normalAchievement: false,
-			secretAchievement: false,
-		},
-	}
 	const cookieHeader = request.headers.get("Cookie")
-	const cookie = (await userPrefsCookie.parse(cookieHeader)) ?? defaultUserPrefs
-
-	return create(cookie, userPrefsSchema)
+	const cookie = await userPrefsCookie.parse(cookieHeader)
+	return mask(cookie ?? {}, userPrefsSchema)
 }
 
 export { userPrefsCookie, getUserPrefs }
