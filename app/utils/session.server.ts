@@ -1,5 +1,6 @@
 import type { SessionStorage } from "@remix-run/cloudflare"
 import { redirect } from "@remix-run/cloudflare"
+import { uid } from "uid"
 
 const SESSION_ID_KEY = "userSessionId"
 
@@ -11,7 +12,7 @@ async function getSessionId(sessionStorage: SessionStorage, request: Request) {
 	if (session.has(SESSION_ID_KEY)) {
 		return session.get(SESSION_ID_KEY)
 	} else {
-		session.set(SESSION_ID_KEY, crypto.randomUUID())
+		session.set(SESSION_ID_KEY, uid())
 		throw redirect(url.pathname, {
 			headers: {
 				"Set-Cookie": await sessionStorage.commitSession(session),
