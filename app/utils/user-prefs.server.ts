@@ -3,11 +3,23 @@ import type { Infer } from "superstruct"
 import { boolean, defaulted, mask, object } from "superstruct"
 
 const userPrefsSchema = object({
-	showMissedFirst: defaulted(boolean(), false),
+	showMissedFirst: defaulted(boolean(), true),
 	showClue: defaulted(
 		object({
-			normalAchievement: defaulted(boolean(), true),
-			secretAchievement: defaulted(boolean(), false),
+			normalAchievement: defaulted(
+				object({
+					beforeAchieved: defaulted(boolean(), true),
+					afterAchieved: defaulted(boolean(), true),
+				}),
+				{}
+			),
+			secretAchievement: defaulted(
+				object({
+					beforeAchieved: defaulted(boolean(), false),
+					afterAchieved: defaulted(boolean(), true),
+				}),
+				{}
+			),
 		}),
 		{}
 	),
