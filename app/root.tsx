@@ -11,10 +11,7 @@ import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
-import {
-	getEnableAchievedBottom,
-	setEnableAchievedBottom,
-} from "~/utils/user-prefs.server"
+import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { getSessionId } from "./utils/session.server"
@@ -28,13 +25,7 @@ declare module "@remix-run/cloudflare" {
 }
 
 export function meta(): V2_MetaDescriptor[] {
-	return [
-		{ title: "HSR Achievement Tracker" },
-		{
-			name: "description",
-			content: "Simple achievement tracker for Honkai Star Rail",
-		},
-	]
+	return [{ title: "HSR Achievement Tracker" }]
 }
 
 export function links(): LinkDescriptor[] {
@@ -45,13 +36,22 @@ export function links(): LinkDescriptor[] {
 }
 
 export async function action({ request }: LoaderArgs) {
-	return await setEnableAchievedBottom(request)
+	const cookie = await getUserPrefs(request)
+	const formData = await request.formData()
+	cookie.showMissedFirst = formData.get("checked") === "true"
+
+	return json(null, {
+		headers: {
+			"Set-Cookie": await userPrefsCookie.serialize(cookie),
+		},
+	})
 }
 
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
-	const enableAchievedBottom = await getEnableAchievedBottom(request)
+	const { showMissedFirst } = await getUserPrefs(request)
+
 	try {
 		const { achievementSize, achievedTotal, categories } = await getCategories(
 			context.env,
@@ -62,7 +62,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			achievementSize,
 			achievedTotal,
 			categories,
-			enableAchievedBottom,
+			showMissedFirst,
 		})
 	} catch (error) {
 		let message = "Failed to get category details"

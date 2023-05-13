@@ -23,6 +23,10 @@ function Document({ children }: { children: React.ReactNode }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<meta
+					name="description"
+					content="Simple achievement tracker for Honkai Star Rail"
+				/>
 				<Meta />
 				<link
 					rel="apple-touch-icon"
@@ -93,13 +97,13 @@ function Main() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, enableAchievedBottom } =
+	const { achievementSize, achievedTotal, showMissedFirst } =
 		useRouteLoaderData("root") as RootLoaderData
 
 	const checkboxId = React.useId()
 
-	const [checkedAchievedBottom, setCheckedAchievedBottom] =
-		React.useState<CheckedState>(enableAchievedBottom)
+	const [showMissedFirstState, setShowMissedFirstState] =
+		React.useState<CheckedState>(showMissedFirst)
 	const fetcher = useFetcher()
 
 	return (
@@ -131,9 +135,9 @@ function Sidebar() {
 						<Checkbox
 							name="ck"
 							id={checkboxId}
-							checked={checkedAchievedBottom}
+							checked={showMissedFirstState}
 							onCheckedChange={(checked) => {
-								setCheckedAchievedBottom(checked)
+								setShowMissedFirstState(checked)
 								if (checked !== "indeterminate") {
 									fetcher.submit(
 										{ checked: checked.toString() },

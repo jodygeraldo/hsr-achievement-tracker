@@ -1,37 +1,31 @@
-import { createCookie, json } from "@remix-run/cloudflare"
-import { assert, boolean, create, defaulted, type } from "superstruct"
+import { createCookie } from "@remix-run/cloudflare"
+import type { Infer } from "superstruct"
+import { boolean, create, defaulted, object, type } from "superstruct"
 
-const userPrefs = createCookie("user-prefs")
+const userPrefsSchema = type({
+	showMissedFirst: defaulted(boolean(), false),
+	showClue: object({
+		normalAchievement: defaulted(boolean(), false),
+		secretAchievement: defaulted(boolean(), false),
+	}),
+})
 
-async function getUserPrefsCookie(request: Request) {
-	const cookieHeader = request.headers.get("Cookie")
-	const cookie = (await userPrefs.parse(cookieHeader)) ?? undefined
+type UserPrefs = Infer<typeof userPrefsSchema>
 
-	return create(
-		cookie,
-		defaulted(type({ enableAchievedBottom: boolean() }), {
-			enableAchievedBottom: false,
-		})
-	)
-}
+const userPrefsCookie = createCookie("user-prefs")
 
-async function getEnableAchievedBottom(request: Request) {
-	const cookie = await getUserPrefsCookie(request)
-	const enableAchievedBottom = cookie.enableAchievedBottom
-	assert(enableAchievedBottom, boolean())
-	return enableAchievedBottom
-}
-
-async function setEnableAchievedBottom(request: Request) {
-	const cookie = await getUserPrefsCookie(request)
-	const formData = await request.formData()
-	cookie.enableAchievedBottom = formData.get("checked") === "true"
-
-	return json(null, {
-		headers: {
-			"Set-Cookie": await userPrefs.serialize(cookie),
+async function getUserPrefs(request: Request): Promise<UserPrefs> {
+	const defaultUserPrefs: UserPrefs = {
+		showMissedFirst: false,
+		showClue: {
+			normalAchievement: false,
+			secretAchievement: false,
 		},
-	})
+	}
+	const cookieHeader = request.headers.get("Cookie")
+	const cookie = (await userPrefsCookie.parse(cookieHeader)) ?? defaultUserPrefs
+
+	return create(cookie, userPrefsSchema)
 }
 
-export { getEnableAchievedBottom, setEnableAchievedBottom }
+export { userPrefsCookie, getUserPrefs }

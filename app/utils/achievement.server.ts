@@ -3,7 +3,7 @@ import { array, assert, enums, is, object, string, union } from "superstruct"
 import type { SlugifiedCategoryName } from "~/models/achievement.server"
 
 export function isValidSlugifiedCategoryName(
-	slug: string
+	slug?: string
 ): slug is SlugifiedCategoryName {
 	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> = enums([
 		"trailblazer",
@@ -31,8 +31,6 @@ export function clueBuilder(
 	let modifiedClue = clue
 
 	Object.entries(modifier).forEach(([key, values]) => {
-		console.log(key, values)
-
 		assert(key, enums(["italic", "highlight", "link"]))
 		assert(
 			values,
