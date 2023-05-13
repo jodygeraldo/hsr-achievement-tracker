@@ -11,7 +11,6 @@ import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
-import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { getSessionId } from "./utils/session.server"
@@ -35,22 +34,9 @@ export function links(): LinkDescriptor[] {
 	]
 }
 
-export async function action({ request }: LoaderArgs) {
-	const cookie = await getUserPrefs(request)
-	const formData = await request.formData()
-	cookie.showMissedFirst = formData.get("checked") === "true"
-
-	return json(null, {
-		headers: {
-			"Set-Cookie": await userPrefsCookie.serialize(cookie),
-		},
-	})
-}
-
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
-	const { showMissedFirst } = await getUserPrefs(request)
 
 	try {
 		const { achievementSize, achievedTotal, categories } = await getCategories(
@@ -58,12 +44,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			sessionId
 		)
 
-		return json({
-			achievementSize,
-			achievedTotal,
-			categories,
-			showMissedFirst,
-		})
+		return json({ achievementSize, achievedTotal, categories })
 	} catch (error) {
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {

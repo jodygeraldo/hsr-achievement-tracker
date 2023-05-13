@@ -6,7 +6,6 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useFetcher,
 	useLocation,
 	useNavigate,
 	useRouteLoaderData,
@@ -14,8 +13,6 @@ import {
 import * as React from "react"
 import type { RootLoaderData } from "../root"
 import { cn } from "../utils/shared"
-import type { CheckedState } from "./ui/checkbox"
-import { Checkbox } from "./ui/checkbox"
 
 function Document({ children }: { children: React.ReactNode }) {
 	return (
@@ -97,14 +94,9 @@ function Main() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, showMissedFirst } =
-		useRouteLoaderData("root") as RootLoaderData
-
-	const checkboxId = React.useId()
-
-	const [showMissedFirstState, setShowMissedFirstState] =
-		React.useState<CheckedState>(showMissedFirst)
-	const fetcher = useFetcher()
+	const { achievementSize, achievedTotal } = useRouteLoaderData(
+		"root"
+	) as RootLoaderData
 
 	return (
 		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:max-w-md">
@@ -113,40 +105,15 @@ function Sidebar() {
 					HSR Achievement Tracker
 				</h1>
 
-				<div className="mt-2 flex items-center justify-between tabular-nums">
-					<div className="text-sm text-gray-12">
-						<span className="font-medium">{achievedTotal}</span>/
-						{achievementSize} &middot;{" "}
-						<span className="font-medium">
-							{achievedTotal === achievementSize
-								? "100"
-								: ((achievedTotal / achievementSize) * 100).toPrecision(2)}
-							%
-						</span>
-					</div>
-
-					<div className="flex items-center gap-x-2">
-						<label
-							htmlFor={checkboxId}
-							className="select-none text-sm font-medium leading-none"
-						>
-							Show not achieved first
-						</label>
-						<Checkbox
-							name="ck"
-							id={checkboxId}
-							checked={showMissedFirstState}
-							onCheckedChange={(checked) => {
-								setShowMissedFirstState(checked)
-								if (checked !== "indeterminate") {
-									fetcher.submit(
-										{ checked: checked.toString() },
-										{ action: "/", method: "POST", replace: true }
-									)
-								}
-							}}
-						/>
-					</div>
+				<div className="mt-2 text-sm tabular-nums text-gray-12">
+					<span className="font-medium">{achievedTotal}</span>/{achievementSize}{" "}
+					&middot;{" "}
+					<span className="font-medium">
+						{achievedTotal === achievementSize
+							? "100"
+							: ((achievedTotal / achievementSize) * 100).toPrecision(2)}
+						%
+					</span>
 				</div>
 			</div>
 
