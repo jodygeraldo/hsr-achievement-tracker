@@ -17,6 +17,8 @@ import {
 } from "@remix-run/react"
 import * as React from "react"
 import { assert, literal, string, union } from "superstruct"
+import { ErrorComponent } from "~/components/error-component"
+import { MainContainer } from "~/components/main-container"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
@@ -98,13 +100,13 @@ export default function CategoryPage() {
 	const { achievements } = useLoaderData<typeof loader>()
 
 	return (
-		<Container>
-			<ul className="divide-y divide-gray-6">
+		<MainContainer>
+			<ul className="flex-1 divide-y divide-gray-6">
 				{achievements.map((achievement) => (
 					<Achievement key={achievement.name} achievement={achievement} />
 				))}
 			</ul>
-		</Container>
+		</MainContainer>
 	)
 }
 
@@ -120,14 +122,11 @@ export function ErrorBoundary() {
 
 		if (error.status === 404) {
 			return (
-				<Container>
-					<h2 className="text-7xl font-semibold text-gray-12">
-						<span className="text-gold-9">404</span>{" "}
-						<span className="text-3xl">Page Not Found</span>
-					</h2>
-
-					<p className="mt-4 text-gray-11">{errorMessage}</p>
-				</Container>
+				<ErrorComponent
+					status={404}
+					title="Page Not Found"
+					message={errorMessage}
+				/>
 			)
 		}
 	}
@@ -137,14 +136,11 @@ export function ErrorBoundary() {
 	}
 
 	return (
-		<Container>
-			<h2 className="text-7xl font-semibold text-gray-12">
-				<span className="text-gold-9">500</span>{" "}
-				<span className="text-3xl">Internal Server Error</span>
-			</h2>
-
-			<p className="mt-4 text-gray-11">{errorMessage}</p>
-		</Container>
+		<ErrorComponent
+			status={500}
+			title="Internal Server Error"
+			message={errorMessage}
+		/>
 	)
 }
 
@@ -157,14 +153,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 	}
 
 	return true
-}
-
-function Container({ children }: { children: React.ReactNode }) {
-	return (
-		<div className="flex w-full flex-1 flex-col gap-y-3 self-start rounded-lg bg-gray-2 px-4 py-6">
-			{children}
-		</div>
-	)
 }
 
 function Achievement({ achievement }: { achievement: AchievementType }) {
