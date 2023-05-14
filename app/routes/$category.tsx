@@ -207,10 +207,10 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 
 	// prettier-ignore
 	const displayClue = 
-		(!achievement.secret && value === "none" && showClue.normalAchievement.beforeAchieved) ||
-		(!achievement.secret && value !== "none" && showClue.normalAchievement.afterAchieved) ||
-		(achievement.secret && value === "none" && showClue.secretAchievement.beforeAchieved) ||
-		(achievement.secret && value !== "none" && showClue.secretAchievement.afterAchieved)
+		(!achievement.secret && !achievement.path && showClue.normalAchievement.beforeAchieved) ||
+		(!achievement.secret && achievement.path && showClue.normalAchievement.afterAchieved) ||
+		(achievement.secret && !achievement.path && showClue.secretAchievement.beforeAchieved) ||
+		(achievement.secret && achievement.path && showClue.secretAchievement.afterAchieved)
 
 	return (
 		<RadioGroup
@@ -311,10 +311,10 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 
 	// prettier-ignore
 	const displayClue = 
-		(!achievement.secret && !checked && showClue.normalAchievement.beforeAchieved) ||
-		(!achievement.secret && checked && showClue.normalAchievement.afterAchieved) ||
-		(achievement.secret && !checked && showClue.secretAchievement.beforeAchieved) ||
-		(achievement.secret && checked && showClue.secretAchievement.afterAchieved)
+		(!achievement.secret && !achievement.done && showClue.normalAchievement.beforeAchieved) ||
+		(!achievement.secret && achievement.done && showClue.normalAchievement.afterAchieved) ||
+		(achievement.secret && !achievement.done && showClue.secretAchievement.beforeAchieved) ||
+		(achievement.secret && achievement.done && showClue.secretAchievement.afterAchieved)
 
 	return (
 		<div key={achievement.name} className="flex items-center gap-x-3">
