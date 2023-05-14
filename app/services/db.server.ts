@@ -7,6 +7,7 @@ interface AchievementTable {
 	session_id: string
 	name: string
 	category: string
+	path: string | null
 }
 
 interface Database {

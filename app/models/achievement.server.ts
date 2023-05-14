@@ -25,11 +25,12 @@ type Category = {
 }
 
 type Achievement = {
-	name: string
+	name: string | string[]
 	version: `${number}.${number}`
 	clue?: string | string[]
 	secret?: boolean
 	done?: boolean
+	path?: string
 }
 
 /**
@@ -333,7 +334,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Moral Higher Ground", version: "1.0", secret: true, clue: "Confront the Public Property Protector and show him the cost of stopping you (or have him humbly acknowledge his wrongdoing.)" },
 		{ name: "Outworlder", version: "1.0", secret: true, clue: "Return the music box found in Rivet Town to its heartbroken owner" },
 		{ 
-			name: "For a Breath I Tarry |DIVIDER| The Lifecycle of Software Objects", 
+			name: ["For a Breath I Tarry", "The Lifecycle of Software Objects"], 
 			version: "1.0", 
 			secret: true,
 			clue: [
@@ -362,7 +363,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "A Simple Life", version: "1.0", secret: true, clue: 'Receive a text from Luhui after completing the mission "Fired"' },
 		{ name: "Carpe Diem, Festina Lente, and Tempus Fugit", version: "1.0", secret: true, clue: `Revving up, Losing Steam, and Running On Empty. Receive all the texts about Chengjie's fading passion after completing the mission "A Teacher and a Friend".` },
 		{ 
-			name: "Tootsie |DIVIDER| Cyber Fraud |DIVIDER| A Secret Makes a Woman, Woman.", 
+			name: ["Tootsie", "Cyber Fraud", "A Secret Makes a Woman, Woman."], 
 			version: "1.0", 
 			secret: true,
 			clue: [
@@ -374,7 +375,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "The Seven Errors of Cycranes: Sloth", version: "1.0", secret: true, clue: "Convince the depressed cycrane to return to its job" },
 		{ name: "Seven Birds in the Hand Is Worth A Thousand in the Bush", version: "1.0", secret: true, clue: "Help Heron Express to recover all lost cycranes" },
 		{ 
-			name: "Fair and Square |DIVIDER| All Is Fair in Love and War |DIVIDER| From Hero to Zero", 
+			name: ["Fair and Square", "All Is Fair in Love and War", "From Hero to Zero"], 
 			version: "1.0", 
 			secret: true,
 			clue: [
@@ -384,7 +385,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			],
 		},
 		{ 
-			name: "Far From the Madding Crowd |DIVIDER| Let the Wind Blow Where It May", 
+			name: ["Far From the Madding Crowd", "Let the Wind Blow Where It May"], 
 			version: "1.0", 
 			secret: true,
 			clue: [
@@ -395,7 +396,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{ name: "Hasta la vista, Hexanexus!", version: "1.0", secret: true, clue: "Complete 15 Hexanexus challenge(s) from the Hex Club" },
 		{ name: "Rubik's Headache", version: "1.0", secret: true, clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club" },
 		{ 
-			name: "The Crimes That Bind |DIVIDER| Flight Cancelled", 
+			name: ["The Crimes That Bind", "Flight Cancelled"], 
 			version: "1.0", 
 			secret: true, 
 			clue: [
@@ -404,7 +405,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			],
 		},
 		{ 
-			name: "Lost and Found |DIVIDER| Leave It There |DIVIDER| Have Your Cake and Eat It", 
+			name: ["Lost and Found", "Leave It There", "Have Your Cake and Eat It"], 
 			version: "1.0", 
 			secret: true, 
 			clue: [
@@ -535,17 +536,20 @@ async function getAchievements(
 	const db = getDbConnection(env)
 	const achieved = await db
 		.selectFrom("achievement")
-		.select("name")
+		.select(["name", "path"])
 		.where(({ and, cmpr }) =>
 			and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
 		)
 		.execute()
 
 	const achievements = achievementByCategory[slug].map((achievement) => {
-		const done = achieved.find(({ name }) => name === achievement.name)
+		const done = achieved.find(
+			({ name }) => name === achievement.name.toString()
+		)
 		return {
 			...achievement,
 			done: Boolean(done),
+			path: done?.path ?? undefined,
 		}
 	})
 
@@ -588,30 +592,56 @@ async function modifyAchieved(
 	sessionId: string,
 	slug: SlugifiedCategoryName,
 	name: string,
-	intent: "put" | "delete"
+	intent: "put" | "delete" | "multi",
+	path?: string
 ) {
 	const db = getDbConnection(env)
-
-	if (intent === "put") {
-		await db
-			.insertInto("achievement")
-			.values({
-				category: slug,
-				session_id: sessionId,
-				name,
-			})
-			.execute()
+	if (intent === "multi") {
+		if (path === "none") {
+			await db
+				.deleteFrom("achievement")
+				.where(({ and, cmpr }) =>
+					and([
+						cmpr("session_id", "=", sessionId),
+						cmpr("category", "=", slug),
+						cmpr("name", "=", name),
+					])
+				)
+				.execute()
+		} else {
+			await db
+				.insertInto("achievement")
+				.values({
+					category: slug,
+					session_id: sessionId,
+					name,
+					path,
+				})
+				.onDuplicateKeyUpdate({ path })
+				.execute()
+		}
 	} else {
-		await db
-			.deleteFrom("achievement")
-			.where(({ and, cmpr }) =>
-				and([
-					cmpr("session_id", "=", sessionId),
-					cmpr("category", "=", slug),
-					cmpr("name", "=", name),
-				])
-			)
-			.execute()
+		if (intent === "put") {
+			await db
+				.insertInto("achievement")
+				.values({
+					category: slug,
+					session_id: sessionId,
+					name,
+				})
+				.execute()
+		} else {
+			await db
+				.deleteFrom("achievement")
+				.where(({ and, cmpr }) =>
+					and([
+						cmpr("session_id", "=", sessionId),
+						cmpr("category", "=", slug),
+						cmpr("name", "=", name),
+					])
+				)
+				.execute()
+		}
 	}
 }
 
