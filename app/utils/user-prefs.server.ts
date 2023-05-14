@@ -1,25 +1,25 @@
 import { createCookie } from "@remix-run/cloudflare"
 import type { Infer } from "superstruct"
-import { boolean, defaulted, mask, object } from "superstruct"
+import { boolean, coerce, defaulted, mask, object } from "superstruct"
+
+const achievedSchema = defaulted(
+	coerce(
+		object({
+			beforeAchieved: defaulted(boolean(), false),
+			afterAchieved: defaulted(boolean(), true),
+		}),
+		boolean(),
+		(value) => ({ beforeAchieved: value, afterAchieved: value })
+	),
+	{}
+)
 
 const userPrefsSchema = object({
 	showMissedFirst: defaulted(boolean(), true),
 	showClue: defaulted(
 		object({
-			normalAchievement: defaulted(
-				object({
-					beforeAchieved: defaulted(boolean(), true),
-					afterAchieved: defaulted(boolean(), true),
-				}),
-				{}
-			),
-			secretAchievement: defaulted(
-				object({
-					beforeAchieved: defaulted(boolean(), false),
-					afterAchieved: defaulted(boolean(), true),
-				}),
-				{}
-			),
+			normalAchievement: achievedSchema,
+			secretAchievement: achievedSchema,
 		}),
 		{}
 	),
