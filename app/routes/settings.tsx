@@ -111,8 +111,8 @@ export default function SettingsPage() {
 								</p>
 
 								<div className="mt-6 space-y-6">
-									<div className="relative flex gap-x-3">
-										<div className="flex h-7 items-center">
+									<div className="flex gap-x-3">
+										<div className="flex h-6 items-center">
 											<Checkbox
 												id="secret-before-achieved"
 												name="secretBeforeAchieved"
