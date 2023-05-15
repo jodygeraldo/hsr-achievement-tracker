@@ -224,6 +224,7 @@ function MobileNavigation() {
 				defaultValue={location.pathname}
 				onChange={(e) => navigate(e.currentTarget.value)}
 			>
+				<option value="/">-</option>
 				{categories.map((category) => (
 					<option key={category.slug} value={category.slug}>
 						{category.name}

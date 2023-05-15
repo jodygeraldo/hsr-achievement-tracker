@@ -44,4 +44,3 @@ async function getUserPrefs(request: Request): Promise<UserPrefs> {
 }
 
 export { userPrefsCookie, getUserPrefs }
-
