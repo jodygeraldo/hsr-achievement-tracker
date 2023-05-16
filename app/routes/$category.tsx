@@ -281,7 +281,10 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 						</label>
 
 						{achievement.clue && achievement.clue[index] && displayClue ? (
-							<p className="text-gray-11">{achievement.clue[index]}</p>
+							<p
+								className="text-gray-11"
+								dangerouslySetInnerHTML={{ __html: achievement.clue[index] }}
+							/>
 						) : null}
 					</div>
 				</div>
@@ -356,7 +359,10 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 				</label>
 
 				{achievement.clue && displayClue ? (
-					<p className="text-gray-11">{achievement.clue}</p>
+					<p
+						className="text-gray-11"
+						dangerouslySetInnerHTML={{ __html: achievement.clue }}
+					/>
 				) : null}
 			</div>
 		</div>
