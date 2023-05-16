@@ -51,10 +51,7 @@ async function getUserPrefs(request: Request) {
 	}
 
 	try {
-		return mask(
-			{ showClue: { normalAchievement: { beforeAchieved: true } } },
-			userPrefsStruct
-		)
+		return mask(cookie, userPrefsStruct)
 	} catch (error) {
 		if (error instanceof StructError) {
 			let hasUnexpectedFailure = false
