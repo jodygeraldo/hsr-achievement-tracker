@@ -197,7 +197,9 @@ function DesktopNavigation() {
 						>
 							<span className="text-sm font-medium">{category.name}</span>
 							<div className="text-xs">
-								{category.achievedCount}/{category.size}
+								{Number(category.achievedCount) === category.size
+									? "🎉"
+									: `${category.achievedCount}/${category.size}`}
 							</div>
 						</NavLink>
 					</li>
