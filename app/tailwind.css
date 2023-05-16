@@ -3,8 +3,8 @@
 }
 
 .clue-highlight {
-	color: hsl(var(--gold-9));
-	font-weight: 500;
+	color: hsl(var(--gold-10));
+	font-weight: 600;
 }
 
 .clue-link {
