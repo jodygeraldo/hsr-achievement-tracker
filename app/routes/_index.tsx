@@ -1,9 +1,5 @@
-import { MainContainer } from "~/components/main-container"
+import { redirect } from "@remix-run/cloudflare"
 
-export default function () {
-	return (
-		<MainContainer>
-			<p>Select a achievement category</p>
-		</MainContainer>
-	)
+export function loader() {
+	return redirect("/trailblazer")
 }
