@@ -118,23 +118,23 @@ export default function CategoryPage() {
 						key={achievement.name.toString()}
 						className="flex flex-col gap-x-8 gap-y-2 py-2 sm:flex-row sm:items-center sm:justify-between"
 					>
+						<div className="flex items-center gap-2 self-start sm:order-last">
+							<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
+								{achievement.version}
+							</span>
+
+							{achievement.secret ? (
+								<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6 sm:order-first">
+									Secret
+								</span>
+							) : null}
+						</div>
+
 						{Array.isArray(achievement.name) ? (
 							<MultiAchievement achievement={achievement} />
 						) : (
 							<SingleAchievement achievement={achievement} />
 						)}
-
-						<div className="order-first flex items-center gap-2 self-start sm:order-last">
-							{achievement.secret ? (
-								<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
-									Secret
-								</span>
-							) : null}
-
-							<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
-								{achievement.version}
-							</span>
-						</div>
 					</li>
 				))}
 			</ul>
