@@ -3,23 +3,24 @@ import type {
 	LinkDescriptor,
 	LoaderArgs,
 	SerializeFrom,
-	SessionStorage,
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
+import type { Kysely } from "kysely"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
+import type { AppSession, Database } from "./types"
 import { getSessionId } from "./utils/session.server"
 NProgress.configure({ showSpinner: false })
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
-		env: Env
-		sessionStorage: SessionStorage<{ userSessionId: string }>
+		sessionStorage: AppSession
+		db: Kysely<Database>
 	}
 }
 
@@ -40,7 +41,7 @@ export async function loader({ request, context }: LoaderArgs) {
 
 	try {
 		const { achievementSize, achievedTotal, categories } = await getCategories(
-			context.env,
+			context.db,
 			sessionId
 		)
 

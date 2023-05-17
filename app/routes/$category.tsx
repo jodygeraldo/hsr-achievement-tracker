@@ -52,10 +52,10 @@ export async function action({ request, params, context }: ActionArgs) {
 
 	try {
 		if (is(intent, union([literal("put"), literal("delete")]))) {
-			await modifyAchieved(context.env, sessionId, slug, name, intent)
+			await modifyAchieved(context.db, sessionId, slug, name, intent)
 		} else {
 			assert(path, string())
-			await modifyAchieved(context.env, sessionId, slug, name, "multi", path)
+			await modifyAchieved(context.db, sessionId, slug, name, "multi", path)
 		}
 	} catch (error) {
 		let message = "Failed to modified achievement status"
@@ -86,7 +86,7 @@ export async function loader({ request, params, context }: LoaderArgs) {
 
 	try {
 		const data = await getAchievements(
-			context.env,
+			context.db,
 			sessionId,
 			slug,
 			userPrefs.showMissedFirst

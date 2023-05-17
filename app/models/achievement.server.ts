@@ -1,4 +1,4 @@
-import { getDbConnection } from "~/services/db.server"
+import type { AppLoadContext } from "@remix-run/cloudflare"
 import { clueBuilder } from "~/utils/achievement.server"
 
 type Slugify<S extends string> = S extends `${infer T} ${infer U}`
@@ -1920,33 +1920,40 @@ const categories: Category[] = [
 	},
 ]
 
-async function getCategories(env: Env, sessionId: string) {
+async function getCategories(db: AppLoadContext["db"], sessionId: string) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
 
-	const achievedCount = await getAchievedCount(env, sessionId)
+	const achievedByCategory = await db
+		.selectFrom("achievement")
+		.select(["category as slug", db.fn.countAll<string>().as("count")])
+		.where("session_id", "=", sessionId)
+		.groupBy("category")
+		.execute()
+
+	let achievedTotal = 0
+	achievedByCategory.forEach(({ count }) => (achievedTotal += Number(count)))
 
 	return {
 		achievementSize,
-		achievedTotal: achievedCount.total,
+		achievedTotal,
 		categories: categories.map((category) => ({
 			name: category.name,
 			slug: category.slug,
 			size: category.size,
 			achievedCount:
-				achievedCount.byCategory.find(({ slug }) => slug === category.slug)
-					?.count ?? "0",
+				achievedByCategory.find(({ slug }) => slug === category.slug)?.count ??
+				"0",
 		})),
 	}
 }
 
 async function getAchievements(
-	env: Env,
+	db: AppLoadContext["db"],
 	sessionId: string,
 	slug: SlugifiedCategoryName,
 	showMissedFirst: boolean
 ) {
-	const db = getDbConnection(env)
 	const achieved = await db
 		.selectFrom("achievement")
 		.select(["name", "path"])
@@ -1982,33 +1989,14 @@ async function getAchievements(
 	}
 }
 
-async function getAchievedCount(env: Env, sessionId: string) {
-	const db = getDbConnection(env)
-	const achievedByCategory = await db
-		.selectFrom("achievement")
-		.select(["category as slug", db.fn.countAll<string>().as("count")])
-		.where("session_id", "=", sessionId)
-		.groupBy("category")
-		.execute()
-
-	let total = 0
-	achievedByCategory.forEach(({ count }) => (total += Number(count)))
-
-	return {
-		total,
-		byCategory: achievedByCategory,
-	}
-}
-
 async function modifyAchieved(
-	env: Env,
+	db: AppLoadContext["db"],
 	sessionId: string,
 	slug: SlugifiedCategoryName,
 	name: string,
 	intent: "put" | "delete" | "multi",
 	path?: string
 ) {
-	const db = getDbConnection(env)
 	if (intent === "multi") {
 		if (path === "none") {
 			await db
@@ -2060,4 +2048,3 @@ async function modifyAchieved(
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, modifyAchieved }
-
