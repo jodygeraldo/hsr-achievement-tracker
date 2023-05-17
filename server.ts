@@ -16,7 +16,7 @@ export const onRequest = createPagesFunctionHandler<Env>({
 				httpOnly: true,
 				path: "/",
 				sameSite: "lax",
-				secret: [context.env.SESSION_SECRET],
+				secrets: [context.env.SESSION_SECRET],
 				secure: process.env.NODE_ENV === "production",
 			},
 		}),
