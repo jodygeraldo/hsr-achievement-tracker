@@ -205,12 +205,19 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 
 	const radioNoneId = React.useId()
 
-	// prettier-ignore
-	const displayClue = 
-		(!achievement.secret && !achievement.path && showClue.normalAchievement.beforeAchieved) ||
-		(!achievement.secret && achievement.path && showClue.normalAchievement.afterAchieved) ||
-		(achievement.secret && !achievement.path && showClue.secretAchievement.beforeAchieved) ||
-		(achievement.secret && achievement.path && showClue.secretAchievement.afterAchieved)
+	const displayClue =
+		(!achievement.secret &&
+			!achievement.path &&
+			showClue.normalAchievement.beforeAchieved) ||
+		(!achievement.secret &&
+			achievement.path &&
+			showClue.normalAchievement.afterAchieved) ||
+		(achievement.secret &&
+			!achievement.path &&
+			showClue.secretAchievement.beforeAchieved) ||
+		(achievement.secret &&
+			achievement.path &&
+			showClue.secretAchievement.afterAchieved)
 
 	return (
 		<RadioGroup
@@ -312,12 +319,19 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 	const fetcher = useFetcher()
 	const action = useFormAction()
 
-	// prettier-ignore
-	const displayClue = 
-		(!achievement.secret && !achievement.done && showClue.normalAchievement.beforeAchieved) ||
-		(!achievement.secret && achievement.done && showClue.normalAchievement.afterAchieved) ||
-		(achievement.secret && !achievement.done && showClue.secretAchievement.beforeAchieved) ||
-		(achievement.secret && achievement.done && showClue.secretAchievement.afterAchieved)
+	const displayClue =
+		(!achievement.secret &&
+			!achievement.done &&
+			showClue.normalAchievement.beforeAchieved) ||
+		(!achievement.secret &&
+			achievement.done &&
+			showClue.normalAchievement.afterAchieved) ||
+		(achievement.secret &&
+			!achievement.done &&
+			showClue.secretAchievement.beforeAchieved) ||
+		(achievement.secret &&
+			achievement.done &&
+			showClue.secretAchievement.afterAchieved)
 
 	return (
 		<div key={achievement.name} className="flex items-center gap-x-3">
