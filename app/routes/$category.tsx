@@ -135,7 +135,7 @@ export default function CategoryPage() {
 					}}
 				>
 					<Progress.Indicator
-						className="h-full w-full bg-gold-9 transition-transform duration-700 ease-[0.7,0.3,0.3,0.6]"
+						className="h-full w-full bg-gold-9 transition duration-700 ease-[cubic-bezier(.7,.3,.3,.6)] data-[state=complete]:bg-gold-10"
 						style={{
 							transform: `translateX(-${percentageToPerfect}%)`,
 						}}
