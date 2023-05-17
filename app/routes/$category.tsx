@@ -1,5 +1,6 @@
 import { DatabaseError } from "@planetscale/database"
 import * as Popover from "@radix-ui/react-popover"
+import * as Progress from "@radix-ui/react-progress"
 import type {
 	ActionArgs,
 	LoaderArgs,
@@ -13,7 +14,9 @@ import {
 	useFetcher,
 	useFormAction,
 	useLoaderData,
+	useParams,
 	useRouteError,
+	useRouteLoaderData,
 } from "@remix-run/react"
 import * as React from "react"
 import { assert, is, literal, string, union } from "superstruct"
@@ -24,6 +27,7 @@ import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
+import type { RootLoaderData } from "~/root"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
 import { cn } from "~/utils/shared"
@@ -110,8 +114,35 @@ export async function loader({ request, params, context }: LoaderArgs) {
 export default function CategoryPage() {
 	const { achievements } = useLoaderData<typeof loader>()
 
+	const slug = useParams().category
+	const { categories } = useRouteLoaderData("root") as RootLoaderData
+	const currentCategory = categories.find((category) => category.slug === slug)!
+
+	const percentageToPerfect =
+		100 - (Number(currentCategory.achievedCount) / currentCategory.size) * 100
+
 	return (
 		<MainContainer>
+			<div className="sticky top-0 z-10 -mx-4 -mt-6 flex rounded-lg bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter">
+				<Progress.Root
+					value={Number(currentCategory.achievedCount)}
+					max={currentCategory.size}
+					className="relative h-5 w-full overflow-hidden rounded-full border border-gold-6 bg-gold-3"
+					style={{
+						// Fix overflow clipping in Safari
+						// https://gist.github.com/domske/b66047671c780a238b51c51ffde8d3a0
+						transform: "translateZ(0)",
+					}}
+				>
+					<Progress.Indicator
+						className="h-full w-full bg-gold-9 transition-transform duration-700 ease-[0.7,0.3,0.3,0.6]"
+						style={{
+							transform: `translateX(-${percentageToPerfect}%)`,
+						}}
+					/>
+				</Progress.Root>
+			</div>
+
 			<ul className="flex-1 divide-y divide-gray-6">
 				{achievements.map((achievement) => (
 					<li
