@@ -59,14 +59,14 @@ function Document({ children }: { children: React.ReactNode }) {
 function Main() {
 	return (
 		<Document>
-			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl py-12 sm:px-6 lg:px-8">
 				<div className="flex flex-col gap-x-8 gap-y-4 lg:flex-row">
 					<Sidebar />
 
 					<Outlet />
 				</div>
 
-				<div className="mt-8 items-center justify-between sm:flex lg:hidden">
+				<div className="mt-8 items-center justify-between px-4 sm:flex lg:hidden">
 					<p className="text-sm text-gray-11">
 						Unofficial{" "}
 						<a
@@ -100,7 +100,7 @@ function Sidebar() {
 	) as RootLoaderData
 
 	return (
-		<div className="w-full self-start rounded-lg bg-gray-2 py-6 shadow-sm shadow-overlay-3 lg:sticky lg:top-12 lg:max-w-md">
+		<div className="w-full self-start bg-gray-2 py-6 shadow-sm shadow-overlay-3 sm:rounded-lg lg:sticky lg:top-12 lg:max-w-md">
 			<div className="px-4">
 				<div className="flex items-center justify-between gap-4">
 					<h1 className="text-xl font-semibold tracking-tight text-gold-9">

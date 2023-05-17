@@ -123,7 +123,7 @@ export default function CategoryPage() {
 
 	return (
 		<MainContainer>
-			<div className="sticky top-0 z-10 -mx-4 -mt-6 flex rounded-lg bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter">
+			<div className="sticky top-0 z-10 -mx-4 -mt-6 flex bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:rounded-lg">
 				<Progress.Root
 					value={Number(currentCategory.achievedCount)}
 					max={currentCategory.size}
