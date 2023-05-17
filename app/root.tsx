@@ -19,7 +19,7 @@ NProgress.configure({ showSpinner: false })
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
 		env: Env
-		sessionStorage: SessionStorage
+		sessionStorage: SessionStorage<{ userSessionId: string }>
 	}
 }
 

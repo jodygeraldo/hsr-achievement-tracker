@@ -6,19 +6,20 @@ if (process.env.NODE_ENV === "development") {
 	logDevReady(build)
 }
 
-const sessionStorage = createCookieSessionStorage({
-	cookie: {
-		name: "__session",
-		httpOnly: true,
-		path: "/",
-		sameSite: "lax",
-		secret: ["INTERESTINGLY_SECURE_SECRET_HERE"],
-		secure: process.env.NODE_ENV === "production",
-	},
-})
-
-export const onRequest = createPagesFunctionHandler({
+export const onRequest = createPagesFunctionHandler<Env>({
 	build,
-	getLoadContext: (context) => ({ env: context.env, sessionStorage }),
+	getLoadContext: (context) => ({
+		env: context.env,
+		sessionStorage: createCookieSessionStorage({
+			cookie: {
+				name: "__session",
+				httpOnly: true,
+				path: "/",
+				sameSite: "lax",
+				secret: [context.env.SESSION_SECRET],
+				secure: process.env.NODE_ENV === "production",
+			},
+		}),
+	}),
 	mode: process.env.NODE_ENV,
 })

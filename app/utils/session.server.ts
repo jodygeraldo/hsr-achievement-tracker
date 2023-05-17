@@ -1,24 +1,27 @@
-import type { SessionStorage } from "@remix-run/cloudflare"
+import type { AppLoadContext } from "@remix-run/cloudflare"
 import { redirect } from "@remix-run/cloudflare"
 import { uid } from "uid"
 
-const SESSION_ID_KEY = "userSessionId"
-
-async function getSessionId(sessionStorage: SessionStorage, request: Request) {
+async function getSessionId(
+	sessionStorage: AppLoadContext["sessionStorage"],
+	request: Request
+) {
 	const url = new URL(request.url)
 	const cookie = request.headers.get("Cookie")
 	const session = await sessionStorage.getSession(cookie)
 
-	if (session.has(SESSION_ID_KEY)) {
-		return session.get(SESSION_ID_KEY)
-	} else {
-		session.set(SESSION_ID_KEY, uid())
+	const sessionId = session.get("userSessionId")
+
+	if (!sessionId) {
+		session.set("userSessionId", uid())
 		throw redirect(url.pathname, {
 			headers: {
 				"Set-Cookie": await sessionStorage.commitSession(session),
 			},
 		})
 	}
+
+	return sessionId
 }
 
 export { getSessionId }
