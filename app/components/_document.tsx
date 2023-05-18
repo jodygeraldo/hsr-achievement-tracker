@@ -105,7 +105,7 @@ function Sidebar() {
 		<div className="w-full self-start bg-gray-2 py-6 shadow-sm shadow-overlay-3 sm:rounded-lg lg:sticky lg:top-12 lg:max-w-md">
 			<div className="px-4">
 				<div className="flex items-center justify-between gap-4">
-					<h1 className="text-xl font-semibold tracking-tight text-gold-9">
+					<h1 className="text-xl font-semibold leading-none tracking-tight text-gold-9">
 						HSR Achievement Tracker
 					</h1>
 
@@ -134,7 +134,7 @@ function Sidebar() {
 					</Link>
 				</div>
 
-				<div className="text-sm tabular-nums text-gray-12">
+				<div className="mt-1 text-sm tabular-nums text-gray-12">
 					<span className="font-medium">{achievedTotal}</span>/{achievementSize}{" "}
 					&middot;{" "}
 					<span className="font-medium">
