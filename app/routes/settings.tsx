@@ -1,6 +1,13 @@
 import type { ActionArgs, LoaderArgs } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import { Form, useLoaderData } from "@remix-run/react"
+import {
+	Form,
+	useActionData,
+	useLoaderData,
+	useNavigation,
+} from "@remix-run/react"
+import * as React from "react"
+import toast from "react-hot-toast"
 import { Checkbox } from "~/components/ui/checkbox"
 import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 
@@ -20,11 +27,14 @@ export async function action({ request }: ActionArgs) {
 	cookie.showClue.secretAchievement.beforeAchieved = secretBeforeAchieved
 	cookie.showClue.secretAchievement.afterAchieved = secretAfterAchieved
 
-	return json(null, {
-		headers: {
-			"Set-Cookie": await userPrefsCookie.serialize(cookie),
-		},
-	})
+	return json(
+		{ ok: true },
+		{
+			headers: {
+				"Set-Cookie": await userPrefsCookie.serialize(cookie),
+			},
+		}
+	)
 }
 
 export async function loader({ request }: LoaderArgs) {
@@ -35,6 +45,25 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function SettingsPage() {
 	const { showMissedFirst, showClue } = useLoaderData<typeof loader>()
+	const actionData = useActionData<typeof action>()
+	const navigation = useNavigation()
+
+	React.useEffect(() => {
+		if (navigation.state === "idle" && actionData?.ok) {
+			toast.success("Your changes have been saved.", {
+				id: "settingsAction",
+				style: {
+					borderRadius: "0.375rem",
+					background: "hsl(var(--gray-3))",
+					color: "hsl(var(--gray-12))",
+				},
+				iconTheme: {
+					primary: "hsl(var(--gold-9))",
+					secondary: "hsl(var(--gold-12))",
+				},
+			})
+		}
+	}, [actionData, navigation])
 
 	return (
 		<Form method="post">

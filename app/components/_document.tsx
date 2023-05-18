@@ -12,6 +12,7 @@ import {
 	useRouteLoaderData,
 } from "@remix-run/react"
 import * as React from "react"
+import { Toaster } from "react-hot-toast"
 import type { RootLoaderData } from "../root"
 import { cn } from "../utils/shared"
 import { MainContainer } from "./main-container"
@@ -49,6 +50,7 @@ function Document({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="h-full">
 				{children}
+				<Toaster />
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />
