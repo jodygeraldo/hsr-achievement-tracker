@@ -39,7 +39,7 @@ export default function SettingsPage() {
 	return (
 		<Form method="post">
 			<div className="space-y-12">
-				<div className="border-b border-white/10 pb-12">
+				<div className="border-b border-gray-6 pb-12">
 					<h2 className="font-semibold leading-7 text-gray-12">General</h2>
 					<p className="mt-1 text-sm leading-6 text-gray-11">
 						These are the settings that determine how achievements are displayed
