@@ -14,6 +14,8 @@ import {
 	useFetcher,
 	useFormAction,
 	useLoaderData,
+	useLocation,
+	useNavigate,
 	useParams,
 	useRouteError,
 	useRouteLoaderData,
@@ -21,7 +23,6 @@ import {
 import * as React from "react"
 import { assert, is, literal, string, union } from "superstruct"
 import { ErrorComponent } from "~/components/error-component"
-import { MainContainer } from "~/components/main-container"
 import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
@@ -114,6 +115,9 @@ export async function loader({ request, params, context }: LoaderArgs) {
 export default function CategoryPage() {
 	const { achievements } = useLoaderData<typeof loader>()
 
+	const location = useLocation()
+	const navigate = useNavigate()
+
 	const slug = useParams().category
 	const { categories } = useRouteLoaderData("root") as RootLoaderData
 	const currentCategory = categories.find((category) => category.slug === slug)!
@@ -122,8 +126,26 @@ export default function CategoryPage() {
 		100 - (Number(currentCategory.achievedCount) / currentCategory.size) * 100
 
 	return (
-		<MainContainer>
-			<div className="sticky top-0 z-10 -mx-4 -mt-6 flex bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:rounded-lg">
+		<>
+			<div className="sticky top-0 z-10 -mx-4 -mt-12 flex flex-col gap-4 bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:-mt-6 sm:rounded-lg">
+				<div className="sm:hidden">
+					<label htmlFor="navs" className="sr-only">
+						Select a category
+					</label>
+					<select
+						id="navs"
+						className="block w-full rounded-md border-0 bg-gray-3 py-1.5 pl-3 pr-10 text-gray-12 ring-1 ring-inset ring-gray-7 focus:ring-2 focus:ring-gold-8 sm:text-sm sm:leading-6"
+						defaultValue={location.pathname.slice(1)}
+						onChange={(e) => navigate(e.currentTarget.value)}
+					>
+						{categories.map((category) => (
+							<option key={category.slug} value={category.slug}>
+								{category.name}
+							</option>
+						))}
+					</select>
+				</div>
+
 				<Progress.Root
 					value={Number(currentCategory.achievedCount)}
 					max={currentCategory.size}
@@ -169,7 +191,7 @@ export default function CategoryPage() {
 					</li>
 				))}
 			</ul>
-		</MainContainer>
+		</>
 	)
 }
 
