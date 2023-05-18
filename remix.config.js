@@ -1,6 +1,6 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
-	devServerBroadcastDelay: 1000,
+	// devServerBroadcastDelay: 1000,
 	ignoredRouteFiles: ["**/.*"],
 	server: "./server.ts",
 	serverBuildPath: "functions/[[path]].js",
@@ -14,7 +14,7 @@ export default {
 	// assetsBuildDirectory: "public/build",
 	// publicPath: "/build/",
 	future: {
-		// unstable_dev: true,
+		unstable_dev: true,
 		v2_errorBoundary: true,
 		v2_meta: true,
 		v2_normalizeFormMethod: true,

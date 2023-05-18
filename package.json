@@ -3,16 +3,12 @@
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
-		"wrangler": "wrangler pages dev ./public",
 		"build": "remix build",
-		"dev:remix": "remix watch",
-		"dev:wrangler": "npm run wrangler",
-		"dev": "run-p -l dev:*",
-		"v2dev": "remix dev --no-restart --command \"npm run wrangler\"",
-		"start": "npm run wrangler",
+		"dev": "remix dev --no-restart --command \"wrangler pages dev ./public\"",
 		"fmt": "prettier --cache --write --ignore-unknown .",
 		"lint": "eslint --ext .ts,.tsx --cache --cache-location ./node_modules/.cache/eslint .",
-		"typecheck": "tsc"
+		"typecheck": "tsc",
+		"validate": "run-p -l lint typecheck"
 	},
 	"dependencies": {
 		"@planetscale/database": "1.6.0",
