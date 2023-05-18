@@ -258,9 +258,8 @@ function MobileNavigation() {
 			</label>
 			<select
 				id="navs"
-				name="navs"
 				className="block w-full rounded-md border-0 bg-gray-3 py-1.5 pl-3 pr-10 text-gray-12 ring-1 ring-inset ring-gray-7 focus:ring-2 focus:ring-gold-8 sm:text-sm sm:leading-6"
-				defaultValue={location.pathname}
+				defaultValue={location.pathname.slice(1)}
 				onChange={(e) => navigate(e.currentTarget.value)}
 			>
 				{categories.map((category) => (
