@@ -78,7 +78,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{
 			name: "My Childhood",
 			version: "1.0",
-			clue: "Enhance 4 characters to Lv. 80",
+			clue: "Reach Character Level 40 with any character",
 		},
 		{
 			name: "Don't Make This Too Easy (II)",
@@ -2048,3 +2048,4 @@ async function modifyAchieved(
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, modifyAchieved }
+
