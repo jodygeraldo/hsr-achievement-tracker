@@ -1920,7 +1920,12 @@ const categories: Category[] = [
 	},
 ]
 
-async function getCategories(db: AppLoadContext["db"], sessionId: string) {
+type DatabaseAccess = {
+	db: AppLoadContext["db"]
+	sessionId: string
+}
+
+async function getCategories({ db, sessionId }: DatabaseAccess) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
 
@@ -1948,12 +1953,15 @@ async function getCategories(db: AppLoadContext["db"], sessionId: string) {
 	}
 }
 
-async function getAchievements(
-	db: AppLoadContext["db"],
-	sessionId: string,
-	slug: SlugifiedCategoryName,
+async function getAchievements({
+	db,
+	sessionId,
+	slug,
+	showMissedFirst,
+}: {
+	slug: SlugifiedCategoryName
 	showMissedFirst: boolean
-) {
+} & DatabaseAccess) {
 	const achieved = await db
 		.selectFrom("achievement")
 		.select(["name", "path"])
@@ -1989,14 +1997,19 @@ async function getAchievements(
 	}
 }
 
-async function modifyAchieved(
-	db: AppLoadContext["db"],
-	sessionId: string,
-	slug: SlugifiedCategoryName,
-	name: string,
-	intent: "put" | "delete" | "multi",
+async function modifyAchieved({
+	db,
+	sessionId,
+	slug,
+	name,
+	intent,
+	path,
+}: {
+	slug: SlugifiedCategoryName
+	name: string
+	intent: "put" | "delete" | "multi"
 	path?: string
-) {
+} & DatabaseAccess) {
 	if (intent === "multi") {
 		if (path === "none") {
 			await db

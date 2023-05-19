@@ -8,10 +8,7 @@ import type {
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
 import type { ShouldRevalidateFunction } from "@remix-run/react"
-import {
-	isRouteErrorResponse,
-	useRouteError
-} from "@remix-run/react"
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import { assert, is, literal, string, union } from "superstruct"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
@@ -44,10 +41,17 @@ export async function action({ request, params, context }: ActionArgs) {
 
 	try {
 		if (is(intent, union([literal("put"), literal("delete")]))) {
-			await modifyAchieved(context.db, sessionId, slug, name, intent)
+			await modifyAchieved({ db: context.db, sessionId, slug, name, intent })
 		} else {
 			assert(path, string())
-			await modifyAchieved(context.db, sessionId, slug, name, "multi", path)
+			await modifyAchieved({
+				db: context.db,
+				sessionId,
+				slug,
+				name,
+				intent: "multi",
+				path,
+			})
 		}
 	} catch (error) {
 		let message = "Failed to modified achievement status"
@@ -78,12 +82,12 @@ export async function loader({ request, params, context }: LoaderArgs) {
 	const userPrefs = await getUserPrefs(request)
 
 	try {
-		const data = await getAchievements(
-			context.db,
+		const data = await getAchievements({
+			db: context.db,
 			sessionId,
 			slug,
-			userPrefs.showMissedFirst
-		)
+			showMissedFirst: userPrefs.showMissedFirst,
+		})
 
 		return json({
 			categoryName: data.categoryName,

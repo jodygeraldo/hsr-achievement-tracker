@@ -40,12 +40,12 @@ export async function loader({ request, context }: LoaderArgs) {
 	const sessionId = await getSessionId(context.sessionStorage, request)
 
 	try {
-		const { achievementSize, achievedTotal, categories } = await getCategories(
-			context.db,
-			sessionId
-		)
+		const category = await getCategories({
+			db: context.db,
+			sessionId,
+		})
 
-		return json({ achievementSize, achievedTotal, categories })
+		return json(category)
 	} catch (error) {
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {
