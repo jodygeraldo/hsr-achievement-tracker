@@ -2048,4 +2048,3 @@ async function modifyAchieved(
 
 export type { Category, CategoryName, SlugifiedCategoryName, Achievement }
 export { getCategories, getAchievements, modifyAchieved }
-
