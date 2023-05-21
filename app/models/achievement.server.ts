@@ -29,7 +29,7 @@ type Achievement = {
 	version: `${number}.${number}`
 	clue?: string | string[]
 	secret?: boolean
-	done?: boolean
+	achievedAt?: string
 	path?: string
 }
 
@@ -1964,7 +1964,7 @@ async function getAchievements({
 } & DatabaseAccess) {
 	const achieved = await db
 		.selectFrom("achievement")
-		.select(["name", "path"])
+		.select(["name", "created_at", "path"])
 		.where(({ and, cmpr }) =>
 			and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
 		)
@@ -1974,9 +1974,39 @@ async function getAchievements({
 		const done = achieved.find(
 			({ name }) => name === achievement.name.toString()
 		)
+
+		let achievedAt: string | undefined = undefined
+		if (done) {
+			const locale = "en"
+			const rtf = new Intl.RelativeTimeFormat(locale, {
+				style: "short",
+			})
+			const dtf = new Intl.DateTimeFormat(locale, {
+				dateStyle: "medium",
+			})
+
+			const now = new Date()
+			const diffInSeconds = (now.getTime() - done.created_at.getTime()) / 1000
+			const diffInMinutes = diffInSeconds / 60
+			const diffInHours = diffInMinutes / 60
+			const diffInDays = diffInHours / 24
+
+			if (diffInDays > 30) {
+				achievedAt = dtf.format(done.created_at)
+			} else if (Math.abs(diffInDays) > 1) {
+				achievedAt = rtf.format(Math.round(diffInDays) * -1, "day")
+			} else if (Math.abs(diffInHours) > 1) {
+				achievedAt = rtf.format(Math.round(diffInHours) * -1, "hour")
+			} else if (Math.abs(diffInMinutes) > 1) {
+				achievedAt = rtf.format(Math.round(diffInMinutes) * -1, "minute")
+			} else {
+				achievedAt = rtf.format(Math.round(diffInSeconds) * -1, "second")
+			}
+		}
+
 		return {
 			...achievement,
-			done: Boolean(done),
+			achievedAt,
 			path: done?.path ?? undefined,
 		}
 	})
@@ -1987,7 +2017,8 @@ async function getAchievements({
 
 	if (showMissedFirst) {
 		achievements.sort(
-			(first, second) => Number(first.done) - Number(second.done)
+			(first, second) =>
+				Number(Boolean(first.achievedAt)) - Number(Boolean(second.achievedAt))
 		)
 	}
 

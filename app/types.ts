@@ -7,6 +7,7 @@ interface AchievementTable {
 	name: string
 	category: string
 	path: string | null
+	created_at: Generated<Date>
 }
 
 interface Database {
