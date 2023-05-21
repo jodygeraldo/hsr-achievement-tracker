@@ -11,6 +11,10 @@ import toast from "react-hot-toast"
 import { Checkbox } from "~/components/ui/checkbox"
 import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 
+export const handle = {
+	pageHeading: "Settings",
+}
+
 export async function action({ request }: ActionArgs) {
 	const cookie = await getUserPrefs(request)
 
