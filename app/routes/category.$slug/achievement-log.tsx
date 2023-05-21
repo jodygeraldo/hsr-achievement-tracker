@@ -17,6 +17,7 @@ export function AchievementLog() {
 						<time
 							dateTime={ach.achievedAt.raw}
 							className="text-gray-600 flex-none text-xs"
+							title={ach.achievedAt.raw}
 						>
 							{ach.achievedAt.formatted}
 						</time>
