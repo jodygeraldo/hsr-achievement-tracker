@@ -8,11 +8,13 @@ import { cn } from "~/utils/shared"
 import type { CategoryLoaderData } from "./route"
 
 export function Achievement() {
-	const { achievements } = useLoaderData() as CategoryLoaderData
+	const { achievements: loaderAchievements } =
+		useLoaderData() as CategoryLoaderData
+	const achievements = React.useRef(loaderAchievements)
 
 	return (
 		<ul className="flex-1 divide-y divide-gray-6">
-			{achievements.map((achievement) => (
+			{achievements.current.map((achievement) => (
 				<li
 					key={achievement.name.toString()}
 					className="flex flex-col gap-x-8 gap-y-2 py-2 sm:flex-row sm:items-center sm:justify-between"

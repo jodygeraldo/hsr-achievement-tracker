@@ -1,5 +1,5 @@
 import type { AppLoadContext } from "@remix-run/cloudflare"
-import { clueBuilder } from "~/utils/achievement.server"
+import { clueBuilder, getAchievedAt } from "~/utils/achievement.server"
 
 type Slugify<S extends string> = S extends `${infer T} ${infer U}`
 	? `${Slugify<T>}-${Slugify<U>}`
@@ -1962,51 +1962,27 @@ async function getAchievements({
 	slug: SlugifiedCategoryName
 	showMissedFirst: boolean
 } & DatabaseAccess) {
-	const achieved = await db
+	const data = await db
 		.selectFrom("achievement")
-		.select(["name", "created_at", "path"])
+		.select(["name", "created_at as createdAt", "path"])
 		.where(({ and, cmpr }) =>
 			and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
 		)
+		.orderBy("created_at", "desc")
 		.execute()
+
+	const achieved = data.map((d) => {
+		return { ...d, achievedAt: getAchievedAt(d.createdAt) }
+	})
 
 	const achievements = achievementByCategory[slug].map((achievement) => {
 		const done = achieved.find(
 			({ name }) => name === achievement.name.toString()
 		)
 
-		let achievedAt: string | undefined = undefined
-		if (done) {
-			const locale = "en"
-			const rtf = new Intl.RelativeTimeFormat(locale, {
-				style: "short",
-			})
-			const dtf = new Intl.DateTimeFormat(locale, {
-				dateStyle: "medium",
-			})
-
-			const now = new Date()
-			const diffInSeconds = (now.getTime() - done.created_at.getTime()) / 1000
-			const diffInMinutes = diffInSeconds / 60
-			const diffInHours = diffInMinutes / 60
-			const diffInDays = diffInHours / 24
-
-			if (diffInDays > 30) {
-				achievedAt = dtf.format(done.created_at)
-			} else if (Math.abs(diffInDays) > 1) {
-				achievedAt = rtf.format(Math.round(diffInDays) * -1, "day")
-			} else if (Math.abs(diffInHours) > 1) {
-				achievedAt = rtf.format(Math.round(diffInHours) * -1, "hour")
-			} else if (Math.abs(diffInMinutes) > 1) {
-				achievedAt = rtf.format(Math.round(diffInMinutes) * -1, "minute")
-			} else {
-				achievedAt = rtf.format(Math.round(diffInSeconds) * -1, "second")
-			}
-		}
-
 		return {
 			...achievement,
-			achievedAt,
+			achievedAt: done?.achievedAt,
 			path: done?.path ?? undefined,
 		}
 	})
@@ -2025,6 +2001,13 @@ async function getAchievements({
 	return {
 		categoryName,
 		achievements,
+		achieved: achieved.map((ach) => ({
+			name: ach.path ?? ach.name,
+			achievedAt: {
+				formatted: ach.achievedAt,
+				raw: ach.createdAt.toISOString(),
+			},
+		})),
 	}
 }
 

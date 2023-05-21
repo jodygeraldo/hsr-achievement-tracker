@@ -7,17 +7,23 @@ import type {
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import type { ShouldRevalidateFunction } from "@remix-run/react"
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
+import {
+	isRouteErrorResponse,
+	useLocation,
+	useRouteError,
+} from "@remix-run/react"
 import { assert, is, literal, string, union } from "superstruct"
-import { MainContainer } from "~/components/container"
+import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
-import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
+import {
+	isValidSlugifiedCategoryName
+} from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
 import { AchievementHeader } from "./achievement-header"
+import { AchievementLog } from "./achievement-log"
 
 export function meta({
 	data,
@@ -93,6 +99,7 @@ export async function loader({ request, params, context }: LoaderArgs) {
 		return json({
 			categoryName: data.categoryName,
 			achievements: data.achievements,
+			achieved: data.achieved,
 			showClue: userPrefs.showClue,
 		})
 	} catch (error) {
@@ -106,12 +113,18 @@ export async function loader({ request, params, context }: LoaderArgs) {
 }
 
 export default function CategoryPage() {
+	const location = useLocation()
+
 	return (
 		<>
-			<MainContainer>
+			<MainContainer withAside>
 				<AchievementHeader />
-				<Achievement />
+				<Achievement key={location.pathname} />
 			</MainContainer>
+
+			<AsideContainer>
+				<AchievementLog />
+			</AsideContainer>
 		</>
 	)
 }
@@ -148,15 +161,4 @@ export function ErrorBoundary() {
 			message={errorMessage}
 		/>
 	)
-}
-
-export const shouldRevalidate: ShouldRevalidateFunction = ({
-	formAction,
-	formData,
-}) => {
-	if (formAction !== "/" && formData?.get("name")) {
-		return false
-	}
-
-	return true
 }
