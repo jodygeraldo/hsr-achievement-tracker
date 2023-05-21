@@ -9,7 +9,7 @@ import type { RootLoaderData } from "~/root"
 
 export function AchievementHeader() {
 	return (
-		<div className="sticky top-0 z-10 -mx-4 -mt-12 flex flex-col gap-4 bg-gray-2 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:-mt-6 sm:rounded-lg">
+		<div className="sticky top-0 z-10 -mx-4 -mt-12 flex flex-col gap-4 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:-mx-6 sm:-mt-6 sm:rounded-lg lg:-mx-6">
 			<AchievementMobileNavigation />
 			<AchievementProgress />
 		</div>
@@ -44,7 +44,7 @@ function AchievementMobileNavigation() {
 }
 
 function AchievementProgress() {
-	const slug = useParams().category
+	const slug = useParams().slug
 	const { categories } = useRouteLoaderData("root") as RootLoaderData
 	const currentCategory = categories.find((category) => category.slug === slug)!
 

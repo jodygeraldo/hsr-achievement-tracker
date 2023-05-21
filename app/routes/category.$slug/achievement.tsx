@@ -1,7 +1,6 @@
 import * as Popover from "@radix-ui/react-popover"
 import { useFetcher, useFormAction, useLoaderData } from "@remix-run/react"
 import * as React from "react"
-import type { CheckedState } from "~/components/ui/checkbox"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
 import type { Achievement as AchievementType } from "~/models/achievement.server"
@@ -62,7 +61,7 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 
 	const displayClue = shouldDisplayClue({
 		isSecret: achievement.secret,
-		isDone: achievement.path,
+		isAchieved: achievement.achievedAt,
 		showClue,
 	})
 
@@ -159,16 +158,14 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 
 	const { showClue } = useLoaderData() as CategoryLoaderData
 	const checkboxId = React.useId()
-	const [checked, setChecked] = React.useState<CheckedState>(
-		achievement.done ?? false
-	)
+	const [checked, setChecked] = React.useState(Boolean(achievement.achievedAt))
 
 	const fetcher = useFetcher()
 	const action = useFormAction()
 
 	const displayClue = shouldDisplayClue({
 		isSecret: achievement.secret,
-		isDone: achievement.done,
+		isAchieved: achievement.achievedAt,
 		showClue,
 	})
 
@@ -178,9 +175,9 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 				<Checkbox
 					name={achievement.name}
 					id={checkboxId}
-					checked={Boolean(checked)}
+					checked={checked}
 					onCheckedChange={(checked) => {
-						setChecked(checked)
+						setChecked(Boolean(checked))
 						if (checked !== "indeterminate") {
 							fetcher.submit(
 								{
@@ -275,22 +272,22 @@ function AchievementClue({ clue }: { clue: string }) {
 
 function shouldDisplayClue({
 	isSecret,
-	isDone,
+	isAchieved,
 	showClue,
 }: {
 	isSecret?: boolean
-	isDone?: boolean | string
+	isAchieved?: string
 	showClue: CategoryLoaderData["showClue"]
 }) {
 	if (isSecret) {
-		if (isDone) {
+		if (isAchieved) {
 			return showClue.secretAchievement.afterAchieved
 		}
 
 		return showClue.secretAchievement.beforeAchieved
 	}
 
-	if (isDone) {
+	if (isAchieved) {
 		return showClue.normalAchievement.afterAchieved
 	}
 

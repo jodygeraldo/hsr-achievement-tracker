@@ -26,7 +26,7 @@ export function meta({
 }
 
 export async function action({ request, params, context }: ActionArgs) {
-	const slug = params.category
+	const slug = params.slug
 	if (!isValidSlugifiedCategoryName(slug)) {
 		throw json({ message: "Invalid slugified category name" }, { status: 400 })
 	}
@@ -67,7 +67,7 @@ export async function action({ request, params, context }: ActionArgs) {
 
 export type CategoryLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, params, context }: LoaderArgs) {
-	const slug = params.category
+	const slug = params.slug
 	if (!isValidSlugifiedCategoryName(slug)) {
 		throw json(
 			{
