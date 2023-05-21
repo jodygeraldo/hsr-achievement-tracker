@@ -70,33 +70,35 @@ function Main() {
 
 	return (
 		<Document>
-			<div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-96 lg:flex-col">
-				<Sidebar />
-			</div>
-
-			<Dialog.Root>
-				<MobileSidebar />
-
-				<div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-2 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
-					<Dialog.Trigger className="-m-2.5 p-2.5 text-gray-12 lg:hidden">
-						<span className="sr-only">Open sidebar</span>
-						<MenuIcon />
-					</Dialog.Trigger>
-
-					<h1 className="flex-1 text-sm font-semibold leading-6 text-gray-12">
-						{pageHeading}
-					</h1>
-
-					<div
-						className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 text-xs font-bold text-gray-12"
-						aria-hidden="true"
-					>
-						A1
-					</div>
+			<div>
+				<div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-96 lg:flex-col">
+					<Sidebar />
 				</div>
-			</Dialog.Root>
 
-			<Outlet />
+				<Dialog.Root>
+					<MobileSidebar />
+
+					<div className="sticky top-0 z-40 flex items-center gap-x-6 border-b border-gray-6 bg-gray-2 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+						<Dialog.Trigger className="-m-2.5 p-2.5 text-gray-12 lg:hidden">
+							<span className="sr-only">Open sidebar</span>
+							<MenuIcon />
+						</Dialog.Trigger>
+
+						<h1 className="flex-1 text-sm font-semibold leading-6 text-gray-12">
+							{pageHeading}
+						</h1>
+
+						<div
+							className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 text-xs font-bold text-gray-12"
+							aria-hidden="true"
+						>
+							A1
+						</div>
+					</div>
+				</Dialog.Root>
+
+				<Outlet />
+			</div>
 		</Document>
 	)
 }
