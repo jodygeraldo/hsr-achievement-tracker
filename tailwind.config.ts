@@ -52,6 +52,22 @@ export default {
 				12: "hsla(0, 0%, 0%, 0.910)",
 			},
 		},
+		extend: {
+			keyframes: {
+				overlayFadeIn: {
+					from: { opacity: "0" },
+					to: { opacity: "1" },
+				},
+				overlayFadeOut: {
+					from: { opacity: "1" },
+					to: { opacity: "0" },
+				},
+			},
+			animation: {
+				overlayFadeIn: "overlayFadeIn 100ms cubic-bezier(0.4, 0, 1, 1)",
+				overlayFadeOut: "overlayFadeOut 100ms cubic-bezier(0, 0, 0.2, 1)",
+			},
+		},
 	},
 	plugins: [require("@tailwindcss/forms")],
 } satisfies Config
