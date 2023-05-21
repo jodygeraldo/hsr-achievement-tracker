@@ -6,7 +6,7 @@ import type {
 	V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
+import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import type { Kysely } from "kysely"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
@@ -72,8 +72,39 @@ export function ErrorBoundary() {
 
 	let errorMessage = "Unknown error"
 
-	if (isRouteErrorResponse(error) && error.data.message) {
-		errorMessage = error.data.message
+	if (isRouteErrorResponse(error)) {
+		if (typeof error.data === "string") {
+			errorMessage = error.data
+		}
+
+		if (error.data.message) {
+			errorMessage = error.data.message
+		}
+
+		if (error.status === 404) {
+			return (
+				<Document>
+					<div className="grid h-full place-items-center px-4 py-12 sm:px-6 lg:px-8">
+						<div>
+							<h1 className="text-7xl font-semibold text-gray-12">
+								<span className="text-gold-9">404</span>{" "}
+								<span className="text-3xl">Page Not Found</span>
+							</h1>
+
+							<p className="mt-4 text-gray-11">{errorMessage}</p>
+
+							<Link
+								to="/"
+								prefetch="intent"
+								className="rounded-md text-gray-12 underline decoration-gray-7 transition-colors hover:decoration-gray-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
+							>
+								Back home
+							</Link>
+						</div>
+					</div>
+				</Document>
+			)
+		}
 	}
 
 	if (error instanceof Error) {
