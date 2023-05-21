@@ -78,7 +78,7 @@ function Main() {
 				<Dialog.Root>
 					<MobileSidebar />
 
-					<div className="sticky top-0 z-40 flex items-center gap-x-6 border-b border-gray-6 bg-gray-2 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+					<div className="sticky top-0 z-10 flex items-center gap-x-6 border-b border-gray-6 bg-gray-2 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
 						<Dialog.Trigger className="-m-2.5 p-2.5 text-gray-12 lg:hidden">
 							<span className="sr-only">Open sidebar</span>
 							<MenuIcon />
@@ -111,10 +111,10 @@ const navigation = [
 function MobileSidebar() {
 	return (
 		<Dialog.Portal>
-			<Dialog.Overlay className="fixed inset-0 z-40 bg-overlay-9 backdrop-blur backdrop-filter data-[state=closed]:animate-overlayFadeOut data-[state=open]:animate-overlayFadeIn" />
+			<Dialog.Overlay className="fixed inset-0 z-20 bg-overlay-9 backdrop-blur backdrop-filter data-[state=closed]:animate-overlayFadeOut data-[state=open]:animate-overlayFadeIn" />
 
 			<div className="fixed inset-0 z-50 flex">
-				<Dialog.Content className="relative z-50 mr-16 flex w-full max-w-sm flex-1">
+				<Dialog.Content className="relative flex w-full max-w-sm flex-1">
 					<Sidebar />
 
 					<Dialog.Close className="absolute right-4 top-4 flex justify-center text-gray-12">
