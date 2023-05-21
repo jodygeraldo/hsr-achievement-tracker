@@ -10,6 +10,7 @@ import { json } from "@remix-run/cloudflare"
 import type { ShouldRevalidateFunction } from "@remix-run/react"
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import { assert, is, literal, string, union } from "superstruct"
+import { MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
@@ -107,8 +108,10 @@ export async function loader({ request, params, context }: LoaderArgs) {
 export default function CategoryPage() {
 	return (
 		<>
-			<AchievementHeader />
-			<Achievement />
+			<MainContainer>
+				<AchievementHeader />
+				<Achievement />
+			</MainContainer>
 		</>
 	)
 }
