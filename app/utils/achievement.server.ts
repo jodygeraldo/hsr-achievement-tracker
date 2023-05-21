@@ -85,10 +85,8 @@ export function getAchievedAt(createdAt?: Date) {
 		achievedAt = rtf.format(Math.round(diffInDays) * -1, "day")
 	} else if (Math.abs(diffInHours) > 1) {
 		achievedAt = rtf.format(Math.round(diffInHours) * -1, "hour")
-	} else if (Math.abs(diffInMinutes) > 1) {
-		achievedAt = rtf.format(Math.round(diffInMinutes) * -1, "minute")
 	} else {
-		achievedAt = rtf.format(Math.round(diffInSeconds) * -1, "second")
+		achievedAt = "just now"
 	}
 
 	return achievedAt
