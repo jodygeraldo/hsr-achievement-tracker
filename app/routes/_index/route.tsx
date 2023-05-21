@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/cloudflare"
 
 export function loader() {
-	return redirect("/trailblazer")
+	return redirect("/category/trailblazer")
 }
