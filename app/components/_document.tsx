@@ -89,7 +89,7 @@ function Main() {
 						</h1>
 
 						<div
-							className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 text-xs font-bold text-gray-12"
+							className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12"
 							aria-hidden="true"
 						>
 							A1
@@ -155,7 +155,7 @@ function Sidebar() {
 			{/* Account */}
 			<div className="-mx-2 flex gap-x-3 rounded-md bg-gray-3 p-2">
 				<div
-					className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 text-xl font-bold text-gray-12"
+					className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xl font-bold text-gray-12"
 					aria-hidden="true"
 				>
 					A1
