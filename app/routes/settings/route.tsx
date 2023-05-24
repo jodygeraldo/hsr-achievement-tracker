@@ -1,205 +1,33 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
-import {
-	Form,
-	useActionData,
-	useLoaderData,
-	useNavigation,
-} from "@remix-run/react"
-import * as React from "react"
-import toast from "react-hot-toast"
-import { MainContainer } from "~/components/container"
-import { Checkbox } from "~/components/ui/checkbox"
-import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
+import { NavLink, Outlet } from "@remix-run/react"
+import { cn } from "~/utils/shared"
 
-export const handle = {
-	pageHeading: "Settings",
-}
+const settingTabs = [
+	{ name: "Achievements", to: "." },
+	// { name: "Account", to: "account" },
+]
 
-export async function action({ request }: ActionArgs) {
-	const cookie = await getUserPrefs(request)
-
-	const formData = await request.formData()
-	const showMissingFirst = formData.get("showMissingFirst") === "on"
-	const normalBeforeAchieved = formData.get("normalBeforeAchieved") === "on"
-	const normalAfterAchieved = formData.get("normalAfterAchieved") === "on"
-	const secretBeforeAchieved = formData.get("secretBeforeAchieved") === "on"
-	const secretAfterAchieved = formData.get("secretAfterAchieved") === "on"
-
-	cookie.showMissedFirst = showMissingFirst
-	cookie.showClue.normalAchievement.beforeAchieved = normalBeforeAchieved
-	cookie.showClue.normalAchievement.afterAchieved = normalAfterAchieved
-	cookie.showClue.secretAchievement.beforeAchieved = secretBeforeAchieved
-	cookie.showClue.secretAchievement.afterAchieved = secretAfterAchieved
-
-	return json(
-		{ ok: true },
-		{
-			headers: {
-				"Set-Cookie": await userPrefsCookie.serialize(cookie),
-			},
-		}
-	)
-}
-
-export async function loader({ request }: LoaderArgs) {
-	const userPrefs = await getUserPrefs(request)
-
-	return json(userPrefs)
-}
-
-export default function SettingsPage() {
-	const { showMissedFirst, showClue } = useLoaderData<typeof loader>()
-	const actionData = useActionData<typeof action>()
-	const navigation = useNavigation()
-
-	React.useEffect(() => {
-		if (navigation.state === "idle" && actionData?.ok) {
-			toast.success("Your changes have been saved.", {
-				id: "settingsAction",
-				style: {
-					borderRadius: "0.375rem",
-					background: "hsl(var(--gray-3))",
-					color: "hsl(var(--gray-12))",
-				},
-				iconTheme: {
-					primary: "hsl(var(--gold-9))",
-					secondary: "hsl(var(--gold-12))",
-				},
-			})
-		}
-	}, [actionData, navigation])
-
+export default function SettingsLayout() {
 	return (
-		<MainContainer>
-			<Form method="post">
-				<div className="space-y-12">
-					<div className="border-b border-gray-6 pb-12">
-						<h2 className="font-semibold leading-7 text-gray-12">General</h2>
-						<p className="mt-1 text-sm leading-6 text-gray-11">
-							These are the settings that determine how achievements are
-							displayed
-						</p>
-
-						<div className="mt-10 space-y-10">
-							<div className="flex items-center gap-x-3">
-								<Checkbox
-									id="show-missing-first"
-									name="showMissingFirst"
-									defaultChecked={showMissedFirst}
-								/>
-								<label
-									htmlFor="show-missing-first"
-									className="block text-sm font-medium leading-6 text-gray-12"
+		<main className="lg:pl-96">
+			<header className="border-b border-gray-6">
+				<nav className="flex overflow-x-auto py-4">
+					<ul className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-11 sm:px-6 lg:px-8">
+						{settingTabs.map((tab) => (
+							<li key={tab.name}>
+								<NavLink
+									to={tab.to}
+									className={({ isActive }) => cn(isActive && "text-gold-10")}
+									end
 								>
-									Show not achieved first
-								</label>
-							</div>
+									{tab.name}
+								</NavLink>
+							</li>
+						))}
+					</ul>
+				</nav>
+			</header>
 
-							<fieldset>
-								<legend className="text-sm font-semibold leading-6 text-gray-12">
-									Display descriptions for normal achievements
-								</legend>
-								<p className="mt-1 text-sm leading-6 text-gray-11">
-									If unchecked, descriptions will be hidden and require a button
-									click to reveal.
-								</p>
-
-								<div className="mt-6 space-y-6">
-									<div className="flex items-center gap-x-3">
-										<Checkbox
-											id="normal-before-achieved"
-											name="normalBeforeAchieved"
-											defaultChecked={showClue.normalAchievement.beforeAchieved}
-										/>
-										<label
-											htmlFor="normal-before-achieved"
-											className="block text-sm font-medium leading-6 text-gray-12"
-										>
-											Before achieved
-										</label>
-									</div>
-									<div className="flex items-center gap-x-3">
-										<Checkbox
-											id="normal-after-achieved"
-											name="normalAfterAchieved"
-											defaultChecked={showClue.normalAchievement.afterAchieved}
-										/>
-										<label
-											htmlFor="normal-after-achieved"
-											className="block text-sm font-medium leading-6 text-gray-12"
-										>
-											After achieved
-										</label>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset>
-								<legend className="text-sm font-semibold leading-6 text-gray-12">
-									Display descriptions for secret achievements
-								</legend>
-								<p className="mt-1 text-sm leading-6 text-gray-11">
-									If unchecked, descriptions will be hidden and require a button
-									click to reveal.
-								</p>
-
-								<div className="mt-6 space-y-6">
-									<div className="flex gap-x-3">
-										<div className="flex h-6 items-center">
-											<Checkbox
-												id="secret-before-achieved"
-												name="secretBeforeAchieved"
-												defaultChecked={
-													showClue.secretAchievement.beforeAchieved
-												}
-											/>
-										</div>
-										<div className="text-sm leading-6">
-											<label
-												htmlFor="secret-before-achieved"
-												className="font-medium text-gray-12"
-											>
-												Before achieved
-											</label>
-											<p className="text-gray-11">
-												Checking this may reveal spoilers.
-											</p>
-										</div>
-									</div>
-									<div className="flex items-center gap-x-3">
-										<Checkbox
-											id="secret-after-achieved"
-											name="secretAfterAchieved"
-											defaultChecked={showClue.secretAchievement.afterAchieved}
-										/>
-										<label
-											htmlFor="secret-after-achieved"
-											className="block text-sm font-medium leading-6 text-gray-12"
-										>
-											After achieved
-										</label>
-									</div>
-								</div>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-
-				<div className="mt-6 flex items-center justify-end gap-x-6">
-					<button
-						type="reset"
-						className="rounded-md text-sm font-semibold leading-6 text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
-					>
-						Reset
-					</button>
-					<button
-						type="submit"
-						className="rounded-md bg-gold-3 px-3 py-2 text-sm font-semibold text-gray-12 shadow-sm hover:bg-gold-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
-					>
-						Save
-					</button>
-				</div>
-			</Form>
-		</MainContainer>
+			<Outlet />
+		</main>
 	)
 }
