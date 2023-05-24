@@ -16,9 +16,7 @@ import { assert, is, literal, string, union } from "superstruct"
 import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
-import {
-	isValidSlugifiedCategoryName
-} from "~/utils/achievement.server"
+import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getSessionId } from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
