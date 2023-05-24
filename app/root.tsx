@@ -7,20 +7,19 @@ import type {
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
 import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
-import type { Kysely } from "kysely"
 import NProgress from "nprogress"
 import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
-import type { AppSession, Database } from "./types"
-import { getSessionId } from "./utils/session.server"
+import type { AppDatabase, AppSessionStorage } from "./types"
+import { getActiveSessionId, setupSession } from "./utils/session.server"
 NProgress.configure({ showSpinner: false })
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
-		sessionStorage: AppSession
-		db: Kysely<Database>
+		sessionStorage: AppSessionStorage
+		db: AppDatabase
 	}
 }
 
@@ -37,7 +36,16 @@ export function links(): LinkDescriptor[] {
 
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
-	const sessionId = await getSessionId(context.sessionStorage, request)
+	await setupSession({
+		db: context.db,
+		sessionStorage: context.sessionStorage,
+		request,
+	})
+
+	const sessionId = await getActiveSessionId({
+		sessionStorage: context.sessionStorage,
+		request,
+	})
 
 	try {
 		const category = await getCategories({

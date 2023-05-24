@@ -17,7 +17,7 @@ import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
-import { getSessionId } from "~/utils/session.server"
+import { getActiveSessionId } from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
 import { AchievementHeader } from "./achievement-header"
@@ -36,7 +36,10 @@ export async function action({ request, params, context }: ActionArgs) {
 		throw json({ message: "Invalid slugified category name" }, { status: 400 })
 	}
 
-	const sessionId = await getSessionId(context.sessionStorage, request)
+	const sessionId = await getActiveSessionId({
+		sessionStorage: context.sessionStorage,
+		request,
+	})
 
 	const formData = await request.formData()
 	const name = formData.get("name")
@@ -83,7 +86,10 @@ export async function loader({ request, params, context }: LoaderArgs) {
 		)
 	}
 
-	const sessionId = await getSessionId(context.sessionStorage, request)
+	const sessionId = await getActiveSessionId({
+		sessionStorage: context.sessionStorage,
+		request,
+	})
 	const userPrefs = await getUserPrefs(request)
 
 	try {
