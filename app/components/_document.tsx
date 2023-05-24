@@ -208,6 +208,7 @@ function Sidebar() {
 								<li key={category.name}>
 									<NavLink
 										to={`/category/${category.slug}`}
+										prefetch="intent"
 										className={({ isActive }) =>
 											cn(
 												isActive
