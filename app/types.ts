@@ -35,4 +35,10 @@ type Account = {
 type AppSessionStorage = SessionStorage<OLD_Account & Account>
 type AppSession = Session<OLD_Account & Account>
 
-export type { Database, AppDatabase, AppSessionStorage, AppSession }
+export type {
+	Database,
+	AppDatabase,
+	AppSessionStorage,
+	AppSession,
+	UserSession,
+}
