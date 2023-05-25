@@ -171,16 +171,16 @@ export default function SettingPage() {
 						</FormField>
 					</div>
 				</fieldset>
-
-				<FormActions>
-					<Button type="reset" variant="ghost">
-						Reset
-					</Button>
-					<FormSubmit asChild>
-						<Button>Save</Button>
-					</FormSubmit>
-				</FormActions>
 			</FormBody>
+
+			<FormActions>
+				<Button type="reset" variant="outline">
+					Reset
+				</Button>
+				<FormSubmit asChild>
+					<Button>Save</Button>
+				</FormSubmit>
+			</FormActions>
 		</Form>
 	)
 }
