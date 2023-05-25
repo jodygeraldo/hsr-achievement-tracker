@@ -13,7 +13,7 @@ import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import type { AppDatabase, AppSessionStorage } from "./types"
-import { getActiveSessionId, setupSession } from "./utils/session.server"
+import { getActiveSession, setupSession } from "./utils/session.server"
 NProgress.configure({ showSpinner: false })
 
 declare module "@remix-run/cloudflare" {
@@ -42,7 +42,7 @@ export async function loader({ request, context }: LoaderArgs) {
 		request,
 	})
 
-	const sessionId = await getActiveSessionId({
+	const session = await getActiveSession({
 		sessionStorage: context.sessionStorage,
 		request,
 	})
@@ -50,10 +50,10 @@ export async function loader({ request, context }: LoaderArgs) {
 	try {
 		const category = await getCategories({
 			db: context.db,
-			sessionId,
+			sessionId: session.sessionId,
 		})
 
-		return json(category)
+		return json({ ...category, sessionName: session.name })
 	} catch (error) {
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {

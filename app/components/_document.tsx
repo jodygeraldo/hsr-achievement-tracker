@@ -80,6 +80,8 @@ function Main() {
 			? (leafMatch.data as CategoryLoaderData).categoryName
 			: (leafMatch.handle?.pageHeading as string)) ?? "HSR Achievement Tracker"
 
+	const { sessionName } = useRouteLoaderData("root") as RootLoaderData
+
 	return (
 		<Document>
 			<div>
@@ -104,7 +106,7 @@ function Main() {
 							className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12"
 							aria-hidden="true"
 						>
-							A1
+							{getInitials(sessionName)}
 						</div>
 					</div>
 				</Dialog.Root>
@@ -152,9 +154,8 @@ function MobileSidebar() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, categories } = useRouteLoaderData(
-		"root"
-	) as RootLoaderData
+	const { achievementSize, achievedTotal, categories, sessionName } =
+		useRouteLoaderData("root") as RootLoaderData
 
 	return (
 		<div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-6 bg-gray-2 px-6">
@@ -170,12 +171,12 @@ function Sidebar() {
 					className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xl font-bold text-gray-12"
 					aria-hidden="true"
 				>
-					A1
+					{getInitials(sessionName)}
 				</div>
 
 				<div className="flex w-full flex-col">
 					<div className="flex-1 text-sm font-medium text-gray-11">
-						Account 1
+						{sessionName}
 					</div>
 
 					<div className="text-sm text-gray-12">
@@ -350,6 +351,14 @@ function MenuIcon() {
 			></path>
 		</svg>
 	)
+}
+
+function getInitials(name: string) {
+	return name
+		.split(" ")
+		.map((name) => name.charAt(0).toUpperCase())
+		.filter((_, i, arr) => i === 0 || i === arr.length - 1)
+		.join("")
 }
 
 export { Document, Main }
