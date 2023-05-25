@@ -34,7 +34,8 @@
 		"remix-utils": "^6.3.0",
 		"superstruct": "^1.0.3",
 		"tailwind-merge": "^1.12.0",
-		"tailwind-variants": "^0.1.5"
+		"tailwind-variants": "^0.1.5",
+		"tailwindcss-animate": "^1.0.5"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^3.19.0",

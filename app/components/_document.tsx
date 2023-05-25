@@ -111,7 +111,7 @@ const navigation = [
 function MobileSidebar() {
 	return (
 		<Dialog.Portal>
-			<Dialog.Overlay className="fixed inset-0 z-20 bg-overlay-9 backdrop-blur backdrop-filter data-[state=closed]:animate-overlayFadeOut data-[state=open]:animate-overlayFadeIn" />
+			<Dialog.Overlay className="fixed inset-0 z-20 bg-overlay-9 backdrop-blur backdrop-filter transition-opacity animate-in fade-in" />
 
 			<div className="fixed inset-0 z-50 flex">
 				<Dialog.Content className="relative flex w-full max-w-sm flex-1">
