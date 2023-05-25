@@ -13,6 +13,7 @@
 	"dependencies": {
 		"@paralleldrive/cuid2": "^2.2.0",
 		"@planetscale/database": "1.6.0",
+		"@radix-ui/react-alert-dialog": "^1.0.3",
 		"@radix-ui/react-checkbox": "^1.0.3",
 		"@radix-ui/react-dialog": "^1.0.3",
 		"@radix-ui/react-form": "^0.0.2",

@@ -3,7 +3,7 @@ import { cn } from "~/utils/shared"
 
 const settingTabs = [
 	{ name: "Achievements", to: "." },
-	// { name: "Account", to: "account" },
+	{ name: "Sessions", to: "sessions" },
 ]
 
 export default function SettingsLayout() {
