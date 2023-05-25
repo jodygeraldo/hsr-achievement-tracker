@@ -62,7 +62,7 @@ async function setupSession(context: {
 
 		throw redirect(url.pathname, {
 			headers: {
-				"Set-Cookie": await sessionStorage.commitSession(cookieSession),
+				"Set-Cookie": await context.sessionStorage.commitSession(cookieSession),
 			},
 		})
 	}
@@ -78,7 +78,7 @@ async function setupSession(context: {
 
 	throw redirect(url.pathname, {
 		headers: {
-			"Set-Cookie": await sessionStorage.commitSession(cookieSession),
+			"Set-Cookie": await context.sessionStorage.commitSession(cookieSession),
 		},
 	})
 }
