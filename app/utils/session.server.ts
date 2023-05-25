@@ -5,18 +5,23 @@ import type { AppDatabase, AppSessionStorage } from "~/types"
 
 const createId = init({ length: 11 })
 
-type SessionAccess = { sessionStorage: AppSessionStorage; request: Request }
+async function getCookieSession(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const cookie = context.request.headers.get("Cookie")
+	return context.sessionStorage.getSession(cookie)
+}
 
-async function setupSession({
-	db,
-	sessionStorage,
-	request,
-}: { db: AppDatabase } & SessionAccess) {
-	const url = new URL(request.url)
-	const cookie = request.headers.get("Cookie")
-	const session = await sessionStorage.getSession(cookie)
+async function setupSession(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+	db: AppDatabase
+}) {
+	const url = new URL(context.request.url)
+	const cookieSession = await getCookieSession(context)
 
-	if (session.has("sessions")) {
+	if (cookieSession.has("sessions")) {
 		return
 	}
 
@@ -25,20 +30,20 @@ async function setupSession({
 	 * The old system is setting session with key `userSessionId`
 	 * with the value of random unique id.
 	 */
-	if (session.has("userSessionId")) {
-		const userSessionId = session.get("userSessionId")!
-		session.unset("userSessionId")
+	if (cookieSession.has("userSessionId")) {
+		const userSessionId = cookieSession.get("userSessionId")!
+		cookieSession.unset("userSessionId")
 
 		try {
 			const newSessionId = createId()
 
-			await db
+			await context.db
 				.updateTable("achievement")
 				.set({ session_id: newSessionId })
 				.where("session_id", "=", userSessionId)
 				.executeTakeFirstOrThrow()
 
-			session.set("sessions", [
+			cookieSession.set("sessions", [
 				{
 					id: createId(),
 					name: "Account 1",
@@ -57,12 +62,12 @@ async function setupSession({
 
 		throw redirect(url.pathname, {
 			headers: {
-				"Set-Cookie": await sessionStorage.commitSession(session),
+				"Set-Cookie": await sessionStorage.commitSession(cookieSession),
 			},
 		})
 	}
 
-	session.set("sessions", [
+	cookieSession.set("sessions", [
 		{
 			id: createId(),
 			name: "Account 1",
@@ -73,16 +78,18 @@ async function setupSession({
 
 	throw redirect(url.pathname, {
 		headers: {
-			"Set-Cookie": await sessionStorage.commitSession(session),
+			"Set-Cookie": await sessionStorage.commitSession(cookieSession),
 		},
 	})
 }
 
-async function getActiveSession({ sessionStorage, request }: SessionAccess) {
-	const cookie = request.headers.get("Cookie")
-	const appSession = await sessionStorage.getSession(cookie)
+async function getActiveSession(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const cookieSession = await getCookieSession(context)
 
-	const sessions = appSession.get("sessions")
+	const sessions = cookieSession.get("sessions")
 	if (!sessions) {
 		throw json(
 			{ message: "No active session found, try refreshing the webpage" },
@@ -93,11 +100,13 @@ async function getActiveSession({ sessionStorage, request }: SessionAccess) {
 	return sessions.filter((session) => session.isActive)[0]
 }
 
-async function getSessions({ sessionStorage, request }: SessionAccess) {
-	const cookie = request.headers.get("Cookie")
-	const session = await sessionStorage.getSession(cookie)
+async function getSessions(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const cookieSession = await getCookieSession(context)
 
-	const sessions = session.get("sessions")
+	const sessions = cookieSession.get("sessions")
 	if (!sessions) {
 		throw json(
 			{ message: "No active session found, try refreshing the webpage" },
@@ -108,9 +117,19 @@ async function getSessions({ sessionStorage, request }: SessionAccess) {
 	return sessions
 }
 
-async function getActiveSessionId(sessionAccess: SessionAccess) {
-	const activeSession = await getActiveSession(sessionAccess)
+async function getActiveSessionId(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const activeSession = await getActiveSession(context)
 	return activeSession.sessionId
 }
 
-export { setupSession, getActiveSession, getSessions, getActiveSessionId }
+export {
+	createId,
+	getCookieSession,
+	setupSession,
+	getActiveSession,
+	getSessions,
+	getActiveSessionId,
+}
