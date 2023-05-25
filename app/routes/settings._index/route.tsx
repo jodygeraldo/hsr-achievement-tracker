@@ -1,21 +1,26 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/cloudflare"
+import type { DataFunctionArgs } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import {
-	Form,
-	useActionData,
-	useLoaderData,
-	useNavigation,
-} from "@remix-run/react"
+import { useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import * as React from "react"
 import toast from "react-hot-toast"
+import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
+import {
+	Form,
+	FormActions,
+	FormBody,
+	FormControl,
+	FormField,
+	FormLabel,
+	FormSubmit,
+} from "~/components/ui/form"
 import { getUserPrefs, userPrefsCookie } from "~/utils/user-prefs.server"
 
 export const handle = {
 	pageHeading: "Settings",
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: DataFunctionArgs) {
 	const cookie = await getUserPrefs(request)
 
 	const formData = await request.formData()
@@ -41,9 +46,8 @@ export async function action({ request }: ActionArgs) {
 	)
 }
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: DataFunctionArgs) {
 	const userPrefs = await getUserPrefs(request)
-
 	return json(userPrefs)
 }
 
@@ -69,191 +73,114 @@ export default function SettingPage() {
 		}
 	}, [actionData, navigation])
 
+	const secretAfterAchievedHintId = React.useId()
+
 	return (
-		<div className="grid grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 lg:px-8 xl:grid-cols-3">
-			<div>
-				<h2 className="font-semibold leading-7 text-gray-12">Description</h2>
-				<p className="mt-1 text-sm leading-6 text-gray-11">
-					These are the settings that determine how achievement descriptions are
-					displayed.
-				</p>
-			</div>
+		<Form
+			method="POST"
+			title="Description"
+			description="These are the settings that determine how achievement descriptions are displayed."
+		>
+			<FormBody>
+				<FormField
+					name="showMissingFirst"
+					className="col-span-full flex items-center gap-x-3"
+				>
+					<FormControl asChild>
+						<Checkbox defaultChecked={showMissedFirst} />
+					</FormControl>
+					<FormLabel>Show not achieved first</FormLabel>
+				</FormField>
 
-			<Form className="md:col-span-2" method="post">
-				<div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-					<div className="col-span-full flex items-center gap-x-3">
-						<Checkbox
-							id="show-missing-first"
-							name="showMissingFirst"
-							defaultChecked={showMissedFirst}
-						/>
-						<label
-							htmlFor="show-missing-first"
-							className="block text-sm font-medium leading-6 text-gray-12"
+				<fieldset className="col-span-full">
+					<legend className="text-sm font-semibold leading-6 text-gray-12">
+						Display descriptions for normal achievements
+					</legend>
+					<p className="mt-1 text-sm leading-6 text-gray-11">
+						If unchecked, descriptions will be hidden and require a button click
+						to reveal.
+					</p>
+
+					<div className="mt-6 space-y-6">
+						<FormField
+							name="normalBeforeAchieved"
+							className="flex items-center gap-x-3"
 						>
-							Show not achieved first
-						</label>
-					</div>
-
-					<fieldset className="col-span-full">
-						<legend className="text-sm font-semibold leading-6 text-gray-12">
-							Display descriptions for normal achievements
-						</legend>
-						<p className="mt-1 text-sm leading-6 text-gray-11">
-							If unchecked, descriptions will be hidden and require a button
-							click to reveal.
-						</p>
-
-						<div className="mt-6 space-y-6">
-							<div className="flex items-center gap-x-3">
+							<FormControl asChild>
 								<Checkbox
-									id="normal-before-achieved"
-									name="normalBeforeAchieved"
 									defaultChecked={showClue.normalAchievement.beforeAchieved}
 								/>
-								<label
-									htmlFor="normal-before-achieved"
-									className="block text-sm font-medium leading-6 text-gray-12"
-								>
-									Before achieved
-								</label>
-							</div>
-							<div className="flex items-center gap-x-3">
+							</FormControl>
+							<FormLabel>Before achieved</FormLabel>
+						</FormField>
+
+						<FormField
+							name="normalAfterAchieved"
+							className="flex items-center gap-x-3"
+						>
+							<FormControl asChild>
 								<Checkbox
-									id="normal-after-achieved"
-									name="normalAfterAchieved"
 									defaultChecked={showClue.normalAchievement.afterAchieved}
 								/>
-								<label
-									htmlFor="normal-after-achieved"
-									className="block text-sm font-medium leading-6 text-gray-12"
-								>
-									After achieved
-								</label>
-							</div>
-						</div>
-					</fieldset>
+							</FormControl>
+							<FormLabel>After achieved</FormLabel>
+						</FormField>
+					</div>
+				</fieldset>
 
-					<fieldset className="col-span-full">
-						<legend className="text-sm font-semibold leading-6 text-gray-12">
-							Display descriptions for secret achievements
-						</legend>
-						<p className="mt-1 text-sm leading-6 text-gray-11">
-							If unchecked, descriptions will be hidden and require a button
-							click to reveal.
-						</p>
+				<fieldset className="col-span-full">
+					<legend className="text-sm font-semibold leading-6 text-gray-12">
+						Display descriptions for secret achievements
+					</legend>
+					<p className="mt-1 text-sm leading-6 text-gray-11">
+						If unchecked, descriptions will be hidden and require a button click
+						to reveal.
+					</p>
 
-						<div className="mt-6 space-y-6">
-							<div className="flex gap-x-3">
-								<div className="flex h-6 items-center">
+					<div className="mt-6 space-y-6">
+						<FormField name="secretBeforeAchieved" className="flex gap-x-3">
+							<div className="flex h-6 items-center">
+								<FormControl asChild>
 									<Checkbox
-										id="secret-before-achieved"
-										name="secretBeforeAchieved"
 										defaultChecked={showClue.secretAchievement.beforeAchieved}
+										aria-describedby={secretAfterAchievedHintId}
 									/>
-								</div>
-								<div className="text-sm leading-6">
-									<label
-										htmlFor="secret-before-achieved"
-										className="font-medium text-gray-12"
-									>
-										Before achieved
-									</label>
-									<p className="text-gray-11">
-										Checking this may reveal spoilers.
-									</p>
-								</div>
+								</FormControl>
 							</div>
-							<div className="flex items-center gap-x-3">
+							<div>
+								<FormLabel>Before achieved</FormLabel>
+								<p
+									className="text-sm leading-6 text-gray-11"
+									id={secretAfterAchievedHintId}
+								>
+									Checking this may reveal spoilers.
+								</p>
+							</div>
+						</FormField>
+
+						<FormField
+							name="secretAfterAchieved"
+							className="flex items-center gap-x-3"
+						>
+							<FormControl asChild>
 								<Checkbox
-									id="secret-after-achieved"
-									name="secretAfterAchieved"
 									defaultChecked={showClue.secretAchievement.afterAchieved}
 								/>
-								<label
-									htmlFor="secret-after-achieved"
-									className="block text-sm font-medium leading-6 text-gray-12"
-								>
-									After achieved
-								</label>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-
-				<div className="mt-8 flex items-center gap-x-6">
-					<button
-						type="reset"
-						className="rounded-md text-sm font-semibold leading-6 text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
-					>
-						Reset
-					</button>
-					<button
-						type="submit"
-						className="rounded-md bg-gold-3 px-3 py-2 text-sm font-semibold text-gray-12 shadow-sm hover:bg-gold-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-8"
-					>
-						Save
-					</button>
-				</div>
-			</Form>
-
-			{/* <form className="md:col-span-2">
-					<div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
-						<div className="col-span-full">
-							<label
-								htmlFor="current-password"
-								className="block text-sm font-medium leading-6 text-white"
-							>
-								Current password
-							</label>
-							<div className="mt-2">
-								<input
-									id="current-password"
-									name="current_password"
-									type="password"
-									autoComplete="current-password"
-									className="focus:ring-indigo-500 block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-								/>
-							</div>
-						</div>
-
-						<div className="col-span-full">
-							<label
-								htmlFor="new-password"
-								className="block text-sm font-medium leading-6 text-white"
-							>
-								New password
-							</label>
-							<div className="mt-2">
-								<input
-									id="new-password"
-									name="new_password"
-									type="password"
-									autoComplete="new-password"
-									className="focus:ring-indigo-500 block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-								/>
-							</div>
-						</div>
-
-						<div className="col-span-full">
-							<label
-								htmlFor="confirm-password"
-								className="block text-sm font-medium leading-6 text-white"
-							>
-								Confirm password
-							</label>
-							<div className="mt-2">
-								<input
-									id="confirm-password"
-									name="confirm_password"
-									type="password"
-									autoComplete="new-password"
-									className="focus:ring-indigo-500 block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-								/>
-							</div>
-						</div>
+							</FormControl>
+							<FormLabel>After achieved</FormLabel>
+						</FormField>
 					</div>
-				</form> */}
-		</div>
+				</fieldset>
+
+				<FormActions>
+					<Button type="reset" variant="ghost">
+						Reset
+					</Button>
+					<FormSubmit asChild>
+						<Button>Save</Button>
+					</FormSubmit>
+				</FormActions>
+			</FormBody>
+		</Form>
 	)
 }
