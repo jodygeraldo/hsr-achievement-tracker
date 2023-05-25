@@ -50,7 +50,19 @@ function Document({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="h-full">
 				{children}
-				<Toaster />
+				<Toaster
+					toastOptions={{
+						style: {
+							borderRadius: "0.375rem",
+							background: "hsl(var(--gray-3))",
+							color: "hsl(var(--gray-12))",
+						},
+						iconTheme: {
+							primary: "hsl(var(--gold-9))",
+							secondary: "hsl(var(--gold-12))",
+						},
+					}}
+				/>
 				<ScrollRestoration />
 				<Scripts />
 				<LiveReload />

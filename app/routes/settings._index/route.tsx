@@ -58,18 +58,7 @@ export default function SettingPage() {
 
 	React.useEffect(() => {
 		if (navigation.state === "idle" && actionData?.ok) {
-			toast.success("Your changes have been saved.", {
-				id: "settingsAction",
-				style: {
-					borderRadius: "0.375rem",
-					background: "hsl(var(--gray-3))",
-					color: "hsl(var(--gray-12))",
-				},
-				iconTheme: {
-					primary: "hsl(var(--gold-9))",
-					secondary: "hsl(var(--gold-12))",
-				},
-			})
+			toast.success("Your changes have been saved.", { id: "settingsAction" })
 		}
 	}, [actionData, navigation])
 
