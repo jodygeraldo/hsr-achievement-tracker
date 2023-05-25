@@ -11,6 +11,17 @@ type FormProps = {
 const FormField = FormPrimitive.Field
 const FormControl = FormPrimitive.Control
 
+function FormHeadless({
+	children,
+	...props
+}: Omit<FormProps, "title" | "description">) {
+	return (
+		<FormPrimitive.Root {...props} asChild>
+			<RemixForm>{children}</RemixForm>
+		</FormPrimitive.Root>
+	)
+}
+
 function Form({ title, description, children, ...props }: FormProps) {
 	return (
 		<FormPrimitive.Root {...props} asChild>
@@ -55,7 +66,16 @@ const FormLabel = React.forwardRef<
 
 const FormSubmit = FormPrimitive.Submit
 
+function FormMessage({ children, ...props }: FormPrimitive.FormMessageProps) {
+	return (
+		<FormPrimitive.Message {...props} className="mt-2 text-sm text-red-9">
+			{children}
+		</FormPrimitive.Message>
+	)
+}
+
 export {
+	FormHeadless,
 	Form,
 	FormBody,
 	FormActions,
@@ -63,4 +83,5 @@ export {
 	FormLabel,
 	FormControl,
 	FormSubmit,
+	FormMessage,
 }
