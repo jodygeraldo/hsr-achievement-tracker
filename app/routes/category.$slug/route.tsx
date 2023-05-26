@@ -11,11 +11,13 @@ import {
 	isRouteErrorResponse,
 	useLocation,
 	useRouteError,
+	useRouteLoaderData,
 } from "@remix-run/react"
 import { assert, is, literal, string, union } from "superstruct"
 import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
+import type { RootLoaderData } from "~/root"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getActiveSessionId } from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
@@ -118,12 +120,13 @@ export async function loader({ request, params, context }: LoaderArgs) {
 
 export default function CategoryPage() {
 	const location = useLocation()
+	const { activeSession } = useRouteLoaderData("root") as RootLoaderData
 
 	return (
 		<>
 			<MainContainer withAside>
 				<AchievementHeader />
-				<Achievement key={location.pathname} />
+				<Achievement key={`${location.pathname}-${activeSession.id}`} />
 			</MainContainer>
 
 			<AsideContainer>

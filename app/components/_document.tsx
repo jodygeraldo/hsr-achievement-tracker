@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 import {
 	Links,
 	LiveReload,
@@ -7,6 +8,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useFetcher,
 	useLocation,
 	useMatches,
 	useRouteLoaderData,
@@ -80,7 +82,7 @@ function Main() {
 			? (leafMatch.data as CategoryLoaderData).categoryName
 			: (leafMatch.handle?.pageHeading as string)) ?? "HSR Achievement Tracker"
 
-	const { sessionName } = useRouteLoaderData("root") as RootLoaderData
+	const { activeSession } = useRouteLoaderData("root") as RootLoaderData
 
 	return (
 		<Document>
@@ -102,12 +104,18 @@ function Main() {
 							{pageHeading}
 						</h1>
 
-						<div
-							className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12"
-							aria-hidden="true"
-						>
-							{getInitials(sessionName)}
-						</div>
+						<DropdownMenu.Root modal={false}>
+							<DropdownMenu.Trigger asChild>
+								<button
+									className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
+									aria-hidden="true"
+								>
+									{getInitials(activeSession.name)}
+								</button>
+							</DropdownMenu.Trigger>
+
+							<SessionMenu />
+						</DropdownMenu.Root>
 					</div>
 				</Dialog.Root>
 
@@ -154,7 +162,7 @@ function MobileSidebar() {
 }
 
 function Sidebar() {
-	const { achievementSize, achievedTotal, categories, sessionName } =
+	const { achievementSize, achievedTotal, categories, activeSession } =
 		useRouteLoaderData("root") as RootLoaderData
 
 	return (
@@ -166,27 +174,49 @@ function Sidebar() {
 			</div>
 
 			{/* Account */}
-			<div className="-mx-2 flex gap-x-3 rounded-md bg-gray-3 p-2">
-				<div
-					className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xl font-bold text-gray-12"
-					aria-hidden="true"
-				>
-					{getInitials(sessionName)}
-				</div>
+			<DropdownMenu.Root modal={false}>
+				<DropdownMenu.Trigger asChild>
+					<button className="group -mx-2 flex items-center gap-x-3 rounded-md bg-gray-3 p-2 transition-colors hover:bg-gray-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8 data-[state=open]:bg-gray-5">
+						<div
+							className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xl font-bold text-gray-12"
+							aria-hidden="true"
+						>
+							{getInitials(activeSession.name)}
+						</div>
 
-				<div className="flex w-full flex-col">
-					<div className="flex-1 text-sm font-medium text-gray-11">
-						{sessionName}
-					</div>
+						<div className="flex w-full flex-col self-stretch text-left">
+							<div className="flex-1 text-sm font-medium text-gray-11">
+								{activeSession.name}
+							</div>
 
-					<div className="text-sm text-gray-12">
-						Completed <span className="font-medium">{achievedTotal}</span> out
-						of <span className="font-medium">{achievementSize}</span>
-					</div>
-				</div>
-			</div>
+							<div className="text-sm text-gray-12">
+								Completed <span className="font-medium">{achievedTotal}</span>{" "}
+								out of <span className="font-medium">{achievementSize}</span>
+							</div>
+						</div>
 
-			{/* Desktop Navigation */}
+						<svg
+							width="15"
+							height="15"
+							viewBox="0 0 15 15"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180"
+							aria-hidden="true"
+						>
+							<path
+								d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
+								fill="currentColor"
+								fillRule="evenodd"
+								clipRule="evenodd"
+							/>
+						</svg>
+					</button>
+				</DropdownMenu.Trigger>
+
+				<SessionMenu />
+			</DropdownMenu.Root>
+
 			<nav className="mb-8 flex flex-1 flex-col" aria-label="Sidebar">
 				<ul className="flex flex-1 flex-col gap-y-3">
 					<li>
@@ -266,6 +296,69 @@ function Sidebar() {
 				</p>
 			</div>
 		</div>
+	)
+}
+
+function SessionMenu() {
+	const { sessions, activeSession } = useRouteLoaderData(
+		"root"
+	) as RootLoaderData
+	const [activeId, setActiveId] = React.useState(activeSession.id)
+
+	const fetcher = useFetcher()
+
+	return (
+		<DropdownMenu.Portal>
+			<DropdownMenu.Content
+				sideOffset={4}
+				align="end"
+				className="z-50 min-w-[12rem] overflow-hidden rounded-md bg-gray-3 p-1 shadow-md animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+			>
+				<DropdownMenu.Label className="px-2 py-1.5 pl-8 text-xs font-semibold text-gray-11">
+					Sessions
+				</DropdownMenu.Label>
+
+				<DropdownMenu.RadioGroup
+					value={activeId}
+					onValueChange={(value) => {
+						setActiveId(value)
+						fetcher.submit(
+							{ id: value },
+							{ action: "/resource/session", method: "POST", replace: true }
+						)
+					}}
+					className="space-y-px"
+				>
+					{sessions.map((session) => (
+						<DropdownMenu.RadioItem
+							key={session.id}
+							value={session.id}
+							disabled={session.id === activeId}
+							className="relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm text-gray-12 outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:bg-gray-5 data-[highlighted]:bg-gray-4"
+						>
+							<DropdownMenu.ItemIndicator className="absolute left-2 flex items-center justify-center">
+								<svg
+									width="15"
+									height="15"
+									viewBox="0 0 15 15"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-5 w-5 text-gold-8"
+									aria-hidden={true}
+								>
+									<path
+										d="M9.875 7.5C9.875 8.81168 8.81168 9.875 7.5 9.875C6.18832 9.875 5.125 8.81168 5.125 7.5C5.125 6.18832 6.18832 5.125 7.5 5.125C8.81168 5.125 9.875 6.18832 9.875 7.5Z"
+										fill="currentColor"
+									/>
+								</svg>
+							</DropdownMenu.ItemIndicator>
+
+							{session.name}
+						</DropdownMenu.RadioItem>
+					))}
+				</DropdownMenu.RadioGroup>
+			</DropdownMenu.Content>
+		</DropdownMenu.Portal>
 	)
 }
 
