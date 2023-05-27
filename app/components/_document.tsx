@@ -17,7 +17,7 @@ import * as React from "react"
 import { Toaster } from "react-hot-toast"
 import type { CategoryLoaderData } from "~/routes/category.$slug/route"
 import type { RootLoaderData } from "../root"
-import { cn } from "../utils/shared"
+import { cn, getInitials } from "../utils/shared"
 
 function Document({ children }: { children: React.ReactNode }) {
 	return (
@@ -444,14 +444,6 @@ function MenuIcon() {
 			></path>
 		</svg>
 	)
-}
-
-function getInitials(name: string) {
-	return name
-		.split(" ")
-		.map((name) => name.charAt(0).toUpperCase())
-		.filter((_, i, arr) => i === 0 || i === arr.length - 1)
-		.join("")
 }
 
 export { Document, Main }
