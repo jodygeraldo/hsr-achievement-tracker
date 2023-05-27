@@ -3,7 +3,6 @@ import { useFetcher, useFormAction, useLoaderData } from "@remix-run/react"
 import * as React from "react"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
-import type { Achievement as AchievementType } from "~/models/achievement.server"
 import { cn } from "~/utils/shared"
 import type { CategoryLoaderData } from "./route"
 
@@ -21,7 +20,7 @@ export function Achievement() {
 				>
 					<div className="flex items-center gap-2 self-start sm:order-last">
 						<Badge>{achievement.version}</Badge>
-						{achievement.secret ? <Badge>Secret</Badge> : null}
+						{achievement.isSecret ? <Badge>Secret</Badge> : null}
 					</div>
 
 					{Array.isArray(achievement.name) ? (
@@ -43,7 +42,11 @@ function Badge({ children }: { children: React.ReactNode }) {
 	)
 }
 
-function MultiAchievement({ achievement }: { achievement: AchievementType }) {
+function MultiAchievement({
+	achievement,
+}: {
+	achievement: CategoryLoaderData["achievements"][number]
+}) {
 	if (
 		!Array.isArray(achievement.name) ||
 		(achievement.clue && !Array.isArray(achievement.clue))
@@ -62,7 +65,7 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 	const radioNoneId = React.useId()
 
 	const displayClue = shouldDisplayClue({
-		isSecret: achievement.secret,
+		isSecret: achievement.isSecret,
 		isAchieved: achievement.achievedAt,
 		showClue,
 	})
@@ -148,7 +151,11 @@ function MultiAchievement({ achievement }: { achievement: AchievementType }) {
 	)
 }
 
-function SingleAchievement({ achievement }: { achievement: AchievementType }) {
+function SingleAchievement({
+	achievement,
+}: {
+	achievement: CategoryLoaderData["achievements"][number]
+}) {
 	if (
 		typeof achievement.name !== "string" ||
 		(achievement.clue && typeof achievement.clue !== "string")
@@ -166,7 +173,7 @@ function SingleAchievement({ achievement }: { achievement: AchievementType }) {
 	const action = useFormAction()
 
 	const displayClue = shouldDisplayClue({
-		isSecret: achievement.secret,
+		isSecret: achievement.isSecret,
 		isAchieved: achievement.achievedAt,
 		showClue,
 	})
