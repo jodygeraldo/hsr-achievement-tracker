@@ -7,14 +7,11 @@ import type {
 } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
 import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
-import NProgress from "nprogress"
-import { useGlobalPendingState } from "remix-utils"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import type { AppDatabase, AppSessionStorage } from "./types"
 import { getSessions, setupSession } from "./utils/session.server"
-NProgress.configure({ showSpinner: false })
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
@@ -74,13 +71,6 @@ export async function loader({ request, context }: LoaderArgs) {
 }
 
 export default function App() {
-	const globalPendingState = useGlobalPendingState()
-	if (globalPendingState === "pending") {
-		NProgress.start()
-	} else {
-		NProgress.done()
-	}
-
 	return <Main />
 }
 
