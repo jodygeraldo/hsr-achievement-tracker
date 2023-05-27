@@ -261,6 +261,14 @@ function Sidebar() {
 											)
 										}
 									>
+										<img
+											src={`/assets/${category.slug}.webp`}
+											height={24}
+											width={24}
+											alt=""
+											className="h-6 w-6 shrink-0 rounded-full bg-gold-9"
+										/>
+
 										<span className="truncate">{category.name}</span>
 
 										<span
