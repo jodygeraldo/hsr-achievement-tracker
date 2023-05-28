@@ -45,7 +45,6 @@ export async function action({ request, context }: DataFunctionArgs) {
 		intent,
 		enums(["updateSessionName", "removeSession", "newSession", "importSession"])
 	)
-	console.log(Object.fromEntries(formData.entries()))
 
 	switch (intent) {
 		case "newSession": {
@@ -160,8 +159,6 @@ export async function action({ request, context }: DataFunctionArgs) {
 		}
 
 		case "removeSession": {
-			console.log("run")
-
 			const id = formData.get("id")
 			assert(id, string())
 
