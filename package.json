@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "remix build",
 		"dev": "remix dev --no-restart --command \"wrangler pages dev ./public\"",
-		"fmt:eslint": "eslint --fix --ext .ts,.tsx .",
+		"fmt:eslint": "npm run lint -- --fix",
 		"fmt:prettier": "prettier --cache --write --ignore-unknown .",
 		"fmt": "run-s -l fmt:*",
 		"lint": "eslint --ext .ts,.tsx --cache --cache-location ./node_modules/.cache/eslint .",
