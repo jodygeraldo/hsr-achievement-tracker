@@ -5,7 +5,7 @@ import { Badge } from "~/components/badge"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
 import { cn } from "~/utils/shared"
-import type { CategoryLoaderData } from "./route"
+import { type CategoryLoaderData } from "./route"
 
 export function Achievement() {
 	const { achievements: loaderAchievements } =

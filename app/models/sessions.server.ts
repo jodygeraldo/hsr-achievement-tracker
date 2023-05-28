@@ -1,5 +1,5 @@
 import { isCuid } from "@paralleldrive/cuid2"
-import type { AppDatabase, AppSessionStorage } from "~/types"
+import { type AppDatabase, type AppSessionStorage } from "~/types"
 import { createId, getCookieSession, getSessions } from "~/utils/session.server"
 
 async function setActiveSession(

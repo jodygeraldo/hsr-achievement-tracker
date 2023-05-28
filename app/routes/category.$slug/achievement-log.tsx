@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react"
-import type { CategoryLoaderData } from "./route"
+import { type CategoryLoaderData } from "./route"
 
 export function AchievementLog() {
 	const { achieved } = useLoaderData() as CategoryLoaderData

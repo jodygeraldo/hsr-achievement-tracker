@@ -15,8 +15,8 @@ import {
 } from "@remix-run/react"
 import * as React from "react"
 import { Toaster } from "react-hot-toast"
-import type { CategoryLoaderData } from "~/routes/category.$slug/route"
-import type { RootLoaderData } from "../root"
+import { type CategoryLoaderData } from "~/routes/category.$slug/route"
+import { type RootLoaderData } from "../root"
 import { cn, getInitials } from "../utils/shared"
 
 function Document({ children }: { children: React.ReactNode }) {

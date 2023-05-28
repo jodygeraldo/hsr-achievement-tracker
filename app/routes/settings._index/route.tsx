@@ -1,5 +1,4 @@
-import type { DataFunctionArgs } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
+import { json, type DataFunctionArgs } from "@remix-run/cloudflare"
 import { useActionData, useLoaderData, useNavigation } from "@remix-run/react"
 import * as React from "react"
 import toast from "react-hot-toast"

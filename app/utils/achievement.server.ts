@@ -1,6 +1,14 @@
-import type { Describe } from "superstruct"
-import { array, assert, enums, is, object, string, union } from "superstruct"
-import type { SlugifiedCategoryName } from "~/data/achievement.server"
+import {
+	array,
+	assert,
+	enums,
+	is,
+	object,
+	string,
+	union,
+	type Describe,
+} from "superstruct"
+import { type SlugifiedCategoryName } from "~/data/achievement.server"
 
 export function isValidSlugifiedCategoryName(
 	slug?: string

@@ -1,12 +1,11 @@
 import { DatabaseError } from "@planetscale/database"
-import type {
-	ActionArgs,
-	LoaderArgs,
-	SerializeFrom,
-	V2_MetaArgs,
-	V2_MetaDescriptor,
+import {
+	json,
+	type DataFunctionArgs,
+	type SerializeFrom,
+	type V2_MetaArgs,
+	type V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
 import {
 	isRouteErrorResponse,
 	useLocation,
@@ -17,7 +16,7 @@ import { assert, is, literal, string, union } from "superstruct"
 import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
-import type { RootLoaderData } from "~/root"
+import { type RootLoaderData } from "~/root"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getActiveSessionId } from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
@@ -32,7 +31,7 @@ export function meta({
 	return [{ title: `${categoryName} | HSR Achievement Tracker` }]
 }
 
-export async function action({ request, params, context }: ActionArgs) {
+export async function action({ request, params, context }: DataFunctionArgs) {
 	const slug = params.slug
 	if (!isValidSlugifiedCategoryName(slug)) {
 		throw json({ message: "Invalid slugified category name" }, { status: 400 })
@@ -76,7 +75,7 @@ export async function action({ request, params, context }: ActionArgs) {
 }
 
 export type CategoryLoaderData = SerializeFrom<typeof loader>
-export async function loader({ request, params, context }: LoaderArgs) {
+export async function loader({ request, params, context }: DataFunctionArgs) {
 	const slug = params.slug
 	if (!isValidSlugifiedCategoryName(slug)) {
 		throw json(

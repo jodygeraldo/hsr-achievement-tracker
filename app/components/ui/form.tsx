@@ -1,6 +1,8 @@
 import * as FormPrimitive from "@radix-ui/react-form"
-import type { FormProps as RemixFormProps } from "@remix-run/react"
-import { Form as RemixForm } from "@remix-run/react"
+import {
+	Form as RemixForm,
+	type FormProps as RemixFormProps,
+} from "@remix-run/react"
 import * as React from "react"
 
 type FormProps = {

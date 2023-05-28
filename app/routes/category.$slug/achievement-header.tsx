@@ -1,6 +1,6 @@
 import * as Progress from "@radix-ui/react-progress"
 import { useParams, useRouteLoaderData } from "@remix-run/react"
-import type { RootLoaderData } from "~/root"
+import { type RootLoaderData } from "~/root"
 
 export function AchievementHeader() {
 	const slug = useParams().slug

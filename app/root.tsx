@@ -1,16 +1,16 @@
 import { DatabaseError } from "@planetscale/database"
-import type {
-	LinkDescriptor,
-	LoaderArgs,
-	SerializeFrom,
-	V2_MetaDescriptor,
+import {
+	json,
+	type LinkDescriptor,
+	type LoaderArgs,
+	type SerializeFrom,
+	type V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
 import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
-import type { AppDatabase, AppSessionStorage } from "./types"
+import { type AppDatabase, type AppSessionStorage } from "./types"
 import { getSessions, setupSession } from "./utils/session.server"
 
 declare module "@remix-run/cloudflare" {

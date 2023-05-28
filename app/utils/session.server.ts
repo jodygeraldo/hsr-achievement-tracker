@@ -1,7 +1,7 @@
 import { init } from "@paralleldrive/cuid2"
 import { DatabaseError } from "@planetscale/database"
 import { json, redirect } from "@remix-run/cloudflare"
-import type { AppDatabase, AppSessionStorage } from "~/types"
+import { type AppDatabase, type AppSessionStorage } from "~/types"
 
 const createId = init({ length: 11 })
 

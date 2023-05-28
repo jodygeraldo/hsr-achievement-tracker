@@ -1,5 +1,5 @@
-import type { Session, SessionStorage } from "@remix-run/cloudflare"
-import type { Generated, Kysely } from "kysely"
+import { type Session, type SessionStorage } from "@remix-run/cloudflare"
+import { type Generated, type Kysely } from "kysely"
 
 interface AchievementTable {
 	id: Generated<number>

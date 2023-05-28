@@ -1,8 +1,7 @@
 import { DatabaseError } from "@planetscale/database"
 import * as AlertDialog from "@radix-ui/react-alert-dialog"
 import * as Dialog from "@radix-ui/react-dialog"
-import type { DataFunctionArgs } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
+import { json, type DataFunctionArgs } from "@remix-run/cloudflare"
 import {
 	useActionData,
 	useFetcher,
@@ -32,7 +31,7 @@ import {
 	removeSession,
 	updateSessionName,
 } from "~/models/sessions.server"
-import type { UserSession } from "~/types"
+import { type UserSession } from "~/types"
 import { getSessions } from "~/utils/session.server"
 
 export const handle = {

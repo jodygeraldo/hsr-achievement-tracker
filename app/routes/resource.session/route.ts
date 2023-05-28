@@ -1,5 +1,4 @@
-import type { DataFunctionArgs } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
+import { json, type DataFunctionArgs } from "@remix-run/cloudflare"
 import { assert, string } from "superstruct"
 import { setActiveSession } from "~/models/sessions.server"
 import { getSessions } from "~/utils/session.server"
