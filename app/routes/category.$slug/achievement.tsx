@@ -71,6 +71,7 @@ function MultiAchievement({
 				fetcher.submit(
 					{
 						name: achievement.name.toString(),
+						intent: value === "none" ? "delete" : "multi",
 						path: value,
 					},
 					{ action, method: "POST", replace: true }

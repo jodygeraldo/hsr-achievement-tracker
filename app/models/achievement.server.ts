@@ -1,64 +1,66 @@
-import type { AppLoadContext } from "@remix-run/cloudflare"
-import type { SlugifiedCategoryName } from "~/data/achievement.server"
-import { achievementByCategory, categories } from "~/data/achievement.server"
+import { type Connection } from "@planetscale/database"
+import { array, assert, date, nullable, object, string } from "superstruct"
+import {
+	achievementByCategory,
+	categories,
+	type SlugifiedCategoryName,
+} from "~/data/achievement.server"
 import { getAchievedAt } from "~/utils/achievement.server"
 
-type DatabaseAccess = {
-	db: AppLoadContext["db"]
-	sessionId: string
-}
-
-async function getCategories({ db, sessionId }: DatabaseAccess) {
+async function getCategories(db: Connection, data: { sessionId: string }) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
 
-	const achievedByCategory = await db
-		.selectFrom("achievement")
-		.select(["category as slug", db.fn.countAll<string>().as("count")])
-		.where("session_id", "=", sessionId)
-		.groupBy("category")
-		.execute()
+	const { rows } = await db.execute(
+		"SELECT category as `slug`, count(*) as `count` FROM achievement WHERE session_id = ? GROUP BY category",
+		[data.sessionId]
+	)
+	const Struct = array(
+		object({
+			slug: string(),
+			count: string(),
+		})
+	)
+	assert(rows, Struct)
 
 	let achievedTotal = 0
-	achievedByCategory.forEach(({ count }) => (achievedTotal += Number(count)))
+	rows.forEach(({ count }) => (achievedTotal += Number(count)))
 
 	return {
 		achievementSize,
 		achievedTotal,
 		categories: categories.map((category) => ({
-			name: category.name,
-			slug: category.slug,
-			size: category.size,
+			...category,
 			achievedCount:
-				achievedByCategory.find(({ slug }) => slug === category.slug)?.count ??
-				"0",
+				rows.find(({ slug }) => slug === category.slug)?.count ?? "0",
 		})),
 	}
 }
 
-async function getAchievements({
-	db,
-	sessionId,
-	slug,
-	showMissedFirst,
-}: {
-	slug: SlugifiedCategoryName
-	showMissedFirst: boolean
-} & DatabaseAccess) {
-	const data = await db
-		.selectFrom("achievement")
-		.select(["name", "created_at as createdAt", "path"])
-		.where(({ and, cmpr }) =>
-			and([cmpr("session_id", "=", sessionId), cmpr("category", "=", slug)])
-		)
-		.orderBy("created_at", "desc")
-		.execute()
+async function getAchievements(
+	db: Connection,
+	data: { sessionId: string; slug: SlugifiedCategoryName },
+	options: { showMissedFirst: boolean }
+) {
+	const { rows } = await db.execute(
+		"SELECT name, created_at as `createdAt`, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC",
+		[data.sessionId, data.slug]
+	)
 
-	const achieved = data.map((d) => {
+	const Struct = array(
+		object({
+			name: string(),
+			createdAt: date(),
+			path: nullable(string()),
+		})
+	)
+	assert(rows, Struct)
+
+	const achieved = rows.map((d) => {
 		return { ...d, achievedAt: getAchievedAt(d.createdAt) }
 	})
 
-	const achievements = achievementByCategory[slug].map((achievement) => {
+	const achievements = achievementByCategory[data.slug].map((achievement) => {
 		const done = achieved.find(
 			({ name }) => name === achievement.name.toString()
 		)
@@ -71,10 +73,10 @@ async function getAchievements({
 	})
 
 	const categoryName = categories.find(
-		(category) => category.slug === slug
+		(category) => category.slug === data.slug
 	)?.name
 
-	if (showMissedFirst) {
+	if (options.showMissedFirst) {
 		achievements.sort(
 			(first, second) =>
 				Number(Boolean(first.achievedAt)) - Number(Boolean(second.achievedAt))
@@ -94,65 +96,40 @@ async function getAchievements({
 	}
 }
 
-async function modifyAchieved({
-	db,
-	sessionId,
-	slug,
-	name,
-	intent,
-	path,
-}: {
-	slug: SlugifiedCategoryName
-	name: string
-	intent: "put" | "delete" | "multi"
-	path?: string
-} & DatabaseAccess) {
-	if (intent === "multi") {
-		if (path === "none") {
-			await db
-				.deleteFrom("achievement")
-				.where(({ and, cmpr }) =>
-					and([
-						cmpr("session_id", "=", sessionId),
-						cmpr("category", "=", slug),
-						cmpr("name", "=", name),
-					])
-				)
-				.execute()
-		} else {
-			await db
-				.insertInto("achievement")
-				.values({
-					category: slug,
-					session_id: sessionId,
-					name,
-					path,
-				})
-				.onDuplicateKeyUpdate({ path })
-				.execute()
+async function modifyAchieved(
+	db: Connection,
+	data: {
+		sessionId: string
+		slug: SlugifiedCategoryName
+		name: string
+		intent: "put" | "delete" | "multi"
+		path?: string
+	}
+) {
+	switch (data.intent) {
+		case "multi": {
+			await db.execute(
+				"INSERT INTO achievement(session_id, name, category, path) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE path = ?",
+				[data.sessionId, data.name, data.slug, data.path, data.path]
+			)
+			break
 		}
-	} else {
-		if (intent === "put") {
-			await db
-				.insertInto("achievement")
-				.values({
-					category: slug,
-					session_id: sessionId,
-					name,
-				})
-				.execute()
-		} else {
-			await db
-				.deleteFrom("achievement")
-				.where(({ and, cmpr }) =>
-					and([
-						cmpr("session_id", "=", sessionId),
-						cmpr("category", "=", slug),
-						cmpr("name", "=", name),
-					])
-				)
-				.execute()
+		case "put": {
+			await db.execute(
+				"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?)",
+				[data.sessionId, data.name, data.slug]
+			)
+			break
 		}
+		case "delete": {
+			await db.execute(
+				"DELETE FROM achievement WHERE session_id = ? AND category = ? AND name = ?",
+				[data.sessionId, data.slug, data.name]
+			)
+			break
+		}
+		default:
+			throw new Error("Invalid data intent on modifyAchieved")
 	}
 }
 

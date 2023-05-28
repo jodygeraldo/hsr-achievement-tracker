@@ -1,7 +1,7 @@
 import { init } from "@paralleldrive/cuid2"
-import { DatabaseError } from "@planetscale/database"
+import { DatabaseError, type Connection } from "@planetscale/database"
 import { json, redirect } from "@remix-run/cloudflare"
-import { type AppDatabase, type AppSessionStorage } from "~/types"
+import { type AppSessionStorage } from "~/types"
 
 const createId = init({ length: 11 })
 
@@ -16,7 +16,7 @@ async function getCookieSession(context: {
 async function setupSession(context: {
 	sessionStorage: AppSessionStorage
 	request: Request
-	db: AppDatabase
+	db: Connection
 }) {
 	const url = new URL(context.request.url)
 	const cookieSession = await getCookieSession(context)
@@ -37,11 +37,10 @@ async function setupSession(context: {
 		try {
 			const newSessionId = createId()
 
-			await context.db
-				.updateTable("achievement")
-				.set({ session_id: newSessionId })
-				.where("session_id", "=", userSessionId)
-				.executeTakeFirstOrThrow()
+			await context.db.execute(
+				"UPDATE achievement SET session_id = ? WHERE session_id = ?",
+				[newSessionId, userSessionId]
+			)
 
 			cookieSession.set("sessions", [
 				{
@@ -52,6 +51,7 @@ async function setupSession(context: {
 				},
 			])
 		} catch (error) {
+			console.error(error)
 			let message = "Failed to migrate your session to current session system"
 			if (error instanceof DatabaseError) {
 				message = error.message

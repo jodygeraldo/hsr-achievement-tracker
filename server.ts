@@ -1,8 +1,7 @@
+import { cast, connect } from "@planetscale/database"
 import { createCookieSessionStorage, logDevReady } from "@remix-run/cloudflare"
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages"
 import * as build from "@remix-run/dev/server-build"
-import { Kysely } from "kysely"
-import { PlanetScaleDialect } from "kysely-planetscale"
 
 if (process.env.NODE_ENV === "development") {
 	logDevReady(build)
@@ -21,12 +20,16 @@ export const onRequest = createPagesFunctionHandler<Env>({
 				secure: process.env.NODE_ENV === "production",
 			},
 		}),
-		db: new Kysely({
-			dialect: new PlanetScaleDialect({
-				host: context.env.DATABASE_HOST,
-				username: context.env.DATABASE_USERNAME,
-				password: context.env.DATABASE_PASSWORD,
-			}),
+		db: connect({
+			host: context.env.DATABASE_HOST,
+			username: context.env.DATABASE_USERNAME,
+			password: context.env.DATABASE_PASSWORD,
+			cast(field, value) {
+				if (field.type === "TIMESTAMP" && value) {
+					return new Date(value)
+				}
+				return cast(field, value)
+			},
 		}),
 	}),
 	mode: process.env.NODE_ENV,

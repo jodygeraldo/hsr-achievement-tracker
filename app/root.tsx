@@ -1,4 +1,4 @@
-import { DatabaseError } from "@planetscale/database"
+import { DatabaseError, type Connection } from "@planetscale/database"
 import {
 	json,
 	type LinkDescriptor,
@@ -10,13 +10,13 @@ import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
-import { type AppDatabase, type AppSessionStorage } from "./types"
+import { type AppSessionStorage } from "./types"
 import { getSessions, setupSession } from "./utils/session.server"
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
 		sessionStorage: AppSessionStorage
-		db: AppDatabase
+		db: Connection
 	}
 }
 
@@ -46,8 +46,7 @@ export async function loader({ request, context }: LoaderArgs) {
 	const activeSession = sessions.filter((session) => session.isActive)[0]
 
 	try {
-		const category = await getCategories({
-			db: context.db,
+		const category = await getCategories(context.db, {
 			sessionId: activeSession.sessionId,
 		})
 
@@ -61,6 +60,7 @@ export async function loader({ request, context }: LoaderArgs) {
 			})),
 		})
 	} catch (error) {
+		console.error(error)
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {
 			message = error.message

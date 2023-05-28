@@ -77,7 +77,7 @@ function Main() {
 	const location = useLocation()
 	const matches = useMatches()
 	const leafMatch = matches[matches.length - 1]
-	
+
 	const defaultPageHeading = "HSR Achievement Tracker"
 	const pageHeading =
 		(location.pathname.startsWith("/category")

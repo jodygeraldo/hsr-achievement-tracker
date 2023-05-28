@@ -12,7 +12,7 @@ import {
 	useRouteError,
 	useRouteLoaderData,
 } from "@remix-run/react"
-import { assert, is, literal, string, union } from "superstruct"
+import { assert, string } from "superstruct"
 import { AsideContainer, MainContainer } from "~/components/container"
 import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
@@ -49,20 +49,28 @@ export async function action({ request, params, context }: DataFunctionArgs) {
 	assert(name, string())
 
 	try {
-		if (is(intent, union([literal("put"), literal("delete")]))) {
-			await modifyAchieved({ db: context.db, sessionId, slug, name, intent })
-		} else {
-			assert(path, string())
-			await modifyAchieved({
-				db: context.db,
-				sessionId,
-				slug,
-				name,
-				intent: "multi",
-				path,
-			})
+		switch (intent) {
+			case "put":
+			case "delete": {
+				await modifyAchieved(context.db, { sessionId, slug, name, intent })
+				break
+			}
+			case "multi": {
+				assert(path, string())
+				await modifyAchieved(context.db, {
+					sessionId,
+					slug,
+					name,
+					intent,
+					path,
+				})
+				break
+			}
+			default:
+				throw new Error("Invalid data intent on category.$slug/route action")
 		}
 	} catch (error) {
+		console.error(error)
 		let message = "Failed to modified achievement status"
 		if (error instanceof DatabaseError) {
 			message = error.message
@@ -94,12 +102,14 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 	const userPrefs = await getUserPrefs(request)
 
 	try {
-		const data = await getAchievements({
-			db: context.db,
-			sessionId,
-			slug,
-			showMissedFirst: userPrefs.showMissedFirst,
-		})
+		const data = await getAchievements(
+			context.db,
+			{
+				sessionId,
+				slug,
+			},
+			{ showMissedFirst: userPrefs.showMissedFirst }
+		)
 
 		return json({
 			categoryName: data.categoryName,
@@ -108,6 +118,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 			showClue: userPrefs.showClue,
 		})
 	} catch (error) {
+		console.error(error)
 		let message = "Failed to get achievement details"
 		if (error instanceof DatabaseError) {
 			message = error.message
