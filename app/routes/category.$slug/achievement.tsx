@@ -1,6 +1,7 @@
 import * as Popover from "@radix-ui/react-popover"
 import { useFetcher, useFormAction, useLoaderData } from "@remix-run/react"
 import * as React from "react"
+import { Badge } from "~/components/badge"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
 import { cn } from "~/utils/shared"
@@ -31,14 +32,6 @@ export function Achievement() {
 				</li>
 			))}
 		</ul>
-	)
-}
-
-function Badge({ children }: { children: React.ReactNode }) {
-	return (
-		<span className="inline-flex items-center rounded-md bg-overlay-3 px-1.5 py-0.5 text-xs font-medium text-gray-11 ring-1 ring-inset ring-gray-6">
-			{children}
-		</span>
 	)
 }
 
