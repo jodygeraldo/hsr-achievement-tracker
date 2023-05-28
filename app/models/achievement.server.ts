@@ -60,7 +60,9 @@ async function getHomeAchievementData(
 	const percentileRank = (rank / totalSessions) * 100
 
 	let topPercentileRank: string
-	if (percentileRank <= 0.01) {
+	if (achievedRows.length === 0) {
+		topPercentileRank = `bottom 0.01%`
+	} else if (percentileRank <= 0.01) {
 		topPercentileRank = `top 0.01%`
 	} else if (percentileRank >= 99.99) {
 		topPercentileRank = `bottom 0.01%`
@@ -253,3 +255,4 @@ export {
 	getAchievements,
 	modifyAchieved,
 }
+
