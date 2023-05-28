@@ -77,10 +77,13 @@ function Main() {
 	const location = useLocation()
 	const matches = useMatches()
 	const leafMatch = matches[matches.length - 1]
+	
+	const defaultPageHeading = "HSR Achievement Tracker"
 	const pageHeading =
 		(location.pathname.startsWith("/category")
-			? (leafMatch.data as CategoryLoaderData).categoryName
-			: (leafMatch.handle?.pageHeading as string)) ?? "HSR Achievement Tracker"
+			? (leafMatch.data as CategoryLoaderData | undefined)?.categoryName ??
+			  defaultPageHeading
+			: (leafMatch.handle?.pageHeading as string)) ?? defaultPageHeading
 
 	const { activeSession } = useRouteLoaderData("root") as RootLoaderData
 
