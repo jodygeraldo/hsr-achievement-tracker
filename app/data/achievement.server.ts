@@ -1,5 +1,10 @@
 import { clueBuilder } from "~/utils/achievement.server"
 
+const metadata: Metadata = {
+	currentVersion: "1.0",
+	size: { "1.0": 332 },
+}
+
 /**
  * There could be mistakes or things missing in the list of achievements.
  * The order of achievements might change as I unlock more or confirm them with others.
@@ -1910,12 +1915,25 @@ type Category = {
 	size: number
 }
 
+type Version = `${number}.${number}`
+
 type Achievement = {
 	name: string | string[]
-	version: `${number}.${number}`
+	version: Version
 	clue?: string | string[]
 	isSecret?: boolean
 }
 
-export type { CategoryName, SlugifiedCategoryName, Category, Achievement }
-export { achievementByCategory, categories }
+type Metadata = {
+	currentVersion: Version
+	size: { [k in Version]: number }
+}
+
+export type {
+	CategoryName,
+	SlugifiedCategoryName,
+	Category,
+	Achievement,
+	Metadata as AchievementMetadata,
+}
+export { metadata as achievementMetadata, achievementByCategory, categories }

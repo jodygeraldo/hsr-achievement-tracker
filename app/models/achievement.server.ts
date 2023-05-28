@@ -2,17 +2,131 @@ import { type Connection } from "@planetscale/database"
 import { array, assert, date, nullable, object, string } from "superstruct"
 import {
 	achievementByCategory,
+	achievementMetadata,
 	categories,
 	type SlugifiedCategoryName,
 } from "~/data/achievement.server"
 import { getAchievedAt } from "~/utils/achievement.server"
+
+async function getHomeAchievementData(
+	db: Connection,
+	data: { sessionId: string }
+) {
+	const AchievedStruct = array(
+		object({
+			name: string(),
+			category: string(),
+		})
+	)
+	const LatestAchievedStruct = array(
+		object({
+			name: string(),
+			category: string(),
+			path: nullable(string()),
+			createdAt: date(),
+		})
+	)
+	const TotalSessionsStruct = array(object({ totalSessions: string() }))
+	const RankStruct = array(object({ rank: string() }))
+
+	const [
+		{ rows: achievedRows },
+		{ rows: latestAchievedRows },
+		{ rows: totalSessionsRows },
+		{ rows: rankRows },
+	] = await Promise.all([
+		db.execute("SELECT name, category FROM achievement WHERE session_id = ?", [
+			data.sessionId,
+		]),
+		db.execute(
+			"SELECT name, category, path, created_at AS `createdAt` FROM achievement WHERE session_id = ? ORDER BY created_at DESC LIMIT 10",
+			[data.sessionId]
+		),
+		db.execute(
+			"SELECT count(DISTINCT session_id) as `totalSessions` FROM achievement"
+		),
+		db.execute(
+			"SELECT count(*) + ? AS `rank` FROM (SELECT session_id, count(*) AS total_achievements FROM achievement GROUP BY session_id) AS a JOIN (SELECT session_id, count(*) AS total_achievements FROM achievement where session_id = ?) AS b on a.session_id != b.session_id where a.total_achievements > b.total_achievements",
+			[1, data.sessionId]
+		),
+	])
+	assert(achievedRows, AchievedStruct)
+	assert(latestAchievedRows, LatestAchievedStruct)
+	assert(totalSessionsRows, TotalSessionsStruct)
+	assert(rankRows, RankStruct)
+
+	const totalSessions = Number(totalSessionsRows[0].totalSessions)
+	const rank = Number(rankRows[0].rank)
+	const percentileRank = (rank / totalSessions) * 100
+
+	let topPercentileRank: string
+	if (percentileRank <= 0.01) {
+		topPercentileRank = `top 0.01%`
+	} else if (percentileRank >= 99.99) {
+		topPercentileRank = `bottom 0.01%`
+	} else if (percentileRank >= 50) {
+		topPercentileRank = `bottom ${(100 - percentileRank).toFixed(2)}%`
+	} else {
+		topPercentileRank = `top ${percentileRank.toFixed(2)}%`
+	}
+
+	let secretAchieved = 0
+	let currentVersionAchieved = 0
+	achievedRows.forEach((ach) => {
+		const done = achievementByCategory[
+			ach.category as SlugifiedCategoryName
+		].find((achievement) => achievement.name.toString() === ach.name)
+		if (done?.isSecret) {
+			secretAchieved += 1
+		}
+		if (done?.version === achievementMetadata.currentVersion) {
+			currentVersionAchieved += 1
+		}
+	})
+	const currentVersion = {
+		num: achievementMetadata.currentVersion,
+		achieved: currentVersionAchieved,
+		size: achievementMetadata.size[achievementMetadata.currentVersion],
+	}
+
+	return {
+		percentileRank: topPercentileRank,
+		rank,
+		secretAchieved,
+		currentVersion,
+		latestAchieved: latestAchievedRows.map((ach) => {
+			const categoryName = categories.find(
+				({ slug }) => slug === ach.category
+			)?.name
+			const achievementData = achievementByCategory[
+				ach.category as SlugifiedCategoryName
+			].find((achievement) => achievement.name.toString() === ach.name)
+
+			if (!achievementData || !categoryName) {
+				throw new Error("Encountered invalid data")
+			}
+
+			return {
+				name: ach.path ?? ach.name,
+				slug: ach.category,
+				category: categoryName,
+				version: achievementData?.version,
+				isSecret: achievementData?.isSecret,
+				achievedAt: {
+					formatted: getAchievedAt(ach.createdAt),
+					raw: ach.createdAt.toISOString(),
+				},
+			}
+		}),
+	}
+}
 
 async function getCategories(db: Connection, data: { sessionId: string }) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
 
 	const { rows } = await db.execute(
-		"SELECT category as `slug`, count(*) as `count` FROM achievement WHERE session_id = ? GROUP BY category",
+		"SELECT category AS `slug`, count(*) AS `count` FROM achievement WHERE session_id = ? GROUP BY category",
 		[data.sessionId]
 	)
 	const Struct = array(
@@ -43,7 +157,7 @@ async function getAchievements(
 	options: { showMissedFirst: boolean }
 ) {
 	const { rows } = await db.execute(
-		"SELECT name, created_at as `createdAt`, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC",
+		"SELECT name, created_at AS `createdAt`, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC",
 		[data.sessionId, data.slug]
 	)
 
@@ -133,4 +247,9 @@ async function modifyAchieved(
 	}
 }
 
-export { getCategories, getAchievements, modifyAchieved }
+export {
+	getHomeAchievementData,
+	getCategories,
+	getAchievements,
+	modifyAchieved,
+}
