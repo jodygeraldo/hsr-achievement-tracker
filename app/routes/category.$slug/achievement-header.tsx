@@ -11,7 +11,7 @@ export function AchievementHeader() {
 		100 - (Number(currentCategory.achievedCount) / currentCategory.size) * 100
 
 	return (
-		<div className="sticky top-[calc(4rem+1px)] z-10 -mx-4 -mt-6 flex flex-col gap-4 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:-mx-6 sm:px-6 lg:top-0 lg:-mx-8 lg:px-8">
+		<div className="sticky top-[calc(4rem+1px)] -mx-4 -mt-6 flex flex-col gap-4 bg-opacity-75 px-4 py-6 backdrop-blur backdrop-filter sm:-mx-6 sm:px-6 lg:top-0 lg:-mx-8 lg:px-8">
 			<Progress.Root
 				value={Number(currentCategory.achievedCount)}
 				max={currentCategory.size}
