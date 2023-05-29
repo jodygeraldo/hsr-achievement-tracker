@@ -617,7 +617,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "In a single battle against boss Kafka, dispel Dominated 3 times",
-		},
+		}, // 0
 		{
 			name: "Bring a Gun to a Knife Fight",
 			version: "1.0",
@@ -695,6 +695,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Obtain 20 type(s) of Light Cones",
 		},
 		{
+			name: "Ripples on the Dirac Sea (III)",
+			version: "1.0",
+			isSecret: true,
+			clue: "Obtain 40 type(s) of Light Cones",
+		},
+		{
 			name: "Supreme Treasure of the Netherworld",
 			version: "1.0",
 			clue: "Obtain a 5-star Relic",
@@ -706,12 +712,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		},
 
 		// in-game position check
-		{
-			name: "Ripples on the Dirac Sea (III)",
-			version: "1.0",
-			isSecret: true,
-			clue: "Obtain 40 type(s) of Light Cones",
-		},
 		{
 			name: "The Great Interastral Migration",
 			version: "1.0",
@@ -980,35 +980,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Have 1,024 or more Cosmic Fragment(s) when clearing Simulated Universe",
 		},
 		{
-			name: "The Grand Budapest Hotel",
-			version: "1.0",
-			clue: "Clear Simulated Universe at difficulty 2 or higher and use Techniques 25 times",
-		},
-		{
-			name: "Coherence",
-			version: "1.0",
-			clue: "Clear Simulated Universe at difficulty 2 or higher with 4 characters of the same Path",
-		},
-		{
-			name: "Does This Game Not Have a Platinum Trophy?",
-			version: "1.0",
-			clue: "Clear Simulated Universe (Difficulty Level 2 and above) with all allies at full HP at the end of every battle",
-		},
-
-		// in-game position check
-		{
-			name: "If I Can Stop One Heart From Breaking",
-			version: "1.0",
-			isSecret: true,
-			clue: "Clear Simulated Universe at difficulty 2 or higher without breaking any destructible objects",
-		},
-		{
-			name: "Aleph is the Universe",
-			version: "1.0",
-			isSecret: true,
-			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
-		},
-		{
 			name: "On Fire off the Shoulder of Orion",
 			version: "1.0",
 			isSecret: true,
@@ -1037,6 +1008,35 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Clear Simulated Universe at difficulty 2 or higher without using the Downloader",
+		},
+		{
+			name: "If I Can Stop One Heart From Breaking",
+			version: "1.0",
+			isSecret: true,
+			clue: "Clear Simulated Universe at difficulty 2 or higher without breaking any destructible objects",
+		},
+		{
+			name: "The Grand Budapest Hotel",
+			version: "1.0",
+			clue: "Clear Simulated Universe at difficulty 2 or higher and use Techniques 25 times",
+		},
+		{
+			name: "Coherence",
+			version: "1.0",
+			clue: "Clear Simulated Universe at difficulty 2 or higher with 4 characters of the same Path",
+		},
+		{
+			name: "Does This Game Not Have a Platinum Trophy?",
+			version: "1.0",
+			clue: "Clear Simulated Universe (Difficulty Level 2 and above) with all allies at full HP at the end of every battle",
+		},
+
+		// in-game position check
+		{
+			name: "Aleph is the Universe",
+			version: "1.0",
+			isSecret: true,
+			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
 		},
 	],
 	"glory-of-the-unyielding": [
@@ -1169,6 +1169,42 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Win 1 battle(s) with a team comprising Bronya, Gepard, Pela, and Serval",
 		},
 		{
+			name: "Hot-Blooded Trailblazer",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose hot-blooded dialogue options 5 time(s)",
+		},
+		{
+			name: "Pessimistic Trailblazer",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose pessimistic dialogue options 5 time(s)",
+		},
+		{
+			name: "Apologetic Trailblazer",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose apologetic dialogue options 5 time(s)",
+		},
+		{
+			name: "Silent Trailblazer",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose silent dialogue options 5 time(s)",
+		},
+		{
+			name: "The Echoer",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose repetitive dialogue options 3 time(s)",
+		},
+		{
+			name: "The Meaning of Choice",
+			version: "1.0",
+			isSecret: true,
+			clue: "Choose gender-specific dialogue options 3 time(s)",
+		},
+		{
 			name: "Lone Wolf",
 			version: "1.0",
 			isSecret: true,
@@ -1258,42 +1294,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Win 10 battles with a team that has 4 Physical-Type characters.",
 		},
-		{
-			name: "Hot-Blooded Trailblazer",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose hot-blooded dialogue options 5 time(s)",
-		},
-		{
-			name: "Pessimistic Trailblazer",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose pessimistic dialogue options 5 time(s)",
-		},
-		{
-			name: "Apologetic Trailblazer",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose apologetic dialogue options 5 time(s)",
-		},
-		{
-			name: "The Echoer",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose repetitive dialogue options 3 time(s)",
-		},
-		{
-			name: "Silent Trailblazer",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose silent dialogue options 5 time(s)",
-		},
-		{
-			name: "The Meaning of Choice",
-			version: "1.0",
-			isSecret: true,
-			clue: "Choose gender-specific dialogue options 3 time(s)",
-		},
 	],
 	"the-memories-we-share": [
 		{
@@ -1326,8 +1326,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			clue: 'Complete Companion Mission "Only A Child"',
 		}, // (in-game typo) Faithfull => Faithful
-
-		// in-game position check
 		{
 			name: "Seventeen's Map",
 			version: "1.0",
@@ -1458,18 +1456,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Solve the crisis at the Belobog cable car station while also avoiding ethical risks",
 		},
 		{
-			name: "Labor Omnia Vincit",
-			version: "1.0",
-			isSecret: true,
-			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
-		},
-		{
-			name: "Dance Like A Butterfly, Sting Like A Bee",
-			version: "1.0",
-			isSecret: true,
-			clue: "Dominate all 5 tournaments in the Boulder Town Super League",
-		},
-		{
 			name: "Where It All Began",
 			version: "1.0",
 			isSecret: true,
@@ -1518,6 +1504,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Participate in the Dark Fist Tournament and become the ultimate winner",
 		},
 		{
+			name: "Dance Like A Butterfly, Sting Like A Bee",
+			version: "1.0",
+			isSecret: true,
+			clue: "Dominate all 5 tournaments in the Boulder Town Super League",
+		},
+		{
 			name: "The Kelly Gang",
 			version: "1.0",
 			isSecret: true,
@@ -1534,12 +1526,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"',
-		},
-		{
-			name: "The Adventurous Moles Super Grown-Up Edition",
-			version: "1.0",
-			isSecret: true,
-			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
 		},
 		{
 			name: "A Simple Life",
@@ -1664,6 +1650,20 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
+		},
+
+		// in-game position check
+		{
+			name: "Labor Omnia Vincit",
+			version: "1.0",
+			isSecret: true,
+			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
+		},
+		{
+			name: "The Adventurous Moles Super Grown-Up Edition",
+			version: "1.0",
+			isSecret: true,
+			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
 		},
 	],
 	"fathom-the-unfathomable": [
@@ -1937,3 +1937,4 @@ export type {
 	Metadata as AchievementMetadata,
 }
 export { metadata as achievementMetadata, achievementByCategory, categories }
+
