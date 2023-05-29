@@ -10,8 +10,6 @@ concurrency:
 
 jobs:
   format:
-    if: github.repository == 'jodygeraldo/hsr-achievement-tracker'
-    name: 🧹 Prettier
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repo
@@ -31,8 +29,8 @@ jobs:
 
       - name: 📢 Commit
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
 
           git add .
           if [ -z "$(git status --porcelain)" ]; then
