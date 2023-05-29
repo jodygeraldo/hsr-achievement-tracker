@@ -109,11 +109,9 @@ function Main() {
 
 						<DropdownMenu.Root modal={false}>
 							<DropdownMenu.Trigger asChild>
-								<button
-									className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
-									aria-hidden="true"
-								>
-									{getInitials(activeSession.name)}
+								<button className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xs font-bold text-gray-12 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8">
+									<span className="sr-only">{activeSession.name}</span>
+									<span aria-hidden>{getInitials(activeSession.name)}</span>
 								</button>
 							</DropdownMenu.Trigger>
 
@@ -458,3 +456,4 @@ function MenuIcon() {
 }
 
 export { Document, Main }
+
