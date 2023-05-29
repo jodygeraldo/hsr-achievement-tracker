@@ -1,5 +1,4 @@
 import { createCookie } from "@remix-run/cloudflare"
-import type { Infer } from "superstruct"
 import {
 	StructError,
 	boolean,
@@ -8,6 +7,7 @@ import {
 	mask,
 	object,
 	type,
+	type Infer,
 } from "superstruct"
 
 const userPrefsStruct = type({

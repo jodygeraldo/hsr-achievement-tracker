@@ -1,4 +1,4 @@
-import { MainContainer } from "./main-container"
+import { MainContainer } from "./container"
 
 export type ErrorProps = {
 	status: number

@@ -1,59 +1,10 @@
-.clue-italic {
-	font-style: italic;
-}
-
-.clue-highlight {
-	color: hsl(var(--gold-10));
-	font-weight: 600;
-}
-
-.clue-link {
-	color: hsl(var(--gold-9));
-	text-decoration-line: underline;
-	text-decoration-color: hsl(var(--gold-6));
-}
-
-.clue-link:hover {
-	color: hsl(var(--gold-10));
-}
-
-#nprogress {
-	pointer-events: none;
-}
-
-#nprogress .bar {
-	background: hsl(var(--gold-9));
-
-	position: fixed;
-	z-index: 1031;
-	top: 0;
-	left: 0;
-
-	width: 100%;
-	height: 2px;
-}
-
-#nprogress .peg {
-	display: block;
-	position: absolute;
-	right: 0px;
-	width: 100px;
-	height: 100%;
-	box-shadow: 0 0 10px hsl(var(--gold-9)), 0 0 5px hsl(var(--gold-9));
-	opacity: 1;
-
-	-webkit-transform: rotate(3deg) translate(0px, -4px);
-	-ms-transform: rotate(3deg) translate(0px, -4px);
-	transform: rotate(3deg) translate(0px, -4px);
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
 	:root {
-		color-scheme: light;
+		color-scheme: light dark;
 		--gold-1: 50 20% 99.1%;
 		--gold-2: 47 52.9% 96.7%;
 		--gold-3: 46 38.2% 93.7%;
@@ -78,11 +29,12 @@
 		--gray-10: 0 0% 52.3%;
 		--gray-11: 0 0% 43.5%;
 		--gray-12: 0 0% 9%;
+		--red-9: 358 75% 59%;
+		--red-10: 358 69.4% 55.2%;
 	}
 
 	@media (prefers-color-scheme: dark) {
 		:root {
-			color-scheme: dark;
 			--gold-1: 44 9% 8.3%;
 			--gold-2: 43 14.3% 9.6%;
 			--gold-3: 42 15.5% 13%;
@@ -106,6 +58,28 @@
 			--gray-10: 0 0% 49.4%;
 			--gray-11: 0 0% 62.8%;
 			--gray-12: 0 0% 93%;
+			--red-10: 358 85.3% 64%;
 		}
+	}
+}
+
+@layer components {
+	.clue-italic {
+		font-style: italic;
+	}
+
+	.clue-highlight {
+		color: hsl(var(--gold-10));
+		font-weight: 600;
+	}
+
+	.clue-link {
+		color: hsl(var(--gold-9));
+		text-decoration-line: underline;
+		text-decoration-color: hsl(var(--gold-6));
+	}
+
+	.clue-link:hover {
+		color: hsl(var(--gold-10));
 	}
 }

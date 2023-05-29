@@ -1,26 +1,22 @@
-import { DatabaseError } from "@planetscale/database"
-import type {
-	LinkDescriptor,
-	LoaderArgs,
-	SerializeFrom,
-	V2_MetaDescriptor,
+import { DatabaseError, type Connection } from "@planetscale/database"
+import {
+	json,
+	type LinkDescriptor,
+	type LoaderArgs,
+	type SerializeFrom,
+	type V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
-import { json } from "@remix-run/cloudflare"
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react"
-import type { Kysely } from "kysely"
-import NProgress from "nprogress"
-import { useGlobalPendingState } from "remix-utils"
+import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
-import type { AppSession, Database } from "./types"
-import { getSessionId } from "./utils/session.server"
-NProgress.configure({ showSpinner: false })
+import { type AppSessionStorage } from "./types"
+import { getSessions, setupSession } from "./utils/session.server"
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
-		sessionStorage: AppSession
-		db: Kysely<Database>
+		sessionStorage: AppSessionStorage
+		db: Connection
 	}
 }
 
@@ -37,16 +33,34 @@ export function links(): LinkDescriptor[] {
 
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
-	const sessionId = await getSessionId(context.sessionStorage, request)
+	await setupSession({
+		db: context.db,
+		sessionStorage: context.sessionStorage,
+		request,
+	})
+
+	const sessions = await getSessions({
+		sessionStorage: context.sessionStorage,
+		request,
+	})
+	const activeSession = sessions.filter((session) => session.isActive)[0]
 
 	try {
-		const { achievementSize, achievedTotal, categories } = await getCategories(
-			context.db,
-			sessionId
-		)
+		const category = await getCategories(context.db, {
+			sessionId: activeSession.sessionId,
+		})
 
-		return json({ achievementSize, achievedTotal, categories })
+		return json({
+			...category,
+			activeSession: { id: activeSession.id, name: activeSession.name },
+			sessions: sessions.map((session) => ({
+				id: session.id,
+				name: session.name,
+				isActive: session.isActive,
+			})),
+		})
 	} catch (error) {
+		console.error(error)
 		let message = "Failed to get category details"
 		if (error instanceof DatabaseError) {
 			message = error.message
@@ -57,13 +71,6 @@ export async function loader({ request, context }: LoaderArgs) {
 }
 
 export default function App() {
-	const globalPendingState = useGlobalPendingState()
-	if (globalPendingState === "pending") {
-		NProgress.start()
-	} else {
-		NProgress.done()
-	}
-
 	return <Main />
 }
 
@@ -72,8 +79,39 @@ export function ErrorBoundary() {
 
 	let errorMessage = "Unknown error"
 
-	if (isRouteErrorResponse(error) && error.data.message) {
-		errorMessage = error.data.message
+	if (isRouteErrorResponse(error)) {
+		if (typeof error.data === "string") {
+			errorMessage = error.data
+		}
+
+		if (error.data.message) {
+			errorMessage = error.data.message
+		}
+
+		if (error.status === 404) {
+			return (
+				<Document>
+					<div className="grid h-full place-items-center px-4 py-12 sm:px-6 lg:px-8">
+						<div>
+							<h1 className="text-7xl font-semibold text-gray-12">
+								<span className="text-gold-9">404</span>{" "}
+								<span className="text-3xl">Page Not Found</span>
+							</h1>
+
+							<p className="mt-4 text-gray-11">{errorMessage}</p>
+
+							<Link
+								to="/"
+								prefetch="intent"
+								className="rounded-md text-gray-12 underline decoration-gray-7 transition-colors hover:decoration-gray-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
+							>
+								Back home
+							</Link>
+						</div>
+					</div>
+				</Document>
+			)
+		}
 	}
 
 	if (error instanceof Error) {

@@ -1,6 +1,14 @@
-import type { Describe } from "superstruct"
-import { array, assert, enums, is, object, string, union } from "superstruct"
-import type { SlugifiedCategoryName } from "~/models/achievement.server"
+import {
+	array,
+	assert,
+	enums,
+	is,
+	object,
+	string,
+	union,
+	type Describe,
+} from "superstruct"
+import { type SlugifiedCategoryName } from "~/data/achievement.server"
 
 export function isValidSlugifiedCategoryName(
 	slug?: string
@@ -59,4 +67,37 @@ function clueModifier(
 
 	assert(value, object({ keyword: string(), url: string() }))
 	return `<a href="${value.url}" target="_blank" rel="noopener noreferrer" class="clue-link">${value.keyword}</a>`
+}
+
+export function getAchievedAt(createdAt?: Date) {
+	const locale = "en"
+	const rtf = new Intl.RelativeTimeFormat(locale, {
+		style: "short",
+	})
+	const dtf = new Intl.DateTimeFormat(locale, {
+		dateStyle: "medium",
+	})
+
+	const on = createdAt ? createdAt : new Date()
+
+	const now = new Date()
+	const diffInSeconds = (now.getTime() - on.getTime()) / 1000
+	const diffInMinutes = diffInSeconds / 60
+	const diffInHours = diffInMinutes / 60
+	const diffInDays = diffInHours / 24
+
+	let achievedAt: string
+	if (diffInDays > 30) {
+		achievedAt = dtf.format(createdAt)
+	} else if (Math.abs(diffInDays) > 1) {
+		achievedAt = rtf.format(Math.round(diffInDays) * -1, "day")
+	} else if (Math.abs(diffInHours) > 1) {
+		achievedAt = rtf.format(Math.round(diffInHours) * -1, "hour")
+	} else if (Math.abs(diffInMinutes) > 1) {
+		achievedAt = rtf.format(Math.round(diffInMinutes) * -1, "minute")
+	} else {
+		achievedAt = "just now"
+	}
+
+	return achievedAt
 }

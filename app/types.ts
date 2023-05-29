@@ -1,18 +1,22 @@
-import type { SessionStorage } from "@remix-run/cloudflare"
-import type { Generated } from "kysely"
+import { type Session, type SessionStorage } from "@remix-run/cloudflare"
 
-interface AchievementTable {
-	id: Generated<number>
-	session_id: string
+/**
+ * @deprecated This type is deprecated and should not be used
+ */
+type OLD_Account = { userSessionId: string }
+
+type UserSession = {
+	id: string
 	name: string
-	category: string
-	path: string | null
+	sessionId: string
+	isActive: boolean
 }
 
-interface Database {
-	achievement: AchievementTable
+type Account = {
+	sessions: UserSession[]
 }
 
-type AppSession = SessionStorage<{ userSessionId: string }>
+type AppSessionStorage = SessionStorage<OLD_Account & Account>
+type AppSession = Session<OLD_Account & Account>
 
-export type { Database, AppSession }
+export type { AppSessionStorage, AppSession, UserSession }

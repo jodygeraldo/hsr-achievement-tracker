@@ -37,6 +37,10 @@ export default {
 				11: "hsl(var(--gray-11) / <alpha-value>)",
 				12: "hsl(var(--gray-12) / <alpha-value>)",
 			},
+			red: {
+				9: "hsl(var(--red-9) / <alpha-value>)",
+				10: "hsl(var(--red-10) / <alpha-value>)",
+			},
 			overlay: {
 				1: "hsla(0, 0%, 0%, 0.012)",
 				2: "hsla(0, 0%, 0%, 0.027)",
@@ -52,6 +56,7 @@ export default {
 				12: "hsla(0, 0%, 0%, 0.910)",
 			},
 		},
+		extend: {},
 	},
-	plugins: [require("@tailwindcss/forms")],
+	plugins: [require("@tailwindcss/forms"), require("tailwindcss-animate")],
 } satisfies Config
