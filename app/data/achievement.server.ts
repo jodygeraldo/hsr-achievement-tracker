@@ -488,9 +488,21 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Seele acts 5 time(s) in a row before the next ally unit's turn",
 		},
 		{
+			name: "Trial of Thirteen",
+			version: "1.0",
+			isSecret: true,
+			clue: "In a single battle, make Svarog block attacks toward Clara 13 times",
+		},
+		{
 			name: "Coffee Lover",
 			version: "1.0",
 			clue: "A cup of coffee thrice a day, keeps the foggy head at bay",
+		},
+		{
+			name: "Over-Protective",
+			version: "1.0",
+			isSecret: true,
+			clue: "Win 1 battle(s) without having Gepard's Shields take any DMG",
 		},
 		{
 			name: "Foolish Little Brother...",
@@ -637,12 +649,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
 		},
 		{
-			name: "Over-Protective",
-			version: "1.0",
-			isSecret: true,
-			clue: "Win 1 battle(s) without having Gepard's Shields take any DMG",
-		},
-		{
 			name: "Perish Song",
 			version: "1.0",
 			isSecret: true,
@@ -659,12 +665,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Qingque starts her turn in the "Hidden Hand" state for 3 turn(s) in a row',
-		},
-		{
-			name: "Trial of Thirteen",
-			version: "1.0",
-			isSecret: true,
-			clue: "In a single battle, make Svarog block attacks toward Clara 13 times",
 		},
 		{
 			name: "When the National Anthem Rings",
