@@ -456,4 +456,3 @@ function MenuIcon() {
 }
 
 export { Document, Main }
-

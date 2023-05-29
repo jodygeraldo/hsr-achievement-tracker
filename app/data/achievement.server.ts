@@ -1937,4 +1937,3 @@ export type {
 	Metadata as AchievementMetadata,
 }
 export { metadata as achievementMetadata, achievementByCategory, categories }
-
