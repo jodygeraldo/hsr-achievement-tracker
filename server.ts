@@ -18,6 +18,7 @@ export const onRequest = createPagesFunctionHandler<Env>({
 				sameSite: "lax",
 				secrets: [context.env.SESSION_SECRET],
 				secure: process.env.NODE_ENV === "production",
+				maxAge: 15_768_000, // 6 months
 			},
 		}),
 		db: connect({
