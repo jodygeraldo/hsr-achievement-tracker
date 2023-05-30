@@ -81,4 +81,3 @@ async function getUserPrefs(request: Request) {
 
 export type { UserPrefs }
 export { userPrefsCookie, getUserPrefs }
-
