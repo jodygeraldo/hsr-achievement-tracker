@@ -1,6 +1,10 @@
 import { NavLink, Outlet } from "@remix-run/react"
 import { cn } from "~/utils/shared"
 
+export function meta() {
+	return [{ title: `Settings | HSR Achievement Tracker` }]
+}
+
 const settingTabs = [
 	{ name: "Achievements", to: "." },
 	{ name: "Sessions", to: "sessions" },
