@@ -40,7 +40,9 @@ const defaultUserPrefs: UserPrefs = {
 	},
 }
 
-const userPrefsCookie = createCookie("user-prefs")
+const userPrefsCookie = createCookie("user-prefs", {
+	maxAge: 15_768_000, // 6 months
+})
 
 async function getUserPrefs(request: Request) {
 	const cookieHeader = request.headers.get("Cookie")
@@ -79,3 +81,4 @@ async function getUserPrefs(request: Request) {
 
 export type { UserPrefs }
 export { userPrefsCookie, getUserPrefs }
+
