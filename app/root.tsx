@@ -1,4 +1,3 @@
-import { DatabaseError, type Connection } from "@planetscale/database"
 import {
 	json,
 	type LinkDescriptor,
@@ -6,17 +5,18 @@ import {
 	type SerializeFrom,
 	type V2_MetaDescriptor,
 } from "@remix-run/cloudflare"
-import { Link, isRouteErrorResponse, useRouteError } from "@remix-run/react"
+import { isRouteErrorResponse, Link, useRouteError } from "@remix-run/react"
 import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { type AppSessionStorage } from "./types"
 import { getSessions, setupSession } from "./utils/session.server"
+import { loggingD1Error } from "./utils/shared"
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
+		db: D1Database
 		sessionStorage: AppSessionStorage
-		db: Connection
 	}
 }
 
@@ -60,13 +60,10 @@ export async function loader({ request, context }: LoaderArgs) {
 			})),
 		})
 	} catch (error) {
-		console.error(error)
-		let message = "Failed to get category details"
-		if (error instanceof DatabaseError) {
-			message = error.message
-		}
-
-		throw json({ message }, { status: 500 })
+		console.error("root.tsx|loader")
+		loggingD1Error(error)
+		console.log(error)
+		throw json({ message: "Failed to get category details" }, { status: 500 })
 	}
 }
 

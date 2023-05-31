@@ -3,8 +3,6 @@
 /// <reference types="@cloudflare/workers-types" />
 
 interface Env {
+	DB: D1Database
 	SESSION_SECRET: string
-	DATABASE_HOST: string
-	DATABASE_USERNAME: string
-	DATABASE_PASSWORD: string
 }

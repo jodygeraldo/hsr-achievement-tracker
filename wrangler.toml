@@ -1,0 +1,7 @@
+name = "hsr-achievement-tracker"
+compatibility_date = "2023-05-09"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hsr"
+database_id = "df68511f-274b-4e34-b4df-0976d59d2c08"

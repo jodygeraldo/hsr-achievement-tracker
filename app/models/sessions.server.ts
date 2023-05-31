@@ -1,5 +1,4 @@
 import { isCuid } from "@paralleldrive/cuid2"
-import { type Connection } from "@planetscale/database"
 import { type AppSessionStorage } from "~/types"
 import { createId, getCookieSession, getSessions } from "~/utils/session.server"
 
@@ -59,7 +58,7 @@ async function newSession(
 async function importSession(
 	context: {
 		sessionStorage: AppSessionStorage
-		db: Connection
+		db: D1Database
 		request: Request
 	},
 	data: { name: string; sessionId: string }
@@ -68,12 +67,12 @@ async function importSession(
 		return
 	}
 
-	const isExistInDatabase = await context.db.execute(
-		"SELECT session_id FROM achievement WHERE session_id = ? LIMIT 1",
-		[data.sessionId]
-	)
+	const isExistInDatabase = await context.db
+		.prepare("SELECT session_id FROM achievement WHERE session_id = ? LIMIT 1")
+		.bind(data.sessionId)
+		.first<string>("session_id")
 
-	if (isExistInDatabase.size === 0) {
+	if (isExistInDatabase) {
 		return
 	}
 

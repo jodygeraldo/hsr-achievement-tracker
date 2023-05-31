@@ -1,4 +1,3 @@
-import { DatabaseError } from "@planetscale/database"
 import {
 	json,
 	type DataFunctionArgs,
@@ -19,6 +18,7 @@ import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { type RootLoaderData } from "~/root"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
 import { getActiveSessionId } from "~/utils/session.server"
+import { loggingD1Error } from "~/utils/shared"
 import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
 import { AchievementHeader } from "./achievement-header"
@@ -70,13 +70,12 @@ export async function action({ request, params, context }: DataFunctionArgs) {
 				throw new Error("Invalid data intent on category.$slug/route action")
 		}
 	} catch (error) {
-		console.error(error)
-		let message = "Failed to modified achievement status"
-		if (error instanceof DatabaseError) {
-			message = error.message
-		}
-
-		throw json({ message }, { status: 500 })
+		console.error("routes/category.$slug/route.tsx|action")
+		loggingD1Error(error)
+		throw json(
+			{ message: "Failed to modified achievement status" },
+			{ status: 500 }
+		)
 	}
 
 	return null
@@ -118,13 +117,12 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 			showClue: userPrefs.showClue,
 		})
 	} catch (error) {
-		console.error(error)
-		let message = "Failed to get achievement details"
-		if (error instanceof DatabaseError) {
-			message = error.message
-		}
-
-		throw json({ message }, { status: 500 })
+		console.error("routes/category.$slug/route.tsx|loader")
+		loggingD1Error(error)
+		throw json(
+			{ message: "Failed to get achievement details" },
+			{ status: 500 }
+		)
 	}
 }
 
