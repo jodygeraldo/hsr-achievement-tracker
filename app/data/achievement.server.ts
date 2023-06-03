@@ -476,6 +476,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Allies have 10 turns of action unbroken by enemies",
 		},
 		{
+			name: "Bring a Gun to a Knife Fight",
+			version: "1.0",
+			isSecret: true,
+			clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack",
+		},
+		{
 			name: "Deus Ex Machina",
 			version: "1.0",
 			isSecret: true,
@@ -629,12 +635,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "In a single battle against boss Kafka, dispel Dominated 3 times",
-		}, // 0
-		{
-			name: "Bring a Gun to a Knife Fight",
-			version: "1.0",
-			isSecret: true,
-			clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack",
 		},
 		{
 			name: "Et tu, Bronya?",
