@@ -36,7 +36,7 @@ export function AchievementLog() {
 								<TooltipContent>
 									{Intl.DateTimeFormat("en", {
 										dateStyle: "full",
-										timeStyle: "full",
+										timeStyle: "medium",
 									}).format(new Date(ach.achievedAt.raw))}
 								</TooltipContent>
 							</Tooltip>

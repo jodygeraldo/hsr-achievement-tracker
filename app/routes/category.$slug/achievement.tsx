@@ -8,7 +8,7 @@ import { cn } from "~/utils/shared"
 import { type CategoryLoaderData } from "./route"
 
 export function Achievement() {
-	const { achievements: loaderAchievements } =
+	const { achievements: loaderAchievements, currentVersion } =
 		useLoaderData() as CategoryLoaderData
 	const achievements = React.useRef(loaderAchievements)
 
@@ -20,7 +20,13 @@ export function Achievement() {
 					className="flex flex-col gap-x-8 gap-y-2 py-2 sm:flex-row sm:items-center sm:justify-between"
 				>
 					<div className="flex items-center gap-2 self-start sm:order-last">
-						<Badge>{achievement.version}</Badge>
+						<Badge
+							className={cn(
+								achievement.version === currentVersion && "ring-gold-6"
+							)}
+						>
+							{achievement.version}
+						</Badge>
 						{achievement.isSecret ? <Badge>Secret</Badge> : null}
 					</div>
 
