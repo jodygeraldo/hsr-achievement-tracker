@@ -479,6 +479,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Allies have 10 turns of action unbroken by enemies",
 		},
 		{
+			name: "Perish Song",
+			version: "1.0",
+			isSecret: true,
+			clue: "Get knocked out together with the enemy",
+		},
+		{
 			name: "Bring a Gun to a Knife Fight",
 			version: "1.0",
 			isSecret: true,
@@ -489,6 +495,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
+		},
+		{
+			name: "Four-and-a-Half Pirouettes",
+			version: "1.0",
+			isSecret: true,
+			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
 		},
 		{
 			name: "It's My Turn",
@@ -518,6 +530,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
+		},
+		{
+			name: "Serval's Parting Gift",
+			version: "1.0",
+			isSecret: true,
+			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Listen...",
@@ -644,24 +662,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Bronya to deal the final blow in a victory against boss Cocolia",
-		},
-		{
-			name: "Four-and-a-Half Pirouettes",
-			version: "1.0",
-			isSecret: true,
-			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
-		},
-		{
-			name: "Perish Song",
-			version: "1.0",
-			isSecret: true,
-			clue: "Get knocked out together with the enemy",
-		},
-		{
-			name: "Serval's Parting Gift",
-			version: "1.0",
-			isSecret: true,
-			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Surge of Tiles",
