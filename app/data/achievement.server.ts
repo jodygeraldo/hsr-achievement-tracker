@@ -1046,6 +1046,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Clear Simulated Universe at difficulty 2 or higher and use Techniques 25 times",
 		},
 		{
+			name: "Aleph is the Universe",
+			version: "1.0",
+			isSecret: true,
+			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
+		},
+		{
 			name: "Coherence",
 			version: "1.0",
 			clue: "Clear Simulated Universe at difficulty 2 or higher with 4 characters of the same Path",
@@ -1054,14 +1060,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "Does This Game Not Have a Platinum Trophy?",
 			version: "1.0",
 			clue: "Clear Simulated Universe (Difficulty Level 2 and above) with all allies at full HP at the end of every battle",
-		},
-
-		// in-game position check
-		{
-			name: "Aleph is the Universe",
-			version: "1.0",
-			isSecret: true,
-			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
 		},
 	],
 	"glory-of-the-unyielding": [
