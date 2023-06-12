@@ -276,9 +276,7 @@ function Sidebar() {
 											className="ml-auto w-16 min-w-max whitespace-nowrap rounded-full bg-gray-2 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-gray-12 ring-1 ring-inset ring-gray-6"
 											aria-hidden="true"
 										>
-											{Number(category.achievedCount) === category.size
-												? "🎉"
-												: `${category.achievedCount}/${category.size}`}
+											{`${category.achievedCount}/${category.size}`}
 										</span>
 									</NavLink>
 								</li>
