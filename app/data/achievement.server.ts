@@ -1684,6 +1684,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club",
 		},
 		{
+			name: "Labor Omnia Vincit",
+			version: "1.0",
+			isSecret: true,
+			clue: "Examine 3 separate file cabinets in the Seat of Divine Foresight",
+		},
+		{
 			name: ["The Crimes That Bind", "Flight Cancelled"],
 			version: "1.0",
 			isSecret: true,
@@ -1737,14 +1743,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
-		},
-
-		// in-game position check
-		{
-			name: "Labor Omnia Vincit",
-			version: "1.0",
-			isSecret: true,
-			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
 		},
 	],
 	"fathom-the-unfathomable": [
