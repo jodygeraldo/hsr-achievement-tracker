@@ -1406,6 +1406,10 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: ["For Old Times' Sake", "Where Can A Wanderer Rest?"],
 			version: "1.1",
 			isSecret: true,
+			clue: [
+				'Hide the identity of the mara-struck monster from Liangmu in the mission "Evanesce Like the Morning Dew"',
+				'Let Liangmu know the identity of the mara-struck monster in the mission "Evanesce Like the Morning Dew"',
+			],
 		},
 		{
 			name: "Seventeen's Map",
