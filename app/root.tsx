@@ -34,7 +34,6 @@ export function links(): LinkDescriptor[] {
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
 	await setupSession({
-		db: context.db,
 		sessionStorage: context.sessionStorage,
 		request,
 	})
