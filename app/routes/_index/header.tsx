@@ -12,18 +12,18 @@ export function Header() {
 
 	const stats = [
 		{
-			name: "Achieved",
+			name: "Completion rate",
 			value:
 				achievedTotal === 0
 					? "0%"
 					: `${((achievedTotal / achievementSize) * 100).toFixed(2)}%`,
 		},
 		{
-			name: `Version ${currentVersion.num} achieved`,
+			name: `Version ${currentVersion.num}`,
 			value: currentVersion.achieved,
-			unit: `out of ${currentVersion.size}`,
+			unit: `/ ${currentVersion.size} achieved`,
 		},
-		{ name: "Secrets achieved", value: secretAchieved },
+		{ name: "Found", value: secretAchieved, unit: "secrets" },
 		{ name: "Rank", value: rank },
 	]
 
