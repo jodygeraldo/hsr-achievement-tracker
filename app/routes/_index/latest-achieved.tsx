@@ -7,9 +7,10 @@ import {
 	TooltipTrigger,
 } from "~/components/ui/tooltip"
 import { type HomeLoaderData } from "./route"
+import { cn } from "~/utils/shared"
 
 export function LatestAchieved() {
-	const { latestAchieved } = useLoaderData() as HomeLoaderData
+	const { latestAchieved, currentVersion } = useLoaderData() as HomeLoaderData
 
 	return (
 		<TooltipProvider>
@@ -52,7 +53,13 @@ export function LatestAchieved() {
 
 							<div className="mt-2 flex items-center gap-x-1.5">
 								<Badge>{achieved.category}</Badge>
-								<Badge>{achieved.version}</Badge>
+								<Badge
+									className={cn(
+										achieved.version === currentVersion.num && "ring-gold-6"
+									)}
+								>
+									{achieved.version}
+								</Badge>
 								{achieved.isSecret ? <Badge>Secret</Badge> : null}
 							</div>
 						</li>

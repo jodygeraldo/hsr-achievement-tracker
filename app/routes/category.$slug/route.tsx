@@ -23,6 +23,7 @@ import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
 import { AchievementHeader } from "./achievement-header"
 import { AchievementLog } from "./achievement-log"
+import { achievementMetadata } from "~/data/achievement.server"
 
 export function meta({
 	data,
@@ -112,6 +113,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 		)
 
 		return json({
+			currentVersion: achievementMetadata.currentVersion,
 			categoryName: data.categoryName,
 			achievements: data.achievements,
 			achieved: data.achieved,

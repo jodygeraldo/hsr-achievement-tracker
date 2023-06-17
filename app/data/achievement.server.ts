@@ -1,8 +1,11 @@
 import { clueBuilder } from "~/utils/achievement.server"
 
 const metadata: Metadata = {
-	currentVersion: "1.0",
-	size: { "1.0": 332 },
+	currentVersion: "1.1",
+	size: {
+		"1.0": 332,
+		"1.1": 15,
+	},
 }
 
 /**
@@ -476,10 +479,28 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Allies have 10 turns of action unbroken by enemies",
 		},
 		{
+			name: "Perish Song",
+			version: "1.0",
+			isSecret: true,
+			clue: "Get knocked out together with the enemy",
+		},
+		{
+			name: "Bring a Gun to a Knife Fight",
+			version: "1.0",
+			isSecret: true,
+			clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack",
+		},
+		{
 			name: "Deus Ex Machina",
 			version: "1.0",
 			isSecret: true,
 			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
+		},
+		{
+			name: "Four-and-a-Half Pirouettes",
+			version: "1.0",
+			isSecret: true,
+			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
 		},
 		{
 			name: "It's My Turn",
@@ -509,6 +530,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
+		},
+		{
+			name: "Serval's Parting Gift",
+			version: "1.0",
+			isSecret: true,
+			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Listen...",
@@ -629,36 +656,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "In a single battle against boss Kafka, dispel Dominated 3 times",
-		}, // 0
-		{
-			name: "Bring a Gun to a Knife Fight",
-			version: "1.0",
-			isSecret: true,
-			clue: "Deal 20000 DMG or higher to an enemy whose HP percentage is equal to or lower than 1% in a single attack",
 		},
 		{
 			name: "Et tu, Bronya?",
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Bronya to deal the final blow in a victory against boss Cocolia",
-		},
-		{
-			name: "Four-and-a-Half Pirouettes",
-			version: "1.0",
-			isSecret: true,
-			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
-		},
-		{
-			name: "Perish Song",
-			version: "1.0",
-			isSecret: true,
-			clue: "Get knocked out together with the enemy",
-		},
-		{
-			name: "Serval's Parting Gift",
-			version: "1.0",
-			isSecret: true,
-			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Surge of Tiles",
@@ -671,6 +674,18 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Have ally Bronya use "The Belobog March" 1 time(s) when fighting the bosses Gepard, Cocolia, and Bronya respectively',
+		},
+		{
+			name: "This Fragile Body",
+			version: "1.1",
+			isSecret: true,
+			clue: "Use Silver Wolf to apply different Type Weaknesses for a total of 3 time(s) to a single enemy in a single battle",
+		},
+		{
+			name: "When the Hunter Becomes the Hunted",
+			version: "1.1",
+			isSecret: true,
+			clue: "Use Silver Wolf to fight enemy Kafka and apply 2 Weaknesse(s) to her in a single battle",
 		},
 	],
 	"vestige-of-luminflux": [
@@ -709,6 +724,16 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "Fate/stranger Fake",
 			version: "1.0",
 			clue: "Obtain 5 5-star Relic(s) from Omni-Synthesizer",
+		},
+		{
+			name: "Texting Enjoyer",
+			version: "1.1",
+			clue: "Reply to 10 idle chat texts from other characters",
+		},
+		{
+			name: "That Friendship Has Sailed",
+			version: "1.1",
+			clue: "Reply to 60 idle chat texts from other characters",
 		},
 
 		// in-game position check
@@ -1021,6 +1046,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Clear Simulated Universe at difficulty 2 or higher and use Techniques 25 times",
 		},
 		{
+			name: "Aleph is the Universe",
+			version: "1.0",
+			isSecret: true,
+			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
+		},
+		{
 			name: "Coherence",
 			version: "1.0",
 			clue: "Clear Simulated Universe at difficulty 2 or higher with 4 characters of the same Path",
@@ -1029,14 +1060,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "Does This Game Not Have a Platinum Trophy?",
 			version: "1.0",
 			clue: "Clear Simulated Universe (Difficulty Level 2 and above) with all allies at full HP at the end of every battle",
-		},
-
-		// in-game position check
-		{
-			name: "Aleph is the Universe",
-			version: "1.0",
-			isSecret: true,
-			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
 		},
 	],
 	"glory-of-the-unyielding": [
@@ -1169,6 +1192,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Win 1 battle(s) with a team comprising Bronya, Gepard, Pela, and Serval",
 		},
 		{
+			name: "Star Saga of the Shattered Sword",
+			version: "1.1",
+			isSecret: true,
+			clue: "Win 1 battle(s) with a team comprising Luocha, Sushang, and Yanqing",
+		},
+		{
 			name: "Hot-Blooded Trailblazer",
 			version: "1.0",
 			isSecret: true,
@@ -1294,6 +1323,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Win 10 battles with a team that has 4 Physical-Type characters.",
 		},
+		{
+			name: "Life in All Its Forms",
+			version: "1.1",
+			isSecret: true,
+			clue: "Trigger 10 different HP restoration voice lines with Luocha's healing",
+		},
 	],
 	"the-memories-we-share": [
 		{
@@ -1326,6 +1361,56 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			clue: 'Complete Companion Mission "Only A Child"',
 		}, // (in-game typo) Faithfull => Faithful
+		{
+			name: "A Perfect Detective",
+			version: "1.1",
+			isSecret: true,
+			clue: 'Complete the Companion Mission "A Knight Stranger"',
+		},
+		{
+			name: "Master Among Swords",
+			version: "1.1",
+			isSecret: true,
+			clue: `Complete the Companion Mission "Frosty Blade's Trial"`,
+		},
+		{
+			name: "Farewell, Punklorde!",
+			version: "1.1",
+			isSecret: true,
+			clue: 'Complete the Companion Mission "Punklorde Mentality"',
+		},
+		{
+			name: "Coffin Dancer",
+			version: "1.1",
+			clue: "Witness Luocha's hidden side",
+		},
+		{
+			name: "Free For Today",
+			version: "1.1",
+			isSecret: true,
+			clue: "Open up the general exhibition area of the Belobog History and Culture Museum",
+		},
+		{
+			name: "You Should Stay in the Museum!",
+			version: "1.1",
+			isSecret: true,
+			clue: "Collect all display items for the Belobog History and Culture Museum",
+		},
+		{
+			name: "Catch Me If You Can",
+			version: "1.1",
+			isSecret: true,
+			clue: "Open up three exhibition areas in the Belobog History and Culture Museum",
+		},
+		{
+			name: ["For Old Times' Sake", "Where Can A Wanderer Rest?"],
+			version: "1.1",
+			isSecret: true,
+			clue: [
+				'Hide the identity of the mara-struck monster from Liangmu in the mission "Evanesce Like the Morning Dew"',
+				'Let Liangmu know the identity of the mara-struck monster in the mission "Evanesce Like the Morning Dew"',
+			],
+		},
 		{
 			name: "Seventeen's Map",
 			version: "1.0",
@@ -1528,6 +1613,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"',
 		},
 		{
+			name: "The Adventurous Moles Super Grown-Up Edition",
+			version: "1.0",
+			isSecret: true,
+			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
+		},
+		{
 			name: "A Simple Life",
 			version: "1.0",
 			isSecret: true,
@@ -1597,6 +1688,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club",
 		},
 		{
+			name: "Labor Omnia Vincit",
+			version: "1.0",
+			isSecret: true,
+			clue: "Examine 3 separate file cabinets in the Seat of Divine Foresight",
+		},
+		{
 			name: ["The Crimes That Bind", "Flight Cancelled"],
 			version: "1.0",
 			isSecret: true,
@@ -1650,20 +1747,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
-		},
-
-		// in-game position check
-		{
-			name: "Labor Omnia Vincit",
-			version: "1.0",
-			isSecret: true,
-			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
-		},
-		{
-			name: "The Adventurous Moles Super Grown-Up Edition",
-			version: "1.0",
-			isSecret: true,
-			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
 		},
 	],
 	"fathom-the-unfathomable": [
@@ -1840,6 +1923,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "North by Northwest",
 			version: "1.0",
 			clue: "Complete the Formation-Breaking Compass 20 time(s)",
+		},
+		{
+			name: "Walk Into The Trap",
+			version: "1.1",
+			isSecret: true,
+			clue: "Capture Lost Trotters 1 time(s) in battle",
 		},
 	],
 }
