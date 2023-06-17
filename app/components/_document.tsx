@@ -16,8 +16,9 @@ import {
 import * as React from "react"
 import { Toaster } from "react-hot-toast"
 import { type CategoryLoaderData } from "~/routes/category.$slug/route"
-import { type RootLoaderData } from "../root"
-import { cn, getInitials } from "../utils/shared"
+import { type RootLoaderData } from "~/root"
+import { cn, getInitials } from "~/utils/shared"
+import { Svg15, Svg24 } from "~/components/svg"
 
 function Document({ children }: { children: React.ReactNode }) {
 	return (
@@ -99,8 +100,8 @@ function Main() {
 
 					<div className="sticky top-0 z-10 flex items-center gap-x-6 border-b border-gray-6 bg-gray-2 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
 						<Dialog.Trigger className="-m-2.5 p-2.5 text-gray-12 lg:hidden">
+							<Svg15 name="menu" className="h-5 w-5" aria-hidden="true" />
 							<span className="sr-only">Open sidebar</span>
-							<MenuIcon />
 						</Dialog.Trigger>
 
 						<h1 className="flex-1 text-sm font-semibold leading-6 text-gray-12">
@@ -127,9 +128,9 @@ function Main() {
 }
 
 const navigation = [
-	{ name: "Home", to: "/", icon: HomeIcon },
-	{ name: "Settings", to: "/settings", icon: SettingIcon },
-]
+	{ name: "Home", to: "/", icon: "home" },
+	{ name: "Settings", to: "/settings", icon: "setting" },
+] as const
 
 function MobileSidebar() {
 	return (
@@ -141,20 +142,8 @@ function MobileSidebar() {
 					<Sidebar />
 
 					<Dialog.Close className="absolute right-4 top-4 flex justify-center text-gray-12">
-						<svg
-							width="15"
-							height="15"
-							viewBox="0 0 15 15"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"
-								fill="currentColor"
-								fillRule="evenodd"
-								clipRule="evenodd"
-							/>
-						</svg>
+						<Svg15 name="cross" aria-hidden="true" />
+						<span className="sr-only">Close sidebar</span>
 					</Dialog.Close>
 				</Dialog.Content>
 			</div>
@@ -196,22 +185,11 @@ function Sidebar() {
 							</div>
 						</div>
 
-						<svg
-							width="15"
-							height="15"
-							viewBox="0 0 15 15"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
+						<Svg15
+							name="chevronDown"
 							className="h-5 w-5 transition-transform group-data-[state=open]:rotate-180"
 							aria-hidden="true"
-						>
-							<path
-								d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
-								fill="currentColor"
-								fillRule="evenodd"
-								clipRule="evenodd"
-							/>
-						</svg>
+						/>
 					</button>
 				</DropdownMenu.Trigger>
 
@@ -236,7 +214,11 @@ function Sidebar() {
 											)
 										}
 									>
-										<item.icon />
+										<Svg24
+											name={item.icon}
+											className="h-6 w-6 shrink-0"
+											aria-hidden="true"
+										/>
 										{item.name}
 									</NavLink>
 								</li>
@@ -344,20 +326,11 @@ function SessionMenu() {
 							className="relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm text-gray-12 outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:bg-gray-5 data-[highlighted]:bg-gray-4"
 						>
 							<DropdownMenu.ItemIndicator className="absolute left-2 flex items-center justify-center">
-								<svg
-									width="15"
-									height="15"
-									viewBox="0 0 15 15"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
+								<Svg15
+									name="dotFilled"
 									className="h-5 w-5 text-gold-8"
-									aria-hidden={true}
-								>
-									<path
-										d="M9.875 7.5C9.875 8.81168 8.81168 9.875 7.5 9.875C6.18832 9.875 5.125 8.81168 5.125 7.5C5.125 6.18832 6.18832 5.125 7.5 5.125C8.81168 5.125 9.875 6.18832 9.875 7.5Z"
-										fill="currentColor"
-									/>
-								</svg>
+									aria-hidden="true"
+								/>
 							</DropdownMenu.ItemIndicator>
 
 							{session.name}
@@ -366,90 +339,6 @@ function SessionMenu() {
 				</DropdownMenu.RadioGroup>
 			</DropdownMenu.Content>
 		</DropdownMenu.Portal>
-	)
-}
-
-function HomeIcon() {
-	return (
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			className="h-6 w-6 shrink-0"
-			aria-hidden="true"
-		>
-			<path
-				opacity="0.12"
-				d="M22 17V11.845C22 10.433 22 9.72701 21.8204 9.07517C21.6613 8.49771 21.3998 7.95353 21.0483 7.46857C20.6514 6.92115 20.1001 6.48011 18.9976 5.59805L16.9976 3.99805C15.214 2.57118 14.3222 1.85774 13.3332 1.58413C12.4608 1.34279 11.5392 1.34279 10.6668 1.58413C9.67783 1.85774 8.78603 2.57118 7.00244 3.99805L5.00244 5.59805C3.89986 6.48011 3.34857 6.92115 2.95174 7.46857C2.6002 7.95353 2.33865 8.49771 2.17957 9.07517C2 9.72701 2 10.433 2 11.845V17C2 19.7614 4.23858 22 7 22C8.10457 22 9 21.1046 9 20V15.9999C9 14.3431 10.3431 12.9999 12 12.9999C13.6569 12.9999 15 14.3431 15 15.9999V20C15 21.1046 15.8954 22 17 22C19.7614 22 22 19.7614 22 17Z"
-				fill="#978365"
-			/>
-			<path
-				d="M22 17V11.845C22 10.433 22 9.72701 21.8204 9.07517C21.6613 8.49771 21.3998 7.95353 21.0483 7.46857C20.6514 6.92115 20.1001 6.48011 18.9976 5.59805L16.9976 3.99805C15.214 2.57118 14.3222 1.85774 13.3332 1.58413C12.4608 1.34279 11.5392 1.34279 10.6668 1.58413C9.67783 1.85774 8.78603 2.57118 7.00244 3.99805L5.00244 5.59805C3.89986 6.48011 3.34857 6.92115 2.95174 7.46857C2.6002 7.95353 2.33865 8.49771 2.17957 9.07517C2 9.72701 2 10.433 2 11.845V17C2 19.7614 4.23858 22 7 22C8.10457 22 9 21.1046 9 20V15.9999C9 14.3431 10.3431 12.9999 12 12.9999C13.6569 12.9999 15 14.3431 15 15.9999V20C15 21.1046 15.8954 22 17 22C19.7614 22 22 19.7614 22 17Z"
-				stroke="#978365"
-				strokeWidth="1.5"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	)
-}
-
-function SettingIcon() {
-	return (
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			className="h-6 w-6 shrink-0"
-			aria-hidden="true"
-		>
-			<path
-				opacity="0.12"
-				fillRule="evenodd"
-				clipRule="evenodd"
-				d="M2.59133 19.5624C1.90001 18.871 1.80981 17.7812 2.37808 16.9857L3.75798 15.0538C4.11531 14.5535 4.20724 13.919 4.10712 13.3125C4.03664 12.8854 3.99997 12.447 3.99997 11.9999C3.99997 11.553 4.03661 11.1147 4.10706 10.6878C4.20714 10.0812 4.1152 9.44678 3.75789 8.94655L2.37812 7.01487C1.80986 6.2193 1.90005 5.1295 2.59137 4.43818L4.43798 2.59157C5.1293 1.90025 6.2191 1.81006 7.01467 2.37832L8.94612 3.75793C9.44638 4.11526 10.0809 4.20719 10.6874 4.10708C11.1145 4.03659 11.5529 3.99993 12 3.99993C12.447 3.99993 12.8855 4.0366 13.3126 4.1071C13.9192 4.20723 14.5537 4.1153 15.054 3.75797L16.9852 2.37854C17.7808 1.81027 18.8706 1.90047 19.5619 2.59179L21.4085 4.4384C22.0998 5.12972 22.19 6.21952 21.6218 7.01509L20.2421 8.94665C19.8848 9.44686 19.7928 10.0813 19.8929 10.6878C19.9633 11.1147 20 11.5531 20 11.9999C20 12.4469 19.9633 12.8854 19.8928 13.3124C19.7927 13.919 19.8847 14.5535 20.242 15.0537L21.6218 16.9854C22.1901 17.781 22.0999 18.8708 21.4085 19.5621L19.5619 21.4087C18.8706 22.1001 17.7808 22.1903 16.9852 21.622L15.0533 20.242C14.5531 19.8847 13.9186 19.7928 13.3121 19.8928C12.8852 19.9633 12.4468 19.9999 12 19.9999C11.5531 19.9999 11.1149 19.9633 10.688 19.8929C10.0815 19.7928 9.44706 19.8848 8.94685 20.242L7.01462 21.6222C6.21905 22.1905 5.12926 22.1003 4.43793 21.409L2.59133 19.5624ZM12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
-				fill="#978365"
-			/>
-			<path
-				d="M4.10712 13.3125C4.20724 13.919 4.11531 14.5535 3.75798 15.0538L2.37808 16.9857C1.80981 17.7812 1.90001 18.871 2.59133 19.5624L4.43793 21.409C5.12926 22.1003 6.21905 22.1905 7.01462 21.6222L8.94685 20.242C9.44706 19.8848 10.0815 19.7928 10.688 19.8929C11.1149 19.9633 11.5531 19.9999 12 19.9999C12.4468 19.9999 12.8852 19.9633 13.3121 19.8928C13.9186 19.7928 14.5531 19.8847 15.0533 20.242L16.9852 21.622C17.7808 22.1903 18.8706 22.1001 19.5619 21.4087L21.4085 19.5621C22.0999 18.8708 22.1901 17.781 21.6218 16.9854L20.242 15.0537C19.8847 14.5535 19.7927 13.919 19.8928 13.3124C19.9633 12.8854 20 12.4469 20 11.9999C20 11.5531 19.9633 11.1147 19.8929 10.6878C19.7928 10.0813 19.8848 9.44686 20.2421 8.94665L21.6218 7.01509C22.19 6.21952 22.0998 5.12972 21.4085 4.4384L19.5619 2.59179C18.8706 1.90047 17.7808 1.81027 16.9852 2.37854L15.054 3.75797C14.5537 4.1153 13.9192 4.20723 13.3126 4.1071C12.8855 4.0366 12.447 3.99993 12 3.99993C11.5529 3.99993 11.1145 4.03659 10.6874 4.10708C10.0809 4.20719 9.44638 4.11526 8.94612 3.75793L7.01467 2.37832C6.2191 1.81006 5.1293 1.90025 4.43798 2.59157L2.59137 4.43818C1.90005 5.1295 1.80986 6.2193 2.37812 7.01487L3.75789 8.94655C4.1152 9.44678 4.20714 10.0812 4.10706 10.6878C4.03661 11.1147 3.99997 11.553 3.99997 11.9999C3.99997 12.447 4.03664 12.8854 4.10712 13.3125Z"
-				stroke="#978365"
-				strokeWidth="1.5"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-			<path
-				d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z"
-				stroke="#978365"
-				strokeWidth="1.5"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	)
-}
-
-function MenuIcon() {
-	return (
-		<svg
-			width="15"
-			height="15"
-			viewBox="0 0 15 15"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			className="h-5 w-5"
-			aria-hidden="true"
-		>
-			<path
-				d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z"
-				fill="currentColor"
-				fillRule="evenodd"
-				clipRule="evenodd"
-			></path>
-		</svg>
 	)
 }
 
