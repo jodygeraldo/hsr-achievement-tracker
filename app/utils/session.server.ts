@@ -1,51 +1,93 @@
 import { init } from "@paralleldrive/cuid2"
-import { json, redirect } from "@remix-run/cloudflare"
 import { type AppSessionStorage } from "~/types"
 
 const createId = init({ length: 11 })
 
+async function requiredActiveSession(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+	activeSessionId: string
+}) {
+	const setup = await setupSession(context)
+
+	if (setup.session) {
+		return { session: setup.session, cookieSession: setup.cookieSession }
+	}
+
+	const sessions = await getSessions(context)
+	const session = sessions.find((session) => session.isActive)
+
+	if (!session) {
+		throw new Error(
+			"Failed to acquired active session, this is likely an implementation error"
+		)
+	}
+
+	return { session, cookieSession: setup.cookieSession }
+}
+
+async function optionalActiveSession(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const sessions = await getSessions(context)
+	return sessions.find((session) => session.isActive)
+}
+
+async function getSessionId(
+	context: {
+		sessionStorage: AppSessionStorage
+		request: Request
+	},
+	id: string
+) {
+	const sessions = await getSessions(context)
+	return sessions.find((session) => session.id === id)?.sessionId
+}
+
+async function getPublicSessions(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const sessions = await getSessions(context)
+	return sessions.map((session) => ({
+		id: session.id,
+		name: session.name,
+		isActive: session.isActive,
+	}))
+}
+
+async function getMaskedSessions(context: {
+	sessionStorage: AppSessionStorage
+	request: Request
+}) {
+	const sessions = await getSessions(context)
+	return sessions.map((session) => ({
+		...session,
+		sessionId: String("*").repeat(session.sessionId.length),
+	}))
+}
+
 async function setupSession(context: {
 	sessionStorage: AppSessionStorage
 	request: Request
+	activeSessionId: string
 }) {
 	const cookieSession = await getCookieSession(context)
 
 	if (cookieSession.has("sessions")) {
-		return
+		return { cookieSession }
 	}
 
-	cookieSession.set("sessions", [
-		{
-			id: createId(),
-			name: "Guess Session",
-			sessionId: createId(),
-			isActive: true,
-		},
-	])
-
-	const redirectTo = new URL(context.request.url).pathname
-	throw redirect(redirectTo, {
-		headers: {
-			"Set-Cookie": await context.sessionStorage.commitSession(cookieSession),
-		},
-	})
-}
-
-async function getActiveSession(context: {
-	sessionStorage: AppSessionStorage
-	request: Request
-}) {
-	const cookieSession = await getCookieSession(context)
-
-	const sessions = cookieSession.get("sessions")
-	if (!sessions) {
-		throw json(
-			{ message: "No active session found, try refreshing the webpage" },
-			{ status: 500 }
-		)
+	const session = {
+		id: context.activeSessionId,
+		name: "Guess Session",
+		sessionId: createId(),
+		isActive: true,
 	}
+	cookieSession.set("sessions", [session])
 
-	return sessions.filter((session) => session.isActive)[0]
+	return { cookieSession, session }
 }
 
 async function getSessions(context: {
@@ -56,21 +98,10 @@ async function getSessions(context: {
 
 	const sessions = cookieSession.get("sessions")
 	if (!sessions) {
-		throw json(
-			{ message: "No active session found, try refreshing the webpage" },
-			{ status: 500 }
-		)
+		return []
 	}
 
 	return sessions
-}
-
-async function getActiveSessionId(context: {
-	sessionStorage: AppSessionStorage
-	request: Request
-}) {
-	const activeSession = await getActiveSession(context)
-	return activeSession.sessionId
 }
 
 async function getCookieSession(context: {
@@ -83,8 +114,10 @@ async function getCookieSession(context: {
 export {
 	createId,
 	getCookieSession,
-	setupSession,
-	getActiveSession,
 	getSessions,
-	getActiveSessionId,
+	getSessionId,
+	getPublicSessions,
+	getMaskedSessions,
+	optionalActiveSession,
+	requiredActiveSession,
 }

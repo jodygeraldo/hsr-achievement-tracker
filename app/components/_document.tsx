@@ -176,8 +176,8 @@ function Sidebar() {
 
 			{/* Account */}
 			<DropdownMenu.Root modal={false}>
-				<DropdownMenu.Trigger asChild>
-					<button className="group -mx-2 flex items-center gap-x-3 rounded-md bg-gray-3 p-2 transition-colors hover:bg-gray-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8 data-[state=open]:bg-gray-5">
+				<DropdownMenu.Trigger disabled={!activeSession.id} asChild>
+					<button className="group -mx-2 flex items-center gap-x-3 rounded-md bg-gray-3 p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8 hover:enabled:bg-gray-4 data-[state=open]:bg-gray-5">
 						<div
 							className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-gray-6 bg-gray-2 font-mono text-xl font-bold text-gray-12"
 							aria-hidden="true"

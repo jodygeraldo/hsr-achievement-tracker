@@ -1,11 +1,17 @@
 import * as Popover from "@radix-ui/react-popover"
-import { useFetcher, useFormAction, useLoaderData } from "@remix-run/react"
+import {
+	useFetcher,
+	useFormAction,
+	useLoaderData,
+	useRouteLoaderData,
+} from "@remix-run/react"
 import * as React from "react"
 import { Badge } from "~/components/badge"
 import { Checkbox } from "~/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio"
 import { cn } from "~/utils/shared"
 import { type CategoryLoaderData } from "./route"
+import { type RootLoaderData } from "~/root"
 
 export function Achievement() {
 	const { achievements: loaderAchievements, currentVersion } =
@@ -69,6 +75,8 @@ function MultiAchievement({
 		showClue,
 	})
 
+	const { activeSession } = useRouteLoaderData("root") as RootLoaderData
+
 	return (
 		<RadioGroup
 			value={value}
@@ -76,6 +84,7 @@ function MultiAchievement({
 				setValue(value)
 				fetcher.submit(
 					{
+						activeSessionId: activeSession.id,
 						name: achievement.name.toString(),
 						intent: value === "none" ? "delete" : "multi",
 						path: value,
@@ -178,6 +187,8 @@ function SingleAchievement({
 		showClue,
 	})
 
+	const { activeSession } = useRouteLoaderData("root") as RootLoaderData
+
 	return (
 		<div key={achievement.name} className="flex items-center gap-x-3">
 			<RadioOrCheckboxContainer shouldRenderDiv={displayClue}>
@@ -190,6 +201,7 @@ function SingleAchievement({
 						if (checked !== "indeterminate") {
 							fetcher.submit(
 								{
+									activeSessionId: activeSession.id,
 									name: achievement.name.toString(),
 									intent: checked ? "put" : "delete",
 								},

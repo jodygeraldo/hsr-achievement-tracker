@@ -49,7 +49,7 @@ async function newSession(
 		id: createId(),
 		name,
 		sessionId: createId(),
-		isActive: false,
+		isActive: sessions.length === 0 ? true : false,
 	})
 	cookieSession.set("sessions", sessions)
 

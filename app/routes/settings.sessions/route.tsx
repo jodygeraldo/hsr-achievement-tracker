@@ -32,7 +32,7 @@ import {
 	updateSessionName,
 } from "~/models/sessions.server"
 import { type UserSession } from "~/types"
-import { getSessions } from "~/utils/session.server"
+import { getMaskedSessions } from "~/utils/session.server"
 
 export const handle = {
 	pageHeading: "Settings",
@@ -195,19 +195,12 @@ export async function action({ request, context }: DataFunctionArgs) {
 }
 
 export async function loader({ request, context }: DataFunctionArgs) {
-	const sessions = await getSessions({
+	const sessions = await getMaskedSessions({
 		sessionStorage: context.sessionStorage,
 		request,
 	})
 
-	return json({
-		sessions: sessions.map((session) => ({
-			id: session.id,
-			name: session.name,
-			sessionId: String("*").repeat(session.sessionId.length),
-			isActive: session.isActive,
-		})),
-	})
+	return json({ sessions })
 }
 
 export default function AccountSettingPage() {

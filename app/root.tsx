@@ -11,7 +11,11 @@ import tailwindHref from "~/tailwind.css"
 import { Document, Main } from "./components/_document"
 import { getCategories } from "./models/achievement.server"
 import { type AppSessionStorage } from "./types"
-import { getSessions, setupSession } from "./utils/session.server"
+import {
+	createId,
+	getPublicSessions,
+	optionalActiveSession,
+} from "./utils/session.server"
 
 declare module "@remix-run/cloudflare" {
 	export interface AppLoadContext {
@@ -33,30 +37,28 @@ export function links(): LinkDescriptor[] {
 
 export type RootLoaderData = SerializeFrom<typeof loader>
 export async function loader({ request, context }: LoaderArgs) {
-	await setupSession({
+	const activeSession = await optionalActiveSession({
 		sessionStorage: context.sessionStorage,
 		request,
 	})
 
-	const sessions = await getSessions({
+	const publicSessions = await getPublicSessions({
 		sessionStorage: context.sessionStorage,
 		request,
 	})
-	const activeSession = sessions.filter((session) => session.isActive)[0]
 
 	try {
 		const category = await getCategories(context.db, {
-			sessionId: activeSession.sessionId,
+			sessionId: activeSession?.sessionId ?? "",
 		})
 
 		return json({
 			...category,
-			activeSession: { id: activeSession.id, name: activeSession.name },
-			sessions: sessions.map((session) => ({
-				id: session.id,
-				name: session.name,
-				isActive: session.isActive,
-			})),
+			activeSession: {
+				id: activeSession?.id ?? createId(),
+				name: activeSession?.name ?? "Guess Session",
+			},
+			sessions: publicSessions,
 		})
 	} catch (error) {
 		console.error(error)

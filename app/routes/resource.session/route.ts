@@ -1,7 +1,7 @@
 import { json, type DataFunctionArgs } from "@remix-run/cloudflare"
 import { assert, string } from "superstruct"
 import { setActiveSession } from "~/models/sessions.server"
-import { getSessions } from "~/utils/session.server"
+import { getSessionId } from "~/utils/session.server"
 
 export async function action({ request, context }: DataFunctionArgs) {
 	const formData = await request.formData()
@@ -35,20 +35,23 @@ export async function action({ request, context }: DataFunctionArgs) {
 export async function loader({ request, context }: DataFunctionArgs) {
 	const query = new URL(request.url).searchParams
 	const id = query.get("id")
-	assert(id, string())
 
-	const sessions = await getSessions({
-		sessionStorage: context.sessionStorage,
-		request,
-	})
+	if (!id) {
+		throw json("id is required to access this resource.", {
+			status: 400,
+		})
+	}
 
-	const session = sessions.filter((session) => session.id === id)
+	const sessionId = await getSessionId(
+		{ sessionStorage: context.sessionStorage, request },
+		id
+	)
 
-	if (session.length !== 1) {
+	if (!sessionId) {
 		throw json("You don't have permission to access this resource.", {
 			status: 403,
 		})
 	}
 
-	return json({ sessionId: session[0].sessionId })
+	return json({ sessionId })
 }

@@ -18,7 +18,10 @@ import { ErrorComponent } from "~/components/error-component"
 import { getAchievements, modifyAchieved } from "~/models/achievement.server"
 import { type RootLoaderData } from "~/root"
 import { isValidSlugifiedCategoryName } from "~/utils/achievement.server"
-import { getActiveSessionId } from "~/utils/session.server"
+import {
+	optionalActiveSession,
+	requiredActiveSession,
+} from "~/utils/session.server"
 import { getUserPrefs } from "~/utils/user-prefs.server"
 import { Achievement } from "./achievement"
 import { AchievementHeader } from "./achievement-header"
@@ -38,28 +41,36 @@ export async function action({ request, params, context }: DataFunctionArgs) {
 		throw json({ message: "Invalid slugified category name" }, { status: 400 })
 	}
 
-	const sessionId = await getActiveSessionId({
-		sessionStorage: context.sessionStorage,
-		request,
-	})
-
 	const formData = await request.formData()
+	const activeSessionId = formData.get("activeSessionId")
 	const name = formData.get("name")
 	const intent = formData.get("intent")
 	const path = formData.get("path")
+	assert(activeSessionId, string())
 	assert(name, string())
+
+	const { session, cookieSession } = await requiredActiveSession({
+		sessionStorage: context.sessionStorage,
+		request,
+		activeSessionId,
+	})
 
 	try {
 		switch (intent) {
 			case "put":
 			case "delete": {
-				await modifyAchieved(context.db, { sessionId, slug, name, intent })
+				await modifyAchieved(context.db, {
+					sessionId: session.sessionId,
+					slug,
+					name,
+					intent,
+				})
 				break
 			}
 			case "multi": {
 				assert(path, string())
 				await modifyAchieved(context.db, {
-					sessionId,
+					sessionId: session.sessionId,
 					slug,
 					name,
 					intent,
@@ -77,10 +88,24 @@ export async function action({ request, params, context }: DataFunctionArgs) {
 			message = error.message
 		}
 
-		throw json({ message }, { status: 500 })
+		throw json(
+			{ message },
+			{
+				status: 500,
+				headers: {
+					"Set-Cookie": await context.sessionStorage.commitSession(
+						cookieSession
+					),
+				},
+			}
+		)
 	}
 
-	return null
+	return json(null, {
+		headers: {
+			"Set-Cookie": await context.sessionStorage.commitSession(cookieSession),
+		},
+	})
 }
 
 export type CategoryLoaderData = SerializeFrom<typeof loader>
@@ -96,7 +121,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 		)
 	}
 
-	const sessionId = await getActiveSessionId({
+	const session = await optionalActiveSession({
 		sessionStorage: context.sessionStorage,
 		request,
 	})
@@ -106,7 +131,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 		const data = await getAchievements(
 			context.db,
 			{
-				sessionId,
+				sessionId: session?.sessionId ?? "",
 				slug,
 			},
 			{ showMissedFirst: userPrefs.showMissedFirst }
