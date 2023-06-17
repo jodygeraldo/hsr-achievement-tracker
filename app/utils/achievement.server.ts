@@ -10,20 +10,23 @@ import {
 } from "superstruct"
 import { type SlugifiedCategoryName } from "~/data/achievement.server"
 
+export const categorySlugs: Readonly<SlugifiedCategoryName[]> = [
+	"trailblazer",
+	"the-rail-unto-the-stars",
+	"eager-for-battle",
+	"vestige-of-luminflux",
+	"universe-in-a-nutshell",
+	"glory-of-the-unyielding",
+	"moment-of-joy",
+	"the-memories-we-share",
+	"fathom-the-unfathomable",
+] as const
+
 export function isValidSlugifiedCategoryName(
 	slug?: string
 ): slug is SlugifiedCategoryName {
-	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> = enums([
-		"trailblazer",
-		"the-rail-unto-the-stars",
-		"eager-for-battle",
-		"vestige-of-luminflux",
-		"universe-in-a-nutshell",
-		"glory-of-the-unyielding",
-		"moment-of-joy",
-		"the-memories-we-share",
-		"fathom-the-unfathomable",
-	])
+	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> =
+		enums(categorySlugs)
 
 	return is(slug, ValidSlugifiedCategoryName)
 }
