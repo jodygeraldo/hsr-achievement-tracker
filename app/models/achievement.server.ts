@@ -1,59 +1,54 @@
-import { type Connection } from "@planetscale/database"
-import { array, assert, date, nullable, object, string } from "superstruct"
+import invariant from "tiny-invariant"
 import {
 	achievementByCategory,
 	achievementMetadata,
 	categories,
 	type SlugifiedCategoryName,
 } from "~/data/achievement.server"
+import { type AchievementTable } from "~/types"
 import { getAchievedAt } from "~/utils/achievement.server"
 
 async function getHomeAchievementData(
-	db: Connection,
+	db: D1Database,
 	data: { sessionId: string }
 ) {
-	const AchievedStruct = array(
-		object({
-			name: string(),
-			category: string(),
-		})
-	)
-	const LatestAchievedStruct = array(
-		object({
-			name: string(),
-			category: string(),
-			path: nullable(string()),
-			createdAt: date(),
-		})
-	)
-	const TotalSessionsStruct = array(object({ totalSessions: string() }))
-	const RankStruct = array(object({ rank: string() }))
-
-	const [
-		{ rows: achievedRows },
-		{ rows: latestAchievedRows },
-		{ rows: totalSessionsRows },
-		{ rows: rankRows },
-	] = await Promise.all([
-		db.execute("SELECT name, category FROM achievement WHERE session_id = ?", [
-			data.sessionId,
-		]),
-		db.execute(
-			"SELECT name, category, path, created_at AS `createdAt` FROM achievement WHERE session_id = ? ORDER BY created_at DESC LIMIT 10",
-			[data.sessionId]
-		),
-		db.execute(
-			"SELECT count(DISTINCT session_id) as `totalSessions` FROM achievement"
-		),
-		db.execute(
-			"SELECT count(*) + ? AS `rank` FROM (SELECT session_id, count(*) AS total_achievements FROM achievement GROUP BY session_id) AS a JOIN (SELECT session_id, count(*) AS total_achievements FROM achievement where session_id = ?) AS b on a.session_id != b.session_id where a.total_achievements > b.total_achievements",
-			[1, data.sessionId]
-		),
+	const rows = await db.batch([
+		// prettier-ignore
+		db
+			.prepare(
+				"SELECT name, category FROM achievement WHERE session_id = ?"
+			)
+			.bind(data.sessionId),
+		db
+			.prepare(
+				"SELECT name, category, path, created_at AS `createdAt` FROM achievement WHERE session_id = ? ORDER BY created_at DESC LIMIT 10"
+			)
+			.bind(data.sessionId),
+		// prettier-ignore
+		db
+			.prepare(
+				"SELECT count(DISTINCT session_id) as `totalSessions` FROM achievement"
+			),
+		db
+			.prepare(
+				"SELECT count(*) + ? AS `rank` FROM (SELECT session_id, count(*) AS total_achievements FROM achievement GROUP BY session_id) AS a JOIN (SELECT session_id, count(*) AS total_achievements FROM achievement where session_id = ?) AS b on a.session_id != b.session_id where a.total_achievements > b.total_achievements"
+			)
+			.bind(1, data.sessionId),
 	])
-	assert(achievedRows, AchievedStruct)
-	assert(latestAchievedRows, LatestAchievedStruct)
-	assert(totalSessionsRows, TotalSessionsStruct)
-	assert(rankRows, RankStruct)
+	const achievedRows = rows[0].results as
+		| Pick<AchievementTable, "name" | "category">[]
+		| undefined
+	const latestAchievedRows = rows[1].results as
+		| Pick<AchievementTable, "name" | "category" | "path" | "created_at">[]
+		| undefined
+	const totalSessionsRows = rows[2].results as
+		| [{ totalSessions: string }]
+		| undefined
+	const rankRows = rows[3].results as [{ rank: string }] | undefined
+
+	if (!achievedRows || !latestAchievedRows || !totalSessionsRows || !rankRows) {
+		throw new Error()
+	}
 
 	const totalSessions = Number(totalSessionsRows[0].totalSessions)
 	const rank = Number(rankRows[0].rank)
@@ -108,6 +103,8 @@ async function getHomeAchievementData(
 				throw new Error("Encountered invalid data")
 			}
 
+			const createdAt = new Date(ach.created_at)
+
 			return {
 				name: ach.path ?? ach.name,
 				slug: ach.category,
@@ -115,29 +112,26 @@ async function getHomeAchievementData(
 				version: achievementData?.version,
 				isSecret: achievementData?.isSecret,
 				achievedAt: {
-					formatted: getAchievedAt(ach.createdAt),
-					raw: ach.createdAt.toISOString(),
+					formatted: getAchievedAt(createdAt),
+					raw: createdAt.toISOString(),
 				},
 			}
 		}),
 	}
 }
 
-async function getCategories(db: Connection, data: { sessionId: string }) {
+async function getCategories(db: D1Database, data: { sessionId: string }) {
 	let achievementSize = 0
 	categories.forEach(({ size }) => (achievementSize += size))
 
-	const { rows } = await db.execute(
-		"SELECT category AS `slug`, count(*) AS `count` FROM achievement WHERE session_id = ? GROUP BY category",
-		[data.sessionId]
-	)
-	const Struct = array(
-		object({
-			slug: string(),
-			count: string(),
-		})
-	)
-	assert(rows, Struct)
+	const { results: rows } = await db
+		.prepare(
+			"SELECT category, count(*) AS `count` FROM achievement WHERE session_id = ? GROUP BY category"
+		)
+		.bind(data.sessionId)
+		.all<Pick<AchievementTable, "category"> & { count: string }>()
+
+	invariant(rows, "getAchievements|rows")
 
 	let achievedTotal = 0
 	rows.forEach(({ count }) => (achievedTotal += Number(count)))
@@ -148,32 +142,28 @@ async function getCategories(db: Connection, data: { sessionId: string }) {
 		categories: categories.map((category) => ({
 			...category,
 			achievedCount:
-				rows.find(({ slug }) => slug === category.slug)?.count ?? "0",
+				rows.find((row) => row.category === category.slug)?.count ?? "0",
 		})),
 	}
 }
 
 async function getAchievements(
-	db: Connection,
+	db: D1Database,
 	data: { sessionId: string; slug: SlugifiedCategoryName },
 	options: { showMissedFirst: boolean }
 ) {
-	const { rows } = await db.execute(
-		"SELECT name, created_at AS `createdAt`, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC",
-		[data.sessionId, data.slug]
-	)
+	const { results: rows } = await db
+		.prepare(
+			"SELECT name, created_at, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC"
+		)
+		.bind(data.sessionId, data.slug)
+		.all<Pick<AchievementTable, "name" | "created_at" | "path">>()
 
-	const Struct = array(
-		object({
-			name: string(),
-			createdAt: date(),
-			path: nullable(string()),
-		})
-	)
-	assert(rows, Struct)
+	invariant(rows, "getAchievements|rows")
 
 	const achieved = rows.map((d) => {
-		return { ...d, achievedAt: getAchievedAt(d.createdAt) }
+		const createdAt = new Date(d.created_at)
+		return { ...d, createdAt, achievedAt: getAchievedAt(createdAt) }
 	})
 
 	const achievements = achievementByCategory[data.slug].map((achievement) => {
@@ -213,7 +203,7 @@ async function getAchievements(
 }
 
 async function modifyAchieved(
-	db: Connection,
+	db: D1Database,
 	data: {
 		sessionId: string
 		slug: SlugifiedCategoryName
@@ -224,24 +214,30 @@ async function modifyAchieved(
 ) {
 	switch (data.intent) {
 		case "multi": {
-			await db.execute(
-				"INSERT INTO achievement(session_id, name, category, path) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE path = ?",
-				[data.sessionId, data.name, data.slug, data.path, data.path]
-			)
+			await db
+				.prepare(
+					"INSERT INTO achievement(session_id, name, category, path) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE path = ?"
+				)
+				.bind(data.sessionId, data.name, data.slug, data.path, data.path)
+				.run()
 			break
 		}
 		case "put": {
-			await db.execute(
-				"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?)",
-				[data.sessionId, data.name, data.slug]
-			)
+			await db
+				.prepare(
+					"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?)"
+				)
+				.bind(data.sessionId, data.name, data.slug)
+				.run()
 			break
 		}
 		case "delete": {
-			await db.execute(
-				"DELETE FROM achievement WHERE session_id = ? AND category = ? AND name = ?",
-				[data.sessionId, data.slug, data.name]
-			)
+			await db
+				.prepare(
+					"DELETE FROM achievement WHERE session_id = ? AND category = ? AND name = ?"
+				)
+				.bind(data.sessionId, data.slug, data.name)
+				.run()
 			break
 		}
 		default:

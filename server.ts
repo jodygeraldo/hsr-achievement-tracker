@@ -1,4 +1,3 @@
-import { cast, connect } from "@planetscale/database"
 import { createCookieSessionStorage, logDevReady } from "@remix-run/cloudflare"
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages"
 import * as build from "@remix-run/dev/server-build"
@@ -10,6 +9,7 @@ if (process.env.NODE_ENV === "development") {
 export const onRequest = createPagesFunctionHandler<Env>({
 	build,
 	getLoadContext: (context) => ({
+		db: context.env.DB,
 		sessionStorage: createCookieSessionStorage({
 			cookie: {
 				name: "__session",
@@ -19,17 +19,6 @@ export const onRequest = createPagesFunctionHandler<Env>({
 				secrets: [context.env.SESSION_SECRET],
 				secure: process.env.NODE_ENV === "production",
 				maxAge: 15_768_000, // 6 months
-			},
-		}),
-		db: connect({
-			host: context.env.DATABASE_HOST,
-			username: context.env.DATABASE_USERNAME,
-			password: context.env.DATABASE_PASSWORD,
-			cast(field, value) {
-				if (field.type === "TIMESTAMP" && value) {
-					return new Date(value)
-				}
-				return cast(field, value)
 			},
 		}),
 	}),

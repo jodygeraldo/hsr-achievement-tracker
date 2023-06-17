@@ -1,4 +1,3 @@
-import { DatabaseError } from "@planetscale/database"
 import * as AlertDialog from "@radix-ui/react-alert-dialog"
 import * as Dialog from "@radix-ui/react-dialog"
 import { json, type DataFunctionArgs } from "@remix-run/cloudflare"
@@ -33,6 +32,7 @@ import {
 } from "~/models/sessions.server"
 import { type UserSession } from "~/types"
 import { getSessions } from "~/utils/session.server"
+import { loggingD1Error } from "~/utils/shared"
 
 export const handle = {
 	pageHeading: "Settings",
@@ -116,12 +116,9 @@ export async function action({ request, context }: DataFunctionArgs) {
 					}
 				)
 			} catch (error) {
-				let message = "Failed to import session"
-				if (error instanceof DatabaseError) {
-					message = error.message
-				}
-
-				throw json({ message }, { status: 500 })
+				console.error("routes/settings.sessions/route.tsx|importSession")
+				loggingD1Error(error)
+				throw json({ message: "Failed to import session" }, { status: 500 })
 			}
 		}
 
