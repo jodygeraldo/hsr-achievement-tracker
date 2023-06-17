@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss"
 import colors from "tailwindcss/colors"
 
+/** @type {import('@remix-run/dev').AppConfig} */
 export default {
 	content: ["app/**/*.{ts,tsx}"],
 	theme: {
@@ -59,4 +59,4 @@ export default {
 		extend: {},
 	},
 	plugins: [require("@tailwindcss/forms"), require("tailwindcss-animate")],
-} satisfies Config
+}
