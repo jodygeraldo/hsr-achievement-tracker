@@ -479,6 +479,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Allies have 10 turns of action unbroken by enemies",
 		},
 		{
+			name: "Perish Song",
+			version: "1.0",
+			isSecret: true,
+			clue: "Get knocked out together with the enemy",
+		},
+		{
 			name: "Bring a Gun to a Knife Fight",
 			version: "1.0",
 			isSecret: true,
@@ -489,6 +495,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Inflict Weakness Break on enemies 3 time(s) using the Trailblazer (Destruction) in a single battle",
+		},
+		{
+			name: "Four-and-a-Half Pirouettes",
+			version: "1.0",
+			isSecret: true,
+			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
 		},
 		{
 			name: "It's My Turn",
@@ -518,6 +530,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Serval to deal the final blow in a victory against boss Gepard",
+		},
+		{
+			name: "Serval's Parting Gift",
+			version: "1.0",
+			isSecret: true,
+			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Listen...",
@@ -644,24 +662,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Use Bronya to deal the final blow in a victory against boss Cocolia",
-		},
-		{
-			name: "Four-and-a-Half Pirouettes",
-			version: "1.0",
-			isSecret: true,
-			clue: "Trigger Herta's talent with an ally's single attack, and have her twirl 5 time(s)",
-		},
-		{
-			name: "Perish Song",
-			version: "1.0",
-			isSecret: true,
-			clue: "Get knocked out together with the enemy",
-		},
-		{
-			name: "Serval's Parting Gift",
-			version: "1.0",
-			isSecret: true,
-			clue: "Use Serval to deal the final blow in a victory against boss Cocolia",
 		},
 		{
 			name: "Surge of Tiles",
@@ -1046,6 +1046,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Clear Simulated Universe at difficulty 2 or higher and use Techniques 25 times",
 		},
 		{
+			name: "Aleph is the Universe",
+			version: "1.0",
+			isSecret: true,
+			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
+		},
+		{
 			name: "Coherence",
 			version: "1.0",
 			clue: "Clear Simulated Universe at difficulty 2 or higher with 4 characters of the same Path",
@@ -1054,14 +1060,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "Does This Game Not Have a Platinum Trophy?",
 			version: "1.0",
 			clue: "Clear Simulated Universe (Difficulty Level 2 and above) with all allies at full HP at the end of every battle",
-		},
-
-		// in-game position check
-		{
-			name: "Aleph is the Universe",
-			version: "1.0",
-			isSecret: true,
-			clue: "Clear Simulated Universe at difficulty 2 or higher with only 1 character in the team",
 		},
 	],
 	"glory-of-the-unyielding": [
@@ -1408,6 +1406,10 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: ["For Old Times' Sake", "Where Can A Wanderer Rest?"],
 			version: "1.1",
 			isSecret: true,
+			clue: [
+				'Hide the identity of the mara-struck monster from Liangmu in the mission "Evanesce Like the Morning Dew"',
+				'Let Liangmu know the identity of the mara-struck monster in the mission "Evanesce Like the Morning Dew"',
+			],
 		},
 		{
 			name: "Seventeen's Map",
@@ -1686,6 +1688,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Complete 15 new Hexanexus challenge(s) from the Hex Club",
 		},
 		{
+			name: "Labor Omnia Vincit",
+			version: "1.0",
+			isSecret: true,
+			clue: "Examine 3 separate file cabinets in the Seat of Divine Foresight",
+		},
+		{
 			name: ["The Crimes That Bind", "Flight Cancelled"],
 			version: "1.0",
 			isSecret: true,
@@ -1739,14 +1747,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
-		},
-
-		// in-game position check
-		{
-			name: "Labor Omnia Vincit",
-			version: "1.0",
-			isSecret: true,
-			clue: "Examine file cabinets in the Seat of Divine Foresight 7 time(s)",
 		},
 	],
 	"fathom-the-unfathomable": [
