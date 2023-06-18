@@ -101,6 +101,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Activate or level up character Traces 100 time(s)",
 		},
 		{
+			name: "I Have Finished The Race",
+			version: "1.0",
+			isSecret: true,
+			clue: "Level up all Traces for a character to the maximum level",
+		},
+		{
 			name: "Divine Relics (IV)",
 			version: "1.0",
 			clue: "Level up a 4-star Relic to Max level",
@@ -114,14 +120,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "Armed to the Teeth",
 			version: "1.0",
 			clue: "Level up 4 Relics to Lv.15",
-		},
-
-		// in-game position check
-		{
-			name: "I Have Finished The Race",
-			version: "1.0",
-			isSecret: true,
-			clue: "Level up all Traces for a character to the maximum level",
 		},
 		{
 			name: "Sovereign Warframe",
