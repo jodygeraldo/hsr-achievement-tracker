@@ -31,7 +31,7 @@ export async function loader({ request, context }: DataFunctionArgs) {
 
 	const categoryUrls: SitemapUrlOption[] = categorySlugs.map((slug) => {
 		return {
-			loc: `${origin}/article/${slug}`,
+			loc: `${origin}/category/${slug}`,
 			priority: 0.8,
 		}
 	})
