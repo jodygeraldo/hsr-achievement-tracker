@@ -1378,29 +1378,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: 'Complete the Companion Mission "Punklorde Mentality"',
 		},
 		{
-			name: "Coffin Dancer",
-			version: "1.1",
-			clue: "Witness Luocha's hidden side",
-		},
-		{
-			name: "Free For Today",
-			version: "1.1",
-			isSecret: true,
-			clue: "Open up the general exhibition area of the Belobog History and Culture Museum",
-		},
-		{
-			name: "You Should Stay in the Museum!",
-			version: "1.1",
-			isSecret: true,
-			clue: "Collect all display items for the Belobog History and Culture Museum",
-		},
-		{
-			name: "Catch Me If You Can",
-			version: "1.1",
-			isSecret: true,
-			clue: "Open up three exhibition areas in the Belobog History and Culture Museum",
-		},
-		{
 			name: ["For Old Times' Sake", "Where Can A Wanderer Rest?"],
 			version: "1.1",
 			isSecret: true,
@@ -1408,6 +1385,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 				'Hide the identity of the mara-struck monster from Liangmu in the mission "Evanesce Like the Morning Dew"',
 				'Let Liangmu know the identity of the mara-struck monster in the mission "Evanesce Like the Morning Dew"',
 			],
+		},
+		{
+			name: "Coffin Dancer",
+			version: "1.1",
+			clue: "Witness Luocha's hidden side",
 		},
 		{
 			name: "Seventeen's Map",
@@ -1615,6 +1597,24 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
+		},
+		{
+			name: "Free For Today",
+			version: "1.1",
+			isSecret: true,
+			clue: "Open up the general exhibition area of the Belobog History and Culture Museum",
+		},
+		{
+			name: "Catch Me If You Can",
+			version: "1.1",
+			isSecret: true,
+			clue: "Open up three exhibition areas in the Belobog History and Culture Museum",
+		},
+		{
+			name: "You Should Stay in the Museum!",
+			version: "1.1",
+			isSecret: true,
+			clue: "Collect all display items for the Belobog History and Culture Museum",
 		},
 		{
 			name: "A Simple Life",
