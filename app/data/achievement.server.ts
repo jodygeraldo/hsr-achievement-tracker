@@ -182,7 +182,22 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{
 			name: 'Slayer of a Very "Deer" Friend',
 			version: "1.0",
+			clue: "Defeat the Master of the Disciples of Sanctus Medicus",
+		},
+		{
+			name: "Svah Sanishyu",
+			version: "1.2",
 			clue: "Try to walk on the Path of The Hunt...",
+		},
+		{
+			name: "The Imbibitor Lunae Arrives",
+			version: "1.2",
+			clue: "Witness Dan Heng part the waters in Scalegorge Waterscape",
+		},
+		{
+			name: "The Arbor Snaps",
+			version: "1.2",
+			clue: "Help Jing Yuan to defeat Phantylia",
 		},
 	],
 	"eager-for-battle": [
