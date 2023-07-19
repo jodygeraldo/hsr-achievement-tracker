@@ -1337,6 +1337,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Trigger 10 different HP restoration voice lines with Luocha's healing",
 		},
+		{
+			name: "Guardian of the Underworld",
+			version: "1.2",
+			isSecret: true,
+			clue: "Win 1 battle with a team comprising Natasha, Seele, and Luka",
+		},
 	],
 	"the-memories-we-share": [
 		{
