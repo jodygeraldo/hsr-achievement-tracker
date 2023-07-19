@@ -184,11 +184,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			clue: "Try to walk on the Path of The Hunt...",
 		},
-		{
-			name: "Draconic Opulence",
-			version: "1.0",
-			clue: "Witness Dan Shu's story",
-		},
 	],
 	"eager-for-battle": [
 		{
@@ -1597,6 +1592,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			isSecret: true,
 			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
+		},
+		{
+			name: "Draconic Opulence",
+			version: "1.0",
+			clue: "Witness Dan Shu's story",
 		},
 		{
 			name: "Free For Today",
