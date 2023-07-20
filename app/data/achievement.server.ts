@@ -1852,6 +1852,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Activate 14 Space Anchors on the Xianzhou Luofu",
 		},
 		{
+			name: "Travels Afar",
+			version: "1.2",
+			isSecret: true,
+			clue: "Activate Space Anchors 20 times on the Xianzhou Luofu",
+		},
+		{
 			name: "Proper Role-Playing Gamer",
 			version: "1.0",
 			clue: "Open Treasures 30 times on the Herta Space Station",
@@ -1865,6 +1871,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "A Drop in the Bucket",
 			version: "1.0",
 			clue: "Open Treasures 100 time(s) on the Xianzhou Luofu",
+		},
+		{
+			name: "The Star of Wealth Shines Upon You",
+			version: "1.2",
+			clue: "Open Treasures 170 time(s) on the Xianzhou Luofu",
 		},
 		{
 			name: "Destructive Impulse",
@@ -2009,6 +2020,35 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "North by Northwest",
 			version: "1.0",
 			clue: "Complete the Formation-Breaking Compass 20 time(s)",
+		},
+		{
+			name: "I Was Here Flying: Meridian Pin",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the vicinity of the Meridian Pin",
+		},
+		{
+			name: "I Was Here Flying: Matrix of Prescience",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the middle of the Matrix of Prescience",
+		},
+		{
+			name: "I Was Here Flying: Aureate Elixir Furnace",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the vicinity of the Aureate Elixir Furnace",
+		},
+		{
+			name: "Take It Easy, Icarus",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to test the limits of its remote control range",
+		},
+		{
+			name: "Unboxing Assessment",
+			version: "1.2",
+			clue: "There is no delivery package inspector more reliable than you",
 		},
 		{
 			name: "Walk Into The Trap",
