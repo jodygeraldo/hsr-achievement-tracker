@@ -55,7 +55,7 @@ export function LatestAchieved() {
 								<Badge>{achieved.category}</Badge>
 								<Badge
 									className={cn(
-										achieved.version === currentVersion.num && "ring-gold-6"
+										achieved.version === currentVersion.num && "ring-gold-6",
 									)}
 								>
 									{achieved.version}

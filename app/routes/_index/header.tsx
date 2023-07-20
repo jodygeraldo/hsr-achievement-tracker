@@ -5,7 +5,7 @@ import { type HomeLoaderData } from "./route"
 
 export function Header() {
 	const { achievedTotal, achievementSize, activeSession } = useRouteLoaderData(
-		"root"
+		"root",
 	) as RootLoaderData
 	const { percentileRank, rank, currentVersion, secretAchieved } =
 		useLoaderData() as HomeLoaderData
@@ -58,7 +58,7 @@ export function Header() {
 								: statIdx === 2
 								? "lg:border-l"
 								: "",
-							"border-t border-gray-6 px-4 py-6 sm:px-6 lg:px-8"
+							"border-t border-gray-6 px-4 py-6 sm:px-6 lg:px-8",
 						)}
 					>
 						<p className="text-sm font-medium leading-6 text-gray-11">

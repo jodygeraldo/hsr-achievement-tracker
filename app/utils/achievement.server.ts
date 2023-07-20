@@ -23,7 +23,7 @@ export const categorySlugs: Readonly<SlugifiedCategoryName[]> = [
 ] as const
 
 export function isValidSlugifiedCategoryName(
-	slug?: string
+	slug?: string,
 ): slug is SlugifiedCategoryName {
 	const ValidSlugifiedCategoryName: Describe<SlugifiedCategoryName> =
 		enums(categorySlugs)
@@ -37,7 +37,7 @@ export function clueBuilder(
 		italic?: string[]
 		highlight?: string[]
 		link?: { keyword: string; url: string }[]
-	}
+	},
 ) {
 	let modifiedClue = clue
 
@@ -48,7 +48,7 @@ export function clueBuilder(
 			union([
 				array(string()),
 				array(object({ keyword: string(), url: string() })),
-			])
+			]),
 		)
 
 		values.forEach((value) => {
@@ -62,7 +62,7 @@ export function clueBuilder(
 
 function clueModifier(
 	value: string | { keyword: string; url: string },
-	modifier: "italic" | "highlight" | "link"
+	modifier: "italic" | "highlight" | "link",
 ) {
 	if (modifier !== "link") {
 		return `<span class="clue-${modifier}">${value}</span>`

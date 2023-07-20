@@ -43,7 +43,12 @@ export async function action({ request, context }: DataFunctionArgs) {
 	const intent = formData.get("intent")
 	assert(
 		intent,
-		enums(["updateSessionName", "removeSession", "newSession", "importSession"])
+		enums([
+			"updateSessionName",
+			"removeSession",
+			"newSession",
+			"importSession",
+		]),
 	)
 
 	switch (intent) {
@@ -53,7 +58,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 
 			const cookieSession = await newSession(
 				{ sessionStorage: context.sessionStorage, request },
-				name
+				name,
 			)
 
 			if (!cookieSession) {
@@ -64,7 +69,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 							name: "You have reached the maximum limit of 7 sessions.",
 						},
 					},
-					{ status: 400 }
+					{ status: 400 },
 				)
 			}
 
@@ -73,10 +78,10 @@ export async function action({ request, context }: DataFunctionArgs) {
 				{
 					headers: {
 						"Set-Cookie": await context.sessionStorage.commitSession(
-							cookieSession
+							cookieSession,
 						),
 					},
-				}
+				},
 			)
 		}
 
@@ -89,7 +94,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 
 				const cookieSession = await importSession(
 					{ sessionStorage: context.sessionStorage, db: context.db, request },
-					{ name, sessionId }
+					{ name, sessionId },
 				)
 
 				if (!cookieSession) {
@@ -101,7 +106,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 									"No data is associated with this session ID. To create a new session, please use the new session form.",
 							},
 						},
-						{ status: 400 }
+						{ status: 400 },
 					)
 				}
 
@@ -110,10 +115,10 @@ export async function action({ request, context }: DataFunctionArgs) {
 					{
 						headers: {
 							"Set-Cookie": await context.sessionStorage.commitSession(
-								cookieSession
+								cookieSession,
 							),
 						},
-					}
+					},
 				)
 			} catch (error) {
 				let message = "Failed to import session"
@@ -133,7 +138,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 
 			const cookieSession = await updateSessionName(
 				{ sessionStorage: context.sessionStorage, request },
-				{ id, newName }
+				{ id, newName },
 			)
 
 			if (!cookieSession) {
@@ -142,7 +147,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 						intent,
 						error: { id: "No session was found with the provided ID." },
 					},
-					{ status: 400 }
+					{ status: 400 },
 				)
 			}
 
@@ -151,10 +156,10 @@ export async function action({ request, context }: DataFunctionArgs) {
 				{
 					headers: {
 						"Set-Cookie": await context.sessionStorage.commitSession(
-							cookieSession
+							cookieSession,
 						),
 					},
-				}
+				},
 			)
 		}
 
@@ -164,7 +169,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 
 			const cookieSession = await removeSession(
 				{ sessionStorage: context.sessionStorage, request },
-				id
+				id,
 			)
 
 			if (!cookieSession) {
@@ -173,7 +178,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 						intent,
 						error: { id: "No session was found with the provided ID." },
 					},
-					{ status: 400 }
+					{ status: 400 },
 				)
 			}
 
@@ -182,10 +187,10 @@ export async function action({ request, context }: DataFunctionArgs) {
 				{
 					headers: {
 						"Set-Cookie": await context.sessionStorage.commitSession(
-							cookieSession
+							cookieSession,
 						),
 					},
-				}
+				},
 			)
 		}
 
@@ -336,7 +341,7 @@ function SessionTableRow({ id, name, sessionId, isActive }: UserSession) {
 							isHidden
 								? fetcher.submit(
 										{ id },
-										{ action: "/resource/session", replace: true }
+										{ action: "/resource/session", replace: true },
 								  )
 								: setSessionIdText(sessionId)
 						}
@@ -465,7 +470,7 @@ function SessionTableRow({ id, name, sessionId, isActive }: UserSession) {
 															action: defaultAction,
 															method: "POST",
 															replace: true,
-														}
+														},
 													)
 												}
 											>

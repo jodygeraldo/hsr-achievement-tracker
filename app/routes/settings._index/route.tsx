@@ -41,7 +41,7 @@ export async function action({ request }: DataFunctionArgs) {
 			headers: {
 				"Set-Cookie": await userPrefsCookie.serialize(cookie),
 			},
-		}
+		},
 	)
 }
 

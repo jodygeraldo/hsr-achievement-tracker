@@ -19,7 +19,7 @@ async function requiredActiveSession(context: {
 
 	if (!session) {
 		throw new Error(
-			"Failed to acquired active session, this is likely an implementation error"
+			"Failed to acquired active session, this is likely an implementation error",
 		)
 	}
 
@@ -39,7 +39,7 @@ async function getSessionId(
 		sessionStorage: AppSessionStorage
 		request: Request
 	},
-	id: string
+	id: string,
 ) {
 	const sessions = await getSessions(context)
 	return sessions.find((session) => session.id === id)?.sessionId

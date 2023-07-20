@@ -8,7 +8,7 @@ async function setActiveSession(
 		sessionStorage: AppSessionStorage
 		request: Request
 	},
-	id: string
+	id: string,
 ) {
 	const cookieSession = await getCookieSession(context)
 	const sessions = await getSessions(context)
@@ -25,7 +25,7 @@ async function setActiveSession(
 			name: session.name,
 			sessionId: session.sessionId,
 			isActive: index === sessionIndex ? true : false,
-		}))
+		})),
 	)
 
 	return cookieSession
@@ -36,7 +36,7 @@ async function newSession(
 		sessionStorage: AppSessionStorage
 		request: Request
 	},
-	name: string
+	name: string,
 ) {
 	const cookieSession = await getCookieSession(context)
 	const sessions = await getSessions(context)
@@ -62,7 +62,7 @@ async function importSession(
 		db: Connection
 		request: Request
 	},
-	data: { name: string; sessionId: string }
+	data: { name: string; sessionId: string },
 ) {
 	if (!isCuid(data.sessionId)) {
 		return
@@ -70,7 +70,7 @@ async function importSession(
 
 	const isExistInDatabase = await context.db.execute(
 		"SELECT session_id FROM achievement WHERE session_id = ? LIMIT 1",
-		[data.sessionId]
+		[data.sessionId],
 	)
 
 	if (isExistInDatabase.size === 0) {
@@ -96,7 +96,7 @@ async function updateSessionName(
 		sessionStorage: AppSessionStorage
 		request: Request
 	},
-	data: { id: string; newName: string }
+	data: { id: string; newName: string },
 ) {
 	const cookieSession = await getCookieSession(context)
 	const sessions = await getSessions(context)
@@ -113,7 +113,7 @@ async function updateSessionName(
 			name: index === sessionIndex ? data.newName : session.name,
 			sessionId: session.sessionId,
 			isActive: session.isActive,
-		}))
+		})),
 	)
 
 	return cookieSession
@@ -124,7 +124,7 @@ async function removeSession(
 		sessionStorage: AppSessionStorage
 		request: Request
 	},
-	id: string
+	id: string,
 ) {
 	const cookieSession = await getCookieSession(context)
 	const sessions = await getSessions(context)

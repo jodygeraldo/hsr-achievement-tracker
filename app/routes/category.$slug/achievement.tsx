@@ -29,7 +29,7 @@ export function Achievement() {
 					<div className="flex items-center gap-2 self-start sm:order-last">
 						<Badge
 							className={cn(
-								achievement.version === currentVersion && "ring-gold-6"
+								achievement.version === currentVersion && "ring-gold-6",
 							)}
 						>
 							{achievement.version}
@@ -58,7 +58,7 @@ function MultiAchievement({
 		(achievement.clue && !Array.isArray(achievement.clue))
 	) {
 		throw new Error(
-			"This is invalid definition for achievement, multi achievement should have an array of title and description"
+			"This is invalid definition for achievement, multi achievement should have an array of title and description",
 		)
 	}
 
@@ -90,7 +90,7 @@ function MultiAchievement({
 						intent: value === "none" ? "delete" : "multi",
 						path: value,
 					},
-					{ action, method: "POST", replace: true }
+					{ action, method: "POST", replace: true },
 				)
 			}}
 			aria-label="Select an achievement"
@@ -120,7 +120,7 @@ function MultiAchievement({
 											value === name
 												? "text-gold-9 line-through"
 												: "text-gray-12",
-											"font-medium"
+											"font-medium",
 									  )
 									: undefined
 							}
@@ -134,7 +134,7 @@ function MultiAchievement({
 											value === name
 												? "text-gold-9 line-through"
 												: "text-gray-12",
-											"font-medium"
+											"font-medium",
 										)}
 									>
 										{name}
@@ -171,7 +171,7 @@ function SingleAchievement({
 		(achievement.clue && typeof achievement.clue !== "string")
 	) {
 		throw new Error(
-			"This is invalid definition for achievement, single achievement should only have one title and one description"
+			"This is invalid definition for achievement, single achievement should only have one title and one description",
 		)
 	}
 
@@ -206,7 +206,7 @@ function SingleAchievement({
 									name: achievement.name.toString(),
 									intent: checked ? "put" : "delete",
 								},
-								{ action, method: "POST", replace: true }
+								{ action, method: "POST", replace: true },
 							)
 						}
 					}}
@@ -219,7 +219,7 @@ function SingleAchievement({
 						<span
 							className={cn(
 								checked ? "text-gold-9 line-through" : "text-gray-12",
-								"font-medium"
+								"font-medium",
 							)}
 						>
 							{achievement.name}

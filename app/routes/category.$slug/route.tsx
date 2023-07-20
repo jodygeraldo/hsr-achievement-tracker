@@ -94,10 +94,10 @@ export async function action({ request, params, context }: DataFunctionArgs) {
 				status: 500,
 				headers: {
 					"Set-Cookie": await context.sessionStorage.commitSession(
-						cookieSession
+						cookieSession,
 					),
 				},
-			}
+			},
 		)
 	}
 
@@ -117,7 +117,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 				message:
 					"The url you entered does not match any category. Please check the spelling and try again.",
 			},
-			{ status: 404 }
+			{ status: 404 },
 		)
 	}
 
@@ -134,7 +134,7 @@ export async function loader({ request, params, context }: DataFunctionArgs) {
 				sessionId: session?.sessionId ?? "",
 				slug,
 			},
-			{ showMissedFirst: userPrefs.showMissedFirst }
+			{ showMissedFirst: userPrefs.showMissedFirst },
 		)
 
 		return json({

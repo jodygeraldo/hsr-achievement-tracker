@@ -10,13 +10,13 @@ import { getAchievedAt } from "~/utils/achievement.server"
 
 async function getHomeAchievementData(
 	db: Connection,
-	data: { sessionId: string }
+	data: { sessionId: string },
 ) {
 	const AchievedStruct = array(
 		object({
 			name: string(),
 			category: string(),
-		})
+		}),
 	)
 	const LatestAchievedStruct = array(
 		object({
@@ -24,7 +24,7 @@ async function getHomeAchievementData(
 			category: string(),
 			path: nullable(string()),
 			createdAt: date(),
-		})
+		}),
 	)
 	const TotalSessionsStruct = array(object({ totalSessions: string() }))
 	const RankStruct = array(object({ rank: string() }))
@@ -40,14 +40,14 @@ async function getHomeAchievementData(
 		]),
 		db.execute(
 			"SELECT name, category, path, created_at AS `createdAt` FROM achievement WHERE session_id = ? ORDER BY created_at DESC LIMIT 10",
-			[data.sessionId]
+			[data.sessionId],
 		),
 		db.execute(
-			"SELECT count(DISTINCT session_id) as `totalSessions` FROM achievement"
+			"SELECT count(DISTINCT session_id) as `totalSessions` FROM achievement",
 		),
 		db.execute(
 			"SELECT count(*) + ? AS `rank` FROM (SELECT session_id, count(*) AS total_achievements FROM achievement GROUP BY session_id) AS a JOIN (SELECT session_id, count(*) AS total_achievements FROM achievement where session_id = ?) AS b on a.session_id != b.session_id where a.total_achievements > b.total_achievements",
-			[1, data.sessionId]
+			[1, data.sessionId],
 		),
 	])
 	assert(achievedRows, AchievedStruct)
@@ -97,9 +97,8 @@ async function getHomeAchievementData(
 		secretAchieved,
 		currentVersion,
 		latestAchieved: latestAchievedRows.map((ach) => {
-			const categoryName = categories.find(
-				({ slug }) => slug === ach.category
-			)?.name
+			const categoryName = categories.find(({ slug }) => slug === ach.category)
+				?.name
 			const achievementData = achievementByCategory[
 				ach.category as SlugifiedCategoryName
 			].find((achievement) => achievement.name.toString() === ach.name)
@@ -129,13 +128,13 @@ async function getCategories(db: Connection, data: { sessionId: string }) {
 
 	const { rows } = await db.execute(
 		"SELECT category AS `slug`, count(*) AS `count` FROM achievement WHERE session_id = ? GROUP BY category",
-		[data.sessionId]
+		[data.sessionId],
 	)
 	const Struct = array(
 		object({
 			slug: string(),
 			count: string(),
-		})
+		}),
 	)
 	assert(rows, Struct)
 
@@ -156,11 +155,11 @@ async function getCategories(db: Connection, data: { sessionId: string }) {
 async function getAchievements(
 	db: Connection,
 	data: { sessionId: string; slug: SlugifiedCategoryName },
-	options: { showMissedFirst: boolean }
+	options: { showMissedFirst: boolean },
 ) {
 	const { rows } = await db.execute(
 		"SELECT name, created_at AS `createdAt`, path FROM achievement WHERE session_id = ? AND category = ? ORDER BY created_at DESC",
-		[data.sessionId, data.slug]
+		[data.sessionId, data.slug],
 	)
 
 	const Struct = array(
@@ -168,7 +167,7 @@ async function getAchievements(
 			name: string(),
 			createdAt: date(),
 			path: nullable(string()),
-		})
+		}),
 	)
 	assert(rows, Struct)
 
@@ -178,7 +177,7 @@ async function getAchievements(
 
 	const achievements = achievementByCategory[data.slug].map((achievement) => {
 		const done = achieved.find(
-			({ name }) => name === achievement.name.toString()
+			({ name }) => name === achievement.name.toString(),
 		)
 
 		return {
@@ -189,13 +188,13 @@ async function getAchievements(
 	})
 
 	const categoryName = categories.find(
-		(category) => category.slug === data.slug
+		(category) => category.slug === data.slug,
 	)?.name
 
 	if (options.showMissedFirst) {
 		achievements.sort(
 			(first, second) =>
-				Number(Boolean(first.achievedAt)) - Number(Boolean(second.achievedAt))
+				Number(Boolean(first.achievedAt)) - Number(Boolean(second.achievedAt)),
 		)
 	}
 
@@ -220,27 +219,27 @@ async function modifyAchieved(
 		name: string
 		intent: "put" | "delete" | "multi"
 		path?: string
-	}
+	},
 ) {
 	switch (data.intent) {
 		case "multi": {
 			await db.execute(
 				"INSERT INTO achievement(session_id, name, category, path) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE path = ?",
-				[data.sessionId, data.name, data.slug, data.path, data.path]
+				[data.sessionId, data.name, data.slug, data.path, data.path],
 			)
 			break
 		}
 		case "put": {
 			await db.execute(
 				"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?)",
-				[data.sessionId, data.name, data.slug]
+				[data.sessionId, data.name, data.slug],
 			)
 			break
 		}
 		case "delete": {
 			await db.execute(
 				"DELETE FROM achievement WHERE session_id = ? AND category = ? AND name = ?",
-				[data.sessionId, data.slug, data.name]
+				[data.sessionId, data.slug, data.name],
 			)
 			break
 		}

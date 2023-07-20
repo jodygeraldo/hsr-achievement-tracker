@@ -210,7 +210,7 @@ function Sidebar() {
 												isActive
 													? "bg-gray-5 text-gold-10"
 													: "text-gray-11 hover:bg-gray-4 hover:text-gold-9",
-												"flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
+												"flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8",
 											)
 										}
 									>
@@ -240,7 +240,7 @@ function Sidebar() {
 												isActive
 													? "bg-gray-5 text-gold-10"
 													: "text-gray-11 hover:bg-gray-4 hover:text-gold-9",
-												"flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8"
+												"flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold-8",
 											)
 										}
 									>
@@ -290,7 +290,7 @@ function Sidebar() {
 
 function SessionMenu() {
 	const { sessions, activeSession } = useRouteLoaderData(
-		"root"
+		"root",
 	) as RootLoaderData
 	const [activeId, setActiveId] = React.useState(activeSession.id)
 
@@ -313,7 +313,7 @@ function SessionMenu() {
 						setActiveId(value)
 						fetcher.submit(
 							{ id: value },
-							{ action: "/resource/session", method: "POST", replace: true }
+							{ action: "/resource/session", method: "POST", replace: true },
 						)
 					}}
 					className="space-y-px"

@@ -10,7 +10,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 
 	const cookieSession = await setActiveSession(
 		{ sessionStorage: context.sessionStorage, request },
-		id
+		id,
 	)
 
 	if (!cookieSession) {
@@ -18,7 +18,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 			{
 				error: { id: "No session was found with the provided ID." },
 			},
-			{ status: 400 }
+			{ status: 400 },
 		)
 	}
 
@@ -28,7 +28,7 @@ export async function action({ request, context }: DataFunctionArgs) {
 			headers: {
 				"Set-Cookie": await context.sessionStorage.commitSession(cookieSession),
 			},
-		}
+		},
 	)
 }
 
@@ -44,7 +44,7 @@ export async function loader({ request, context }: DataFunctionArgs) {
 
 	const sessionId = await getSessionId(
 		{ sessionStorage: context.sessionStorage, request },
-		id
+		id,
 	)
 
 	if (!sessionId) {
