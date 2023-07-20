@@ -1767,6 +1767,66 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
 		},
+		{
+			name: "The Willing Does Not Bite",
+			version: "1.2",
+			isSecret: true,
+			clue: "Uncover the connection between the two anglers from the Artisanship Commission",
+		},
+		{
+			name: "How I Learned to Stop Worrying",
+			version: "1.2",
+			isSecret: true,
+			clue: "Successfully resolve the neutron bomb crisis",
+		},
+		{
+			name: "Lunarescent Rim",
+			version: "1.2",
+			isSecret: true,
+			clue: "Participate 1 time in the Aurumaton Driving Exam",
+		},
+		{
+			name: ["Wordsmith", "Literary Novice"],
+			version: "1.2",
+			isSecret: true,
+			clue: [
+				"Have your literary talent recognized by the Metrical Poet",
+				"Fail to have your literary talent recognized by the Metrical Poet",
+			],
+		},
+		{
+			name: "Soaring Birds and Paper Kites",
+			version: "1.2",
+			isSecret: true,
+			clue: 'Complete the Companion Mission "For I Have Touched the Sky"',
+		},
+		{
+			name: ["Free Will", "True Free Will"],
+			version: "1.2",
+			isSecret: true,
+			clue: [
+				'Complete the Companion Mission "Letter from a Strange Woman"',
+				'Complete the Companion Mission "Letter from a Strange Woman"',
+			],
+		},
+		{
+			name: "Ends Above the Means",
+			version: "1.2",
+			isSecret: true,
+			clue: "Complete 1 successful release with the Unshackled",
+		},
+		{
+			name: "Means Above the Ends",
+			version: "1.2",
+			isSecret: true,
+			clue: "Witness the end of the Unshackled",
+		},
+		{
+			name: "Friend of the Cloud Knights",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fulfill the General's orders without distractions",
+		},
 	],
 	"fathom-the-unfathomable": [
 		{
