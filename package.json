@@ -4,8 +4,9 @@
 	"type": "module",
 	"scripts": {
 		"build": "remix build",
-		"dev": "remix dev --manual --command \"wrangler pages dev ./public\"",
-		"fmt:eslint": "pnpm lint --fix",
+		"dev": "remix dev --manual --command \"pnpm run start\"",
+		"start": "wrangler pages dev --compatibility-date=2023-07-17 ./public",
+		"fmt:eslint": "pnpm run lint --fix",
 		"fmt:prettier": "prettier --cache --write --ignore-unknown .",
 		"fmt": "run-s -l fmt:*",
 		"lint": "eslint --ext .ts,.tsx --cache --cache-location ./node_modules/.cache/eslint .",
