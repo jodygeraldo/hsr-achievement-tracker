@@ -182,6 +182,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{
 			name: 'Slayer of a Very "Deer" Friend',
 			version: "1.0",
+			isSecret: true,
 			clue: "Defeat the Master of the Disciples of Sanctus Medicus",
 		},
 		{
