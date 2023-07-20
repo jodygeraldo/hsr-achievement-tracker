@@ -1127,6 +1127,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			clue: "Complete Echo of War 10 time(s)",
 		},
+		{
+			name: "Voyage to the Ends of the Sky",
+			version: "1.2",
+			clue: "Clear Forgotten Hall: Memory of Xianzhou Stage 6",
+		},
 	],
 	"moment-of-joy": [
 		{
