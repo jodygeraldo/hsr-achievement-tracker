@@ -1,10 +1,11 @@
 import { clueBuilder } from "~/utils/achievement.server"
 
 const metadata: Metadata = {
-	currentVersion: "1.1",
+	currentVersion: "1.2",
 	size: {
 		"1.0": 332,
 		"1.1": 15,
+		"1.2": 28,
 	},
 }
 
@@ -182,12 +183,23 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{
 			name: 'Slayer of a Very "Deer" Friend',
 			version: "1.0",
+			isSecret: true,
+			clue: "Defeat the Master of the Disciples of Sanctus Medicus",
+		},
+		{
+			name: "Svah Sanishyu",
+			version: "1.2",
 			clue: "Try to walk on the Path of The Hunt...",
 		},
 		{
-			name: "Draconic Opulence",
-			version: "1.0",
-			clue: "Witness Dan Shu's story",
+			name: "The Imbibitor Lunae Arrives",
+			version: "1.2",
+			clue: "Witness Dan Heng part the waters in Scalegorge Waterscape",
+		},
+		{
+			name: "The Arbor Snaps",
+			version: "1.2",
+			clue: "Help Jing Yuan to defeat Phantylia",
 		},
 	],
 	"eager-for-battle": [
@@ -685,6 +697,46 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Use Silver Wolf to fight enemy Kafka and apply 2 Weaknesse(s) to her in a single battle",
 		},
+		{
+			name: "Sickly Complexion",
+			version: "1.2",
+			clue: "Dispel the Prana-Siphon state for a total of 5 times during a single battle against Phantylia",
+		},
+		{
+			name: "Horticulturalist",
+			version: "1.2",
+			isSecret: true,
+			clue: "Defeat Phantylia without defeating any Abundance Lotuses",
+		},
+		{
+			name: "BOOM",
+			version: "1.2",
+			isSecret: true,
+			clue: `In a single battle, trigger 4 different DoT effects with 1 use of Kafka's Skill "Caressing Moonlight"`,
+		},
+		{
+			name: "Unfulfilled Wish",
+			version: "1.2",
+			clue: "In a single battle, use the character Blade to restore HP from less than or equal to 5% to greater than or equal to 30% in one single action for 2 time(s)",
+		},
+		{
+			name: "Go, Bladie",
+			version: "1.2",
+			isSecret: true,
+			clue: "Use ally Blade in combat against boss Kafka and be Dominated by her",
+		},
+		{
+			name: "Win by Decision",
+			version: "1.2",
+			isSecret: true,
+			clue: `In a single battle, use Luka's "Sky-Shatter Fist" for a total of 4 time(s)`,
+		},
+		{
+			name: "Self-Hypnosis",
+			version: "1.2",
+			isSecret: true,
+			clue: "Use ally Kafka in combat against boss Kafka and be Dominated by her",
+		},
 	],
 	"vestige-of-luminflux": [
 		{
@@ -1116,6 +1168,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.0",
 			clue: "Complete Echo of War 10 time(s)",
 		},
+		{
+			name: "Voyage to the Ends of the Sky",
+			version: "1.2",
+			clue: "Clear Forgotten Hall: Memory of Xianzhou Stage 6",
+		},
 	],
 	"moment-of-joy": [
 		{
@@ -1326,6 +1383,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.1",
 			isSecret: true,
 			clue: "Trigger 10 different HP restoration voice lines with Luocha's healing",
+		},
+		{
+			name: "Guardian of the Underworld",
+			version: "1.2",
+			isSecret: true,
+			clue: "Win 1 battle with a team comprising Natasha, Seele, and Luka",
 		},
 	],
 	"the-memories-we-share": [
@@ -1599,6 +1662,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
 		},
 		{
+			name: "Draconic Opulence",
+			version: "1.0",
+			isSecret: true,
+			clue: "Witness Dan Shu's story",
+		},
+		{
 			name: "Free For Today",
 			version: "1.1",
 			isSecret: true,
@@ -1746,6 +1815,66 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: 'Complete the challenge from the "Four Great Villains of the Luofu (Self-Proclaimed)"',
 		},
+		{
+			name: "The Willing Does Not Bite",
+			version: "1.2",
+			isSecret: true,
+			clue: "Uncover the connection between the two anglers from the Artisanship Commission",
+		},
+		{
+			name: "How I Learned to Stop Worrying",
+			version: "1.2",
+			isSecret: true,
+			clue: "Successfully resolve the neutron bomb crisis",
+		},
+		{
+			name: "Lunarescent Rim",
+			version: "1.2",
+			isSecret: true,
+			clue: "Participate 1 time in the Aurumaton Driving Exam",
+		},
+		{
+			name: ["Wordsmith", "Literary Novice"],
+			version: "1.2",
+			isSecret: true,
+			clue: [
+				"Have your literary talent recognized by the Metrical Poet",
+				"Fail to have your literary talent recognized by the Metrical Poet",
+			],
+		},
+		{
+			name: "Soaring Birds and Paper Kites",
+			version: "1.2",
+			isSecret: true,
+			clue: 'Complete the Companion Mission "For I Have Touched the Sky"',
+		},
+		{
+			name: ["Free Will", "True Free Will"],
+			version: "1.2",
+			isSecret: true,
+			clue: [
+				'Complete the Companion Mission "Letter from a Strange Woman"',
+				'Complete the Companion Mission "Letter from a Strange Woman"',
+			],
+		},
+		{
+			name: "Ends Above the Means",
+			version: "1.2",
+			isSecret: true,
+			clue: "Complete 1 successful release with the Unshackled",
+		},
+		{
+			name: "Means Above the Ends",
+			version: "1.2",
+			isSecret: true,
+			clue: "Witness the end of the Unshackled",
+		},
+		{
+			name: "Friend of the Cloud Knights",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fulfill the General's orders without distractions",
+		},
 	],
 	"fathom-the-unfathomable": [
 		{
@@ -1764,6 +1893,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Activate 14 Space Anchors on the Xianzhou Luofu",
 		},
 		{
+			name: "Travels Afar",
+			version: "1.2",
+			isSecret: true,
+			clue: "Activate Space Anchors 20 times on the Xianzhou Luofu",
+		},
+		{
 			name: "Proper Role-Playing Gamer",
 			version: "1.0",
 			clue: "Open Treasures 30 times on the Herta Space Station",
@@ -1777,6 +1912,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "A Drop in the Bucket",
 			version: "1.0",
 			clue: "Open Treasures 100 time(s) on the Xianzhou Luofu",
+		},
+		{
+			name: "The Star of Wealth Shines Upon You",
+			version: "1.2",
+			clue: "Open Treasures 170 time(s) on the Xianzhou Luofu",
 		},
 		{
 			name: "Destructive Impulse",
@@ -1921,6 +2061,35 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "North by Northwest",
 			version: "1.0",
 			clue: "Complete the Formation-Breaking Compass 20 time(s)",
+		},
+		{
+			name: "I Was Here Flying: Meridian Pin",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the vicinity of the Meridian Pin",
+		},
+		{
+			name: "I Was Here Flying: Matrix of Prescience",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the middle of the Matrix of Prescience",
+		},
+		{
+			name: "I Was Here Flying: Aureate Elixir Furnace",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to the vicinity of the Aureate Elixir Furnace",
+		},
+		{
+			name: "Take It Easy, Icarus",
+			version: "1.2",
+			isSecret: true,
+			clue: "Fly a cycrane to test the limits of its remote control range",
+		},
+		{
+			name: "Unboxing Assessment",
+			version: "1.2",
+			clue: "There is no delivery package inspector more reliable than you",
 		},
 		{
 			name: "Walk Into The Trap",
