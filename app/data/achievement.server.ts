@@ -1617,6 +1617,7 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 		{
 			name: "Draconic Opulence",
 			version: "1.0",
+			isSecret: true,
 			clue: "Witness Dan Shu's story",
 		},
 		{
