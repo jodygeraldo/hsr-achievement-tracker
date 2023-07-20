@@ -696,6 +696,46 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Use Silver Wolf to fight enemy Kafka and apply 2 Weaknesse(s) to her in a single battle",
 		},
+		{
+			name: "Sickly Complexion",
+			version: "1.2",
+			clue: "Dispel the Prana-Siphon state for a total of 5 times during a single battle against Phantylia",
+		},
+		{
+			name: "Horticulturalist",
+			version: "1.2",
+			isSecret: true,
+			clue: "Defeat Phantylia without defeating any Abundance Lotuses",
+		},
+		{
+			name: "BOOM",
+			version: "1.2",
+			isSecret: true,
+			clue: `In a single battle, trigger 4 different DoT effects with 1 use of Kafka's Skill "Caressing Moonlight"`,
+		},
+		{
+			name: "Unfulfilled Wish",
+			version: "1.2",
+			clue: "In a single battle, use the character Blade to restore HP from less than or equal to 5% to greater than or equal to 30% in one single action for 2 time(s)",
+		},
+		{
+			name: "Go, Bladie",
+			version: "1.2",
+			isSecret: true,
+			clue: "Use ally Blade in combat against boss Kafka and be Dominated by her",
+		},
+		{
+			name: "Win by Decision",
+			version: "1.2",
+			isSecret: true,
+			clue: `In a single battle, use Luka's "Sky-Shatter Fist" for a total of 4 time(s)`,
+		},
+		{
+			name: "Self-Hypnosis",
+			version: "1.2",
+			isSecret: true,
+			clue: "Use ally Kafka in combat against boss Kafka and be Dominated by her",
+		},
 	],
 	"vestige-of-luminflux": [
 		{
