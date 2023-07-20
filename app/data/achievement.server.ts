@@ -1,10 +1,11 @@
 import { clueBuilder } from "~/utils/achievement.server"
 
 const metadata: Metadata = {
-	currentVersion: "1.1",
+	currentVersion: "1.2",
 	size: {
 		"1.0": 332,
 		"1.1": 15,
+		"1.2": 28,
 	},
 }
 
