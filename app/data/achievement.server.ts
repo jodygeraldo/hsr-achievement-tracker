@@ -1662,10 +1662,13 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
 		},
 		{
-			name: "Draconic Opulence",
-			version: "1.0",
+			name: ["Draconic Opulence", "Friend of the Cloud Knights"],
+			version: "1.2",
 			isSecret: true,
-			clue: "Witness Dan Shu's story",
+			clue: [
+				"Witness Dan Shu's story",
+				"Fulfill the General's orders without distractions",
+			],
 		},
 		{
 			name: "Free For Today",
@@ -1868,12 +1871,6 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			version: "1.2",
 			isSecret: true,
 			clue: "Witness the end of the Unshackled",
-		},
-		{
-			name: "Friend of the Cloud Knights",
-			version: "1.2",
-			isSecret: true,
-			clue: "Fulfill the General's orders without distractions",
 		},
 	],
 	"fathom-the-unfathomable": [
