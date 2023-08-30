@@ -1,11 +1,12 @@
 import { clueBuilder } from "~/utils/achievement.server"
 
 const metadata: Metadata = {
-	currentVersion: "1.2",
+	currentVersion: "1.3",
 	size: {
 		"1.0": 332,
 		"1.1": 15,
 		"1.2": 28,
+		"1.3": 80,
 	},
 }
 
@@ -200,6 +201,11 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			name: "The Arbor Snaps",
 			version: "1.2",
 			clue: "Help Jing Yuan to defeat Phantylia",
+		},
+		{
+			name: "Transient Are the Living",
+			version: "1.3",
+			clue: "Farewell, Xianzhou Luofu",
 		},
 	],
 	"eager-for-battle": [
@@ -737,6 +743,64 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Use ally Kafka in combat against boss Kafka and be Dominated by her",
 		},
+		{
+			name: "Icebreaker",
+			version: "1.3",
+			isSecret: true,
+			clue: "Defeat a frozen enemy using Lynx",
+		},
+		{
+			name: "Wardance: Greatsword Trial",
+			version: "1.3",
+			isSecret: true,
+			clue: "Use Sushang to deal the final blow in a victory against Yanqing",
+		},
+		{
+			name: "Wardance: Épée Trial",
+			version: "1.3",
+			isSecret: true,
+			clue: "Use Luocha to deal the final blow in a victory against Yanqing",
+		},
+		{
+			name: "Beetleburster",
+			version: "1.3",
+			isSecret: true,
+			clue: `Use a Lesser Sting's or Juvenile Sting's "Entomon Eulogy" to defeat Swarm: True Sting`,
+		},
+		{
+			name: "I am the Swarm",
+			version: "1.3",
+			isSecret: true,
+			clue: "When Swarm: True Sting uses Swarm Onslaught, there are no Juvenile Stings or Lesser Stings on the battlefield",
+		},
+		{
+			name: "Just a Bug",
+			version: "1.3",
+			isSecret: true,
+			clue: "In a single attack, simultaneously defeat 2 Swarm: True Sting(s)",
+		},
+		{
+			name: "Wardance: Glaive Trial",
+			version: "1.3",
+			isSecret: true,
+			clue: "Use Jing Yuan to deal the final blow in a victory against Yanqing",
+		},
+		{
+			name: "Dragon Trifecta",
+			version: "1.3",
+			clue: "Use Fulgurant Leap during Dan Heng • Imbibitor Lunae's turn for 3 consecutive times in a single battle",
+		},
+		{
+			name: "Survival, Survival, Survival",
+			version: "1.3",
+			clue: "Use Lynx to increase allies' Max HP 3 times in a single battle",
+		},
+		{
+			name: "Heh, Cosmic Big Lotto?",
+			version: "1.3",
+			isSecret: true,
+			clue: `In a single battle, trigger the HP Restore effect of Fu Xuan's Talent "Bleak Breeds Bliss" for a total of 4 times`,
+		},
 	],
 	"vestige-of-luminflux": [
 		{
@@ -814,6 +878,195 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 	],
 	"universe-in-a-nutshell": [
 		{
+			name: "The 400 Blows",
+			version: "1.3",
+			clue: "Use Basic ATK at least 40 times and win within a single battle in Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "Will of the Hive",
+			version: "1.3",
+			clue: "Unlock 12 Blessing(s) of Propagation in Simulated Universe",
+		},
+		{
+			name: "The Fourth Phase",
+			version: "1.3",
+			clue: "Have 10 or more Blessing(s) of Propagation when clearing Simulated Universe",
+		},
+		{
+			name: "Spring in Fialta",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Elation, achieve a total of 12 different types of Happiness",
+		},
+		{
+			name: "The Hunter Games",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Simulated Universe: Swarm Disaster, capture 8 Trotters through battling in the same plane while following the Path of The Hunt",
+		},
+		{
+			name: "Macadam Stories",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Simulated Universe: Swarm Disaster, use the Path of Remembrance to consecutively copy a Reward domain 6 times",
+		},
+		{
+			name: "The Predator",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Destruction, achieve 40 victories in battle",
+		},
+		{
+			name: "Symbolic Exchange and Death",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Nihility, enter a Blank domain 15 times",
+		},
+		{
+			name: "Simulated Universe Wasn't Built in a Day",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Preservation, apply Cornerstone to 8 domains of different types",
+		},
+		{
+			name: "Nick of Time",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Abundance, the remaining Countdown is more than or equal to 80",
+		},
+		{
+			name: "Back to Klendathu",
+			version: "1.3",
+			isSecret: true,
+			clue: "When clearing Simulated Universe: Swarm Disaster with the Path of Propagation, enter a Combat: Swarm, Occurrence: Swarm, or Boss: Swarm domain for 15 times",
+		},
+		{
+			name: "Welcome to the Monkey House",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Elation for a total of 100 times",
+		},
+		{
+			name: "Scattered Hailstones, Shattered Ghostbones",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: The Hunt for a total of 100 times",
+		},
+		{
+			name: "Eternity and a Day",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Remembrance for a total of 100 times",
+		},
+		{
+			name: "The World as Representation",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Nihility for a total of 100 times",
+		},
+		{
+			name: "Scorched Earth",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Destruction for a total of 100 times",
+		},
+		{
+			name: "Hearken, Waken, Enliven",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Abundance for a total of 100 times",
+		},
+		{
+			name: "Homogeneous Nucleation",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Preservation for a total of 100 times",
+		},
+		{
+			name: "Methuselah's Children",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, roll the Audience Die: Propagation for a total of 100 times",
+		},
+		{
+			name: "Data Bank Overseer",
+			version: "1.3",
+			isSecret: true,
+			clue: "Have 9999 or more Cosmic Fragment(s) when clearing Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "Love &amp; the Emperor",
+			version: "1.3",
+			isSecret: true,
+			clue: "Wield unlimited power in The IPC Promotion Saga of the Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "Q",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Simulated Universe: Swarm Disaster, purchase all items in the Blessing Store and Curio Store in the same Transaction domain.",
+		},
+		{
+			name: "Welcome to Valhalla",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Simulated Universe: Swarm Disaster, be defeated in the battle triggered in the event Genius Society #55 Yu Qingtu",
+		},
+		{
+			name: "Wreck-It Self II",
+			version: "1.3",
+			isSecret: true,
+			clue: "In one run of Simulated Universe: Swarm Disaster, break a number of destructible objects greater than or equal to 100",
+		},
+		{
+			name: "Harvest Moon",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Simulated Universe: Swarm Disaster, capture Trotters equal to or greater than 16 within one Adventure domain",
+		},
+		{
+			name: "Room of Parting Paths",
+			version: "1.3",
+			clue: 'In Simulated Universe: Swarm Disaster, light up 1 hidden "Trail of Pathstrider"',
+		},
+		{
+			name: "Choir of One",
+			version: "1.3",
+			clue: "Generate 2 Resonance Interplays in one run of Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "To Be, or Not to Be",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, make 1 Choices of the Paths in Occurrence domains",
+		},
+		{
+			name: "Dial of Destiny",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, complete all Choices of the Paths in Occurrence domains",
+		},
+		{
+			name: "Things to Come",
+			version: "1.3",
+			clue: "Cheat a total of 10 times in Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "Back to the Future",
+			version: "1.3",
+			clue: "Reroll a total of 50 times in Simulated Universe: Swarm Disaster",
+		},
+		{
+			name: "The End of Eternity",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, enter a Blank domain with any Path other than Nihility",
+		},
+		{
+			name: "On the Comet",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, achieve all goals in any Adventure domain",
+		},
+		{
+			name: "Weyland-Yutani Investigator",
+			version: "1.3",
+			clue: "In Simulated Universe: Swarm Disaster, enter a Combat: Swarm, Occurrence: Swarm, or Boss: Swarm domain with a Path other than Propagation for a total of 20 times",
+		},
+		{
+			name: "Mass Relay",
+			version: "1.3",
+			clue: "Have the Planar Disarray's Disruption Level at level 20 or higher when completing Simulated Universe: Swarm Disaster",
+		},
+		{
 			name: "The First and Last Freedom",
 			version: "1.0",
 			clue: "Enter battle with 4 allies with HP percentage equal to or less than 1% in Simulated Universe",
@@ -829,9 +1082,19 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Keep a single enemy Frozen for 10 turns in Simulated Universe",
 		},
 		{
+			name: "Silent Running",
+			version: "1.3",
+			clue: "Clear all Swarm Disaster stories in Simulated Universe: Swarm Disaster",
+		},
+		{
 			name: "Elemental Reaction System",
 			version: "1.0",
 			clue: "Deal 5 or more Types of DMG in a single attack in Simulated Universe",
+		},
+		{
+			name: "Stranger in a Strange Land",
+			version: "1.3",
+			clue: "Collect all Trailblaze Secrets stories in Simulated Universe: Swarm Disaster",
 		},
 		{
 			name: "Your Opponent Has Poor Connection",
@@ -839,9 +1102,19 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Allies take consecutive actions 20 time(s) in Simulated Universe",
 		},
 		{
+			name: "Nuke Them From Orbit",
+			version: "1.3",
+			clue: "Complete Simulated Universe: Swarm Disaster Difficulty V",
+		},
+		{
 			name: "Twenty Four Love Poems and a Song of Despair",
 			version: "1.0",
 			clue: "All allies have HP percentages equal to or less than 5% when winning a battle in Simulated Universe",
+		},
+		{
+			name: "Plague Across Eons",
+			version: "1.3",
+			clue: "Collect chapter The Hunt I in Swarm Disaster",
 		},
 		{
 			name: "We Call the Heart Dancing in the Dark the Moon",
@@ -849,9 +1122,19 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Have at least 3 enemy unit(s) be afflicted with Shock, Burn, Bleed, and Wind Shear simultaneously in Simulated Universe",
 		},
 		{
+			name: "A Dream of Babel",
+			version: "1.3",
+			clue: "Collect chapter Preservation II in Swarm Disaster",
+		},
+		{
 			name: "Good Night, My Friend",
 			version: "1.0",
 			clue: "Defeat 15 enemies in Simulated Universe",
+		},
+		{
+			name: "How One Becomes What One Is",
+			version: "1.3",
+			clue: "Collect chapter Nihility I in Swarm Disaster",
 		},
 		{
 			name: "Ready Player One",
@@ -1390,12 +1673,106 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			isSecret: true,
 			clue: "Win 1 battle with a team comprising Natasha, Seele, and Luka",
 		},
+		{
+			name: "Hold Your Horses",
+			version: "1.3",
+			isSecret: true,
+			clue: "Persist for 15 seconds without entering combat while being pursued by the enemy.",
+		},
+		{
+			name: "Tea is Thicker Than Water",
+			version: "1.3",
+			isSecret: true,
+			clue: "Drink Immortal's Delight daily for 3 consecutive days",
+		},
+		{
+			name: "Luofu Foodie",
+			version: "1.3",
+			isSecret: true,
+			clue: "Drink mung bean soda daily for 3 consecutive days",
+		},
+		{
+			name: "It's Just a Picture",
+			version: "1.3",
+			isSecret: true,
+			clue: "Change Phone Wallpapers for the first time",
+		},
+		{
+			name: "Art Transcends Language",
+			version: "1.3",
+			isSecret: true,
+			clue: "Change Messages and Chat Boxes for the first time",
+		},
+		{
+			name: "You've Been Pom'd!",
+			version: "1.3",
+			isSecret: true,
+			clue: "Send Pom-Pom's stickers to a total of 5 friends",
+		},
+		{
+			name: "Astral Express-ions",
+			version: "1.3",
+			isSecret: true,
+			clue: "Send a total of 20 Astral Express Crew Member stickers",
+		},
+		{
+			name: "To The Other Me",
+			version: "1.3",
+			isSecret: true,
+			clue: "Receive a sticker from a Trailblazer of the opposite gender",
+		},
+		{
+			name: "In the Name of Landau",
+			version: "1.3",
+			isSecret: true,
+			clue: "Win 1 battle with a team comprising Serval, Gepard, and Lynx",
+		},
+		{
+			name: "Full Metal Racket",
+			version: "1.3",
+			isSecret: true,
+			clue: "Enter a battle by attacking a distant enemy with Natasha during exploration",
+		},
 	],
 	"the-memories-we-share": [
+		{
+			name: ["Truthful Trailblazer", "Hidden Harmony"],
+			version: "1.3",
+			isSecret: true,
+			clue: [
+				"Tell Cleo the truth about Todd",
+				"Hide the truth about Todd from Cleo",
+			],
+		},
+		{
+			name: "The River Lethe's Taste is Bitter",
+			version: "1.3",
+			clue: 'Complete the Companion Mission "Total Recall"',
+		},
+		{
+			name: "Beyond Frozen Boundaries",
+			version: "1.3",
+			clue: 'Complete the Companion Mission "Farther Than The Snow Plains"',
+		},
+		{
+			name: "Raindew of Yore",
+			version: "1.3",
+			clue: 'Complete the Companion Mission "The Dragon Returns Home"',
+		},
+		{
+			name: "Only Ashes Remain",
+			version: "1.3",
+			clue: 'Complete the Companion Mission "Mo Cuishle"',
+		},
 		{
 			name: "Guess Who I Am",
 			version: "1.0",
 			clue: 'Complete Companion Mission "You Already Know Me"',
+		},
+		{
+			name: "Peaceful Prime Time",
+			version: "1.3",
+			clue: "Listen to full episode of Interastral Peace Broadcast No. 1",
 		},
 		{
 			name: "The Sorrows of Young Arlan",
@@ -1638,6 +2015,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Dominate all 5 tournaments in the Boulder Town Super League",
 		},
 		{
+			name: "Let Aurum Alley Thrive Once More!",
+			version: "1.3",
+			isSecret: true,
+			clue: "Complete the mission Back in Business (IV), and win the bid for the Aurum Alley Commercial District",
+		},
+		{
 			name: "The Kelly Gang",
 			version: "1.0",
 			isSecret: true,
@@ -1650,16 +2033,38 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: `Finish all the Fool's Box puzzles in the mission "Vessel of Mediocrity"`,
 		},
 		{
+			name: "Trojan Starskiff",
+			version: "1.3",
+			isSecret: true,
+			clue: "Stack 6 Aurumaton Gatekeeper(s) on the freight starskiff in Aurum Alley's Hustle and Bustle",
+		},
+		{
+			name: "Outclassed by None",
+			version: "1.3",
+			isSecret: true,
+			clue: "Tap/Press/Click on 24 freight starskiff(s) during Aurum Alley's Hustle and Bustle",
+		},
+		{
 			name: "The Fourth Little Mole",
 			version: "1.0",
 			isSecret: true,
 			clue: 'Find all the hidden treasure in the Mission "The Adventurous Moles"',
 		},
 		{
+			name: "Horn of Plenty",
+			version: "1.3",
+			clue: "Earn 1000000 of Merchant Guild's funds for the Aurum Alley Merchant Guild in Aurum Alley's Hustle and Bustle",
+		},
+		{
 			name: "The Adventurous Moles Super Grown-Up Edition",
 			version: "1.0",
 			isSecret: true,
 			clue: "Buy The Adventurous Moles: Hidden Treasure from the Belobog Book Merchant",
+		},
+		{
+			name: "Pawnshop No. 8",
+			version: "1.3",
+			clue: "Establish collaboration with Mr. Huo in Aurum Alley's Hustle and Bustle",
 		},
 		{
 			name: ["Draconic Opulence", "Friend of the Cloud Knights"],
@@ -1677,10 +2082,20 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Open up the general exhibition area of the Belobog History and Culture Museum",
 		},
 		{
+			name: "Delivery Dynamo",
+			version: "1.3",
+			clue: "Complete a custom order from Heron Express in Aurum Alley's Hustle and Bustle",
+		},
+		{
 			name: "Catch Me If You Can",
 			version: "1.1",
 			isSecret: true,
 			clue: "Open up three exhibition areas in the Belobog History and Culture Museum",
+		},
+		{
+			name: "Sought Gourmet Afar, Wrought Flavor Ajar",
+			version: "1.3",
+			clue: "Complete the Streetside Event \"Diting's Search\" in Aurum Alley's Hustle and Bustle",
 		},
 		{
 			name: "You Should Stay in the Museum!",
@@ -1689,16 +2104,40 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 			clue: "Collect all display items for the Belobog History and Culture Museum",
 		},
 		{
+			name: "Funds Expended, Fortunes Expanded",
+			version: "1.3",
+			isSecret: true,
+			clue: "Spend 1280000 of Merchant Guild's funds in Aurum Alley's Hustle and Bustle",
+		},
+		{
+			name: "Stellar Stacker",
+			version: "1.3",
+			isSecret: true,
+			clue: "Arrange 81 units of inventory goods onto a single freight starskiff in Aurum Alley's Hustle and Bustle",
+		},
+		{
 			name: "A Simple Life",
 			version: "1.0",
 			isSecret: true,
 			clue: 'Receive a text from Luhui after completing the mission "Fired"',
 		},
 		{
+			name: "Markets: Skyline",
+			version: "1.3",
+			isSecret: true,
+			clue: "In Aurum Alley's Hustle and Bustle, achieve a shipping lane planning score of 81 for any store",
+		},
+		{
 			name: "Carpe Diem, Festina Lente, and Tempus Fugit",
 			version: "1.0",
 			isSecret: true,
 			clue: `Revving up, Losing Steam, and Running On Empty. Receive all the texts about Chengjie's fading passion after completing the mission "A Teacher and a Friend".`,
+		},
+		{
+			name: "Heron Express: We Tried, We Really Did",
+			version: "1.3",
+			isSecret: true,
+			clue: "Investigate all special Courier Packages in Aurum Alley",
 		},
 		{
 			name: ["Tootsie", "Cyber Fraud", "A Secret Makes a Woman, Woman."],
@@ -1709,6 +2148,12 @@ const achievementByCategory: Record<SlugifiedCategoryName, Achievement[]> = {
 				'Choose to have the Foxian Beauty turn themselves in during the mission "From Xianzhou With Love"',
 				'Choose to let the Foxian Beauty continue the ruse during the mission "From Xianzhou With Love"',
 			],
+		},
+		{
+			name: "The Departed Is That Which We Impart",
+			version: "1.3",
+			isSecret: true,
+			clue: "Witness the story of Yongren's hidden identity",
 		},
 		{
 			name: "The Seven Errors of Cycranes: Sloth",
