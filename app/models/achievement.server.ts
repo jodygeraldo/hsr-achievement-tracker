@@ -231,7 +231,7 @@ async function modifyAchieved(
 		}
 		case "put": {
 			await db.execute(
-				"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?)",
+				"INSERT INTO achievement(session_id, name, category) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE id = id",
 				[data.sessionId, data.name, data.slug],
 			)
 			break
