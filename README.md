@@ -2,6 +2,9 @@
 
 Unofficial achievement tracker for Honkai: Star Rail.
 
+> [!IMPORTANT]  
+> This project has been archived and will no longer be maintained or updated. I recommend to use [stardb.gg](https://stardb.gg/en/achievement-tracker) that offers better system and actively maintained.
+
 ## Technology Stack
 
 This project is built using:

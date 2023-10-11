@@ -52,6 +52,28 @@ function Document({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body className="h-full">
+				<div className="pointer-events-none fixed inset-x-0 bottom-0 z-[9999] sm:px-6 sm:pb-5 lg:px-8">
+					<div className="pointer-events-auto flex w-full items-center justify-center gap-x-6 border border-gray-7 bg-gray-5 px-6 py-2.5 shadow-md hover:border-gray-8 sm:rounded-xl sm:py-3 sm:pl-4 sm:pr-3.5">
+						<a
+							href="https://stardb.gg/en/achievement-tracker"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex-1 text-sm leading-6 text-white"
+						>
+							<strong className="font-semibold">Archived Notice</strong>
+							<svg
+								viewBox="0 0 2 2"
+								className="mx-2 inline h-0.5 w-0.5 fill-current"
+								aria-hidden="true"
+							>
+								<circle cx={1} cy={1} r={1} />
+							</svg>
+							I recommanded to use stardb.gg instead&nbsp;
+							<span aria-hidden="true">&rarr;</span>
+						</a>
+					</div>
+				</div>
+
 				{children}
 				<Toaster
 					toastOptions={{
